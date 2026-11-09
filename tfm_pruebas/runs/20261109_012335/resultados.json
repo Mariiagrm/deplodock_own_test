@@ -1,0 +1,5234 @@
+{
+ "meta": {
+  "fecha": "2026-11-09T01:10:58",
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "sm": "sm_120",
+  "driver": "610.43.02",
+  "git": "5f0a3770 2026-11-09",
+  "torch": "2.15.0+cu132",
+  "host": "1531eaebfeed",
+  "cats": [
+   "matmul",
+   "rmsnorm/fused",
+   "nvfp4",
+   "qwen3emb"
+  ],
+  "ncu": false,
+  "tune": 0,
+  "reanalizado": "2026-11-09T01:10:58"
+ },
+ "casos": [
+  {
+   "caso": "matmul/bf16-mma-sm120",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,256) x (256,128)",
+    "dtype": "bf16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.1539258736151234,
+   "tcompile_us": 1.8884444402323828,
+   "emmy_us": 1.7756421584635973,
+   "emmy_muestras": [
+    1.7756421584635973
+   ],
+   "greedy_us": 1.666814787313342,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/bf16-mma-trans-b-masked-n-async",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(128,128) x (72,128)",
+    "dtype": "bf16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.6740761619950661,
+   "tcompile_us": 1.638200662540317,
+   "emmy_us": 3.8709151558578014,
+   "emmy_muestras": [
+    3.8709151558578014
+   ],
+   "greedy_us": 1.0830173268914223,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/bf16-mma-trans-b-masked-n-tma",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(128,128) x (72,128)",
+    "dtype": "bf16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.6777142559811151,
+   "tcompile_us": 1.6338008564788025,
+   "emmy_us": 4.220952745527029,
+   "emmy_muestras": [
+    4.220952745527029
+   ],
+   "greedy_us": 1.0871688136830926,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/bf16-rowless-grouped-pair",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(256) x (4,256,16) x (4,256,16)",
+    "dtype": "bf16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.797575750736275,
+   "tcompile_us": 2.546424215490168,
+   "emmy_us": 1.6283185686916113,
+   "emmy_muestras": [
+    1.6283185686916113
+   ],
+   "greedy_us": 1.4770101988688111,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/bf16-scalar-sync-d2-sm120",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(32,384) x (64,384)",
+    "dtype": "bf16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.712719654910779,
+   "tcompile_us": 1.844656057458706,
+   "emmy_us": 4.435764625668526,
+   "emmy_muestras": [
+    4.435764625668526
+   ],
+   "greedy_us": 1.6558730276301503,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "NO",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-matvec-reshaped-output-tma",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear+reshape+index_map",
+    "shape": "(1,1,1024) x (2048,1024)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.550647332472502,
+   "tcompile_us": 2.3480580336805703,
+   "emmy_us": 6.294274237006903,
+   "emmy_muestras": [
+    6.294274237006903
+   ],
+   "greedy_us": 2.234125742688775,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-batched-pv-b1h4kv128",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,4,128,128) x (1,4,128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.549692169978068,
+   "tcompile_us": 4.75861533330037,
+   "emmy_us": 5.401648581027985,
+   "emmy_muestras": [
+    5.401648581027985
+   ],
+   "greedy_us": 1.1696922592818737,
+   "ref_cloudrift_us": 5.800558037536089,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-batched-pv-b2h3kv256",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(2,3,128,256) x (2,3,256,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 6.423565768456275,
+   "tcompile_us": 5.954852861951488,
+   "emmy_us": 8.572647348046303,
+   "emmy_muestras": [
+    8.57353862375021,
+    8.577115833759308,
+    8.572647348046303
+   ],
+   "greedy_us": 1.9273178186267614,
+   "ref_cloudrift_us": 6.024727315613718,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-batched-qk-b1h4d64",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+transpose",
+    "shape": "(1,4,128,64) x (1,4,128,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.992631573426096,
+   "tcompile_us": 3.357894718647003,
+   "emmy_us": 3.8290631491690874,
+   "emmy_muestras": [
+    3.8290631491690874
+   ],
+   "greedy_us": 1.5197894535958767,
+   "ref_cloudrift_us": 5.915266169598822,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-batched-qk-b2h3d32",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+transpose",
+    "shape": "(2,3,128,32) x (2,3,128,32)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.903762430247694,
+   "tcompile_us": 2.67833677848967,
+   "emmy_us": 2.820954890921712,
+   "emmy_muestras": [
+    2.820954890921712
+   ],
+   "greedy_us": 1.0220989352092147,
+   "ref_cloudrift_us": 2.872253529276559,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-epilogue-residual",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(128,128) x (128,128) x (128,128)",
+    "dtype": "f16/f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.720319747924805,
+   "tcompile_us": 3.5970844162835016,
+   "emmy_us": 6.617462262511253,
+   "emmy_muestras": [
+    6.617462262511253
+   ],
+   "greedy_us": 1.2677689082920551,
+   "ref_cloudrift_us": 11.326909065246582,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-f16acc-cp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.536769219315969,
+   "tcompile_us": 1.3407692313194275,
+   "emmy_us": 3.671253565698862,
+   "emmy_muestras": [
+    3.671253565698862
+   ],
+   "greedy_us": 1.1893846094608307,
+   "ref_cloudrift_us": 4.909399107759222,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-f16acc-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.5297600626945496,
+   "tcompile_us": 1.3432000577449799,
+   "emmy_us": 7.325440179556608,
+   "emmy_muestras": [
+    7.325440179556608
+   ],
+   "greedy_us": 1.185760018415749,
+   "ref_cloudrift_us": 8.680626102115797,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-f16acc-symbolic-k",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,{'sym': 'seq_len', 'hint': 512}) x ({'sym': 'seq_len', 'hint': 512},128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": false,
+   "error": "emmy run falló: el schedule fijado por el caso ya no se realiza con este compilador (unreproducible pin; emmy no lo mide): k_matmul_2778f0: unreproducible pin: WORK=w1x1 realized (off); TILE=mma_m16n8k16_f16_f16/f1x1 realized (unset) — row NOT benched",
+   "eager_us": null,
+   "tcompile_us": null,
+   "emmy_us": null,
+   "emmy_muestras": [],
+   "greedy_us": null,
+   "ref_cloudrift_us": 8.047741747671557,
+   "segundos": 0.0,
+   "tecnicas": {},
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-f16acc-tma",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.55448897017373,
+   "tcompile_us": 1.3731555806265936,
+   "emmy_us": 3.8748132064938545,
+   "emmy_muestras": [
+    3.8748132064938545
+   ],
+   "greedy_us": 1.2202666839584708,
+   "ref_cloudrift_us": 4.535272717475891,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-m128n128k128-f16",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.5339354216228431,
+   "tcompile_us": 1.341640537235594,
+   "emmy_us": 4.697892814874649,
+   "emmy_muestras": [
+    4.697892814874649
+   ],
+   "greedy_us": 1.1494930367916822,
+   "ref_cloudrift_us": 6.211776170671356,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-m128n128k128-f32",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.777517991188245,
+   "tcompile_us": 2.304164110085903,
+   "emmy_us": 4.801659379154444,
+   "emmy_muestras": [
+    4.801659379154444
+   ],
+   "greedy_us": 1.2583384523168206,
+   "ref_cloudrift_us": 6.073599873167096,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-m128n128k128-f32-trans",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.3928528207207695,
+   "tcompile_us": 1.3530963871079653,
+   "emmy_us": 4.7224825248122215,
+   "emmy_muestras": [
+    4.7224825248122215
+   ],
+   "greedy_us": 1.0896243620663881,
+   "ref_cloudrift_us": 4.792782012373209,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-m128n128k132-f32-masked-k",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,132) x (132,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.043692313707792,
+   "tcompile_us": 3.9675896748518333,
+   "emmy_us": 6.459174677729607,
+   "emmy_muestras": [
+    6.459174677729607
+   ],
+   "greedy_us": 9.762461297214031,
+   "ref_cloudrift_us": 7.228753704955612,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-m128n128k132-f32-trans-masked-k",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(128,132) x (128,132)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.904808923099818,
+   "tcompile_us": 1.8035056215993475,
+   "emmy_us": 6.386376451700926,
+   "emmy_muestras": [
+    6.386376451700926
+   ],
+   "greedy_us": 8.210696280002594,
+   "ref_cloudrift_us": 6.544296164065599,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-m128n128k136-f32-masked-k",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,136) x (136,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.918799921870232,
+   "tcompile_us": 3.9503999054431915,
+   "emmy_us": 6.202039308845997,
+   "emmy_muestras": [
+    6.202039308845997
+   ],
+   "greedy_us": 9.928000159561634,
+   "ref_cloudrift_us": 7.089599967002869,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-parity-m256-cp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(256,512) x (512,1024)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.584432453722568,
+   "tcompile_us": 3.6283244152326843,
+   "emmy_us": 3.8425095845013857,
+   "emmy_muestras": [
+    3.8425095845013857
+   ],
+   "greedy_us": 3.7195675540715456,
+   "ref_cloudrift_us": 5.581740268879691,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-parity-m256-tma",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(256,512) x (512,1024)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.572872380564983,
+   "tcompile_us": 3.619609022499027,
+   "emmy_us": 3.9872671477496624,
+   "emmy_muestras": [
+    3.9872671477496624
+   ],
+   "greedy_us": 3.7233084440231323,
+   "ref_cloudrift_us": 4.512146183344871,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-raster-gm8",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1280,256) x (256,512)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.9559632813164947,
+   "tcompile_us": 3.460697351245705,
+   "emmy_us": 3.4080001059919596,
+   "emmy_muestras": [
+    3.4080001059919596
+   ],
+   "greedy_us": 5.294972565025091,
+   "ref_cloudrift_us": 4.975598062103118,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "SI",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-splitk-atomic",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,512) x (512,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.9141442652830145,
+   "tcompile_us": 4.878680423362968,
+   "emmy_us": 8.614253252744675,
+   "emmy_muestras": [
+    8.614253252744675
+   ],
+   "greedy_us": 1.7400413053110242,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "SI",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-splitk-atomic-f16acc-tma-rolled",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(32,1024) x (1024,256)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.596936383145921,
+   "tcompile_us": 5.471318960189819,
+   "emmy_us": 4.836068022996187,
+   "emmy_muestras": [
+    4.836068022996187
+   ],
+   "greedy_us": 2.301957458257675,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "SI",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-splitk-deferred",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,512) x (512,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.7567058801651,
+   "tcompile_us": 3.2807528972625732,
+   "emmy_us": 26.40259452164173,
+   "emmy_muestras": [
+    26.40259452164173
+   ],
+   "greedy_us": 2.1178352180868387,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "SI",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-trans-b-staged-cp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.482201302611588,
+   "tcompile_us": 1.287087298079625,
+   "emmy_us": 4.177361726760864,
+   "emmy_muestras": [
+    4.177361726760864
+   ],
+   "greedy_us": 1.0982013773173094,
+   "ref_cloudrift_us": 6.074926838642213,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-trans-b-staged-tma",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.4833987148758632,
+   "tcompile_us": 1.2865882683423608,
+   "emmy_us": 4.637849051505327,
+   "emmy_muestras": [
+    4.637849051505327
+   ],
+   "greedy_us": 1.089568599127233,
+   "ref_cloudrift_us": 5.791441992271778,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-scalar-register-tile",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(512,512) x (512,512)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.63866659750541,
+   "tcompile_us": 3.5043333967526755,
+   "emmy_us": 107.84000158309937,
+   "emmy_muestras": [
+    108.51199924945831,
+    107.84000158309937,
+    107.9431101679802
+   ],
+   "greedy_us": 8.124000392854214,
+   "ref_cloudrift_us": 97.23520278930664,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-batched-mk-greedy",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(16,{'sym': 'seq_len', 'hint': 512},{'sym': 'seq_len', 'hint': 512}) x (16,{'sym': 'seq_len', 'hint': 512},128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 12.316631643395676,
+   "tcompile_us": 8.31831599536695,
+   "emmy_us": 34.62522849440575,
+   "emmy_muestras": [
+    34.62522849440575
+   ],
+   "greedy_us": 353.39733958244324,
+   "ref_cloudrift_us": 38.30522986558768,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-computed-a-k-warp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+softmax",
+    "shape": "(16,{'sym': 'seq_len', 'hint': 512},{'sym': 'seq_len', 'hint': 512}) x (16,{'sym': 'seq_len', 'hint': 512},128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 22.52800017595291,
+   "tcompile_us": 13.791999779641628,
+   "emmy_us": 31.547583639621735,
+   "emmy_muestras": [
+    31.547583639621735
+   ],
+   "greedy_us": 4599.743843078613,
+   "ref_cloudrift_us": 33.37813218434651,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-demoted-n-greedy",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear+elementwise",
+    "shape": "({'sym': 'seq_len', 'hint': 512},128) x ({'sym': 'seq_len', 'hint': 512},128) x ({'sym': 'seq_len', 'hint': 512},128) x ({'sym': 'seq_len', 'hint': 512},128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.944000229239464,
+   "tcompile_us": 3.3599999733269215,
+   "emmy_us": 19.308364018797874,
+   "emmy_muestras": [
+    19.308364018797874
+   ],
+   "greedy_us": 117.7159994840622,
+   "ref_cloudrift_us": 22.593454881147903,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "NO",
+    "pipelining": "NO",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-demoted-pv-greedy",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+softmax",
+    "shape": "(16,{'sym': 'seq_len', 'hint': 512},{'sym': 'seq_len', 'hint': 512}) x (16,{'sym': 'seq_len', 'hint': 512},128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": false,
+   "error": "emmy run falló: el schedule fijado por el caso ya no se realiza con este compilador (unreproducible pin; emmy no lo mide): k_matmul_softmax_reduce_60ce07: unreproducible pin: WORK=w2x2 realized t128; TILE=mma_m16n8k16_f16_f32/f4x8/k8 realized (unset) (refused: atom mma_m16n8k16_f16_f32 is not offered here (offered: none)) — row NOT benched",
+   "eager_us": null,
+   "tcompile_us": null,
+   "emmy_us": null,
+   "emmy_muestras": [],
+   "greedy_us": null,
+   "ref_cloudrift_us": 84.25333102544148,
+   "segundos": 0.0,
+   "tecnicas": {},
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-k-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(64,{'sym': 'seq_len', 'hint': 512}) x ({'sym': 'seq_len', 'hint': 512},128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.7299047935576666,
+   "tcompile_us": 2.820952307610285,
+   "emmy_us": 10.690986178815365,
+   "emmy_muestras": [
+    10.690986178815365
+   ],
+   "greedy_us": 3.5258980933576822,
+   "ref_cloudrift_us": 12.74379476522788,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-k-trans",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(64,{'sym': 'seq_len', 'hint': 512}) x (32,{'sym': 'seq_len', 'hint': 512})",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.831999957561493,
+   "tcompile_us": 2.075199969112873,
+   "emmy_us": 16.171520575881004,
+   "emmy_muestras": [
+    16.171520575881004,
+    16.252445057034492,
+    16.258245334029198
+   ],
+   "greedy_us": 46.77920043468475,
+   "ref_cloudrift_us": 13.858222299151949,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-m-residual-cp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "({'sym': 'seq_len', 'hint': 512},512) x (512,1024) x ({'sym': 'seq_len', 'hint': 512},1024)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.8567113346523705,
+   "tcompile_us": 5.62666654586792,
+   "emmy_us": 6.432905327528715,
+   "emmy_muestras": [
+    6.432905327528715
+   ],
+   "greedy_us": 7.049955427646637,
+   "ref_cloudrift_us": 7.623816719491973,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-m-tma",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "({'sym': 'seq_len', 'hint': 512},512) x (512,1024)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.654654275591128,
+   "tcompile_us": 4.6549531343941375,
+   "emmy_us": 5.34208957105875,
+   "emmy_muestras": [
+    5.34208957105875
+   ],
+   "greedy_us": 5.5084857158362865,
+   "ref_cloudrift_us": 6.2784809100476995,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-mn-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "({'sym': 'seq_len', 'hint': 512},128) x (128,{'sym': 'seq_len', 'hint': 512})",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.739199995994568,
+   "tcompile_us": 2.764800004661083,
+   "emmy_us": 4.289836157113314,
+   "emmy_muestras": [
+    4.289836157113314
+   ],
+   "greedy_us": 210.60481667518616,
+   "ref_cloudrift_us": 5.161948154627351,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-warp-band-p1-tma-d1-m128",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,256) x (256,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.020532225334593,
+   "tcompile_us": 1.8801717287481088,
+   "emmy_us": 4.02722368016839,
+   "emmy_muestras": [
+    4.02722368016839
+   ],
+   "greedy_us": 1.4485149877145886,
+   "ref_cloudrift_us": 4.473399153739348,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "SI",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-warp-band-p1-tma-d2-m100",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(100,256) x (256,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.000709325809197,
+   "tcompile_us": 2.1730049196722474,
+   "emmy_us": 2.6050994638353586,
+   "emmy_muestras": [
+    2.6050994638353586
+   ],
+   "greedy_us": 1.3399015879258513,
+   "ref_cloudrift_us": 2.9079765952818577,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "SI",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-warp-band-p1-tma-d2-m128",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,256) x (256,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.016450737563657,
+   "tcompile_us": 1.8860469681556236,
+   "emmy_us": 2.6202616281807423,
+   "emmy_muestras": [
+    2.6202616281807423
+   ],
+   "greedy_us": 1.458629034459591,
+   "ref_cloudrift_us": 2.946366925211348,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "SI",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-warp-band-p2-tma-d2-m128",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,256) x (256,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.0165303464752533,
+   "tcompile_us": 1.8812818092535872,
+   "emmy_us": 2.6516190264374018,
+   "emmy_muestras": [
+    2.6516190264374018
+   ],
+   "greedy_us": 1.446011010557413,
+   "ref_cloudrift_us": 2.9317647218704224,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "SI",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-warp-gmem-direct",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.5273399085494945,
+   "tcompile_us": 1.339564327359593,
+   "emmy_us": 2.1841356065124273,
+   "emmy_muestras": [
+    2.1841356065124273
+   ],
+   "greedy_us": 1.1410164879634976,
+   "ref_cloudrift_us": 3.4193655540203225,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-warp-splitk",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(64,4096) x (4096,512)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.852121295350971,
+   "tcompile_us": 5.837090990760109,
+   "emmy_us": 53.101468831300735,
+   "emmy_muestras": [
+    53.101468831300735
+   ],
+   "greedy_us": 10.85381768643856,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "NO",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "SI",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-warp-symbolic-m-cp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "({'sym': 'seq_len', 'hint': 512},512) x (512,1024)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.649631028036469,
+   "tcompile_us": 4.63844647685301,
+   "emmy_us": 5.24159986525774,
+   "emmy_muestras": [
+    5.24159986525774
+   ],
+   "greedy_us": 5.563029553741217,
+   "ref_cloudrift_us": 6.195521954470461,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-epilogue-bias",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,64,64) x (64,64) x (64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.281600060001496,
+   "tcompile_us": 2.9749678027245308,
+   "emmy_us": 1.7123677534982562,
+   "emmy_muestras": [
+    1.7123677534982562
+   ],
+   "greedy_us": 3.1153548043221235,
+   "ref_cloudrift_us": 2.098621816194358,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-epilogue-relu",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.094388416345171,
+   "tcompile_us": 2.214676184619931,
+   "emmy_us": 1.707803225144744,
+   "emmy_muestras": [
+    1.707803225144744
+   ],
+   "greedy_us": 2.914302283897996,
+   "ref_cloudrift_us": 1.9038779134968764,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-epilogue-residual",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,64,64) x (64,64) x (1,64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.098270785424017,
+   "tcompile_us": 2.2996644819936445,
+   "emmy_us": 1.7261503962799907,
+   "emmy_muestras": [
+    1.7261503962799907
+   ],
+   "greedy_us": 3.1289805192500353,
+   "ref_cloudrift_us": 2.2020087893313773,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-epilogue-scale",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,64,64) x (64,64) x (1)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.241126943641985,
+   "tcompile_us": 3.016788774812725,
+   "emmy_us": 1.7302721971645951,
+   "emmy_muestras": [
+    1.7302721971645951
+   ],
+   "greedy_us": 3.386366181075573,
+   "ref_cloudrift_us": 2.0921681107593186,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-mixed-dtype-slabs",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(64,128) x (128,96)",
+    "dtype": "f16/f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.924774873943229,
+   "tcompile_us": 2.4464083591680876,
+   "emmy_us": 2.1802368573844433,
+   "emmy_muestras": [
+    2.1802368573844433
+   ],
+   "greedy_us": 1.3383036712184548,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-reduce-coop",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.1594519745813656,
+   "tcompile_us": 2.177972703763883,
+   "emmy_us": 3.2296532299369574,
+   "emmy_muestras": [
+    3.2296532299369574
+   ],
+   "greedy_us": 2.9148494359105825,
+   "ref_cloudrift_us": 4.576733899772714,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "NO",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-reduce-coop-ilp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.16011603327765,
+   "tcompile_us": 2.1836522264757017,
+   "emmy_us": 3.2343503553420305,
+   "emmy_muestras": [
+    3.2343503553420305
+   ],
+   "greedy_us": 2.920579630881548,
+   "ref_cloudrift_us": 3.65878395981841,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "NO",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-reduce-ilp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.155338035213004,
+   "tcompile_us": 2.183136751325868,
+   "emmy_us": 1.794079435057938,
+   "emmy_muestras": [
+    1.794079435057938
+   ],
+   "greedy_us": 2.914302283897996,
+   "ref_cloudrift_us": 4.06713461389347,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-bm8-outside-hints",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(2048,2048) x (2048,2048)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 184.27999317646027,
+   "tcompile_us": 175.76800286769867,
+   "emmy_us": 1363.1680011749268,
+   "emmy_muestras": [
+    1363.1680011749268
+   ],
+   "greedy_us": 238.50399255752563,
+   "ref_cloudrift_us": 1596.4800119400024,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "NO",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-composite-fm4-fn4",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(2048,2048) x (2048,2048)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 184.12800133228302,
+   "tcompile_us": 175.75199902057648,
+   "emmy_us": 348.54400157928467,
+   "emmy_muestras": [
+    348.54400157928467
+   ],
+   "greedy_us": 238.00000548362732,
+   "ref_cloudrift_us": 530.4960012435913,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-composite-fn4",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(2048,2048) x (2048,2048)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 184.10399556159973,
+   "tcompile_us": 176.28000676631927,
+   "emmy_us": 777.2799730300903,
+   "emmy_muestras": [
+    777.2799730300903
+   ],
+   "greedy_us": 238.50399255752563,
+   "ref_cloudrift_us": 1271.232008934021,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-masked-m-fm26",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(2048,2048) x (2048,2048)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 184.32000279426575,
+   "tcompile_us": 175.76000094413757,
+   "emmy_us": 410.2559983730316,
+   "emmy_muestras": [
+    410.2559983730316
+   ],
+   "greedy_us": 237.99200356006622,
+   "ref_cloudrift_us": 659.8079800605774,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-masked-n-fn26",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(512,512) x (512,512)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 7.2632888952891035,
+   "tcompile_us": 5.396622088220385,
+   "emmy_us": 300.1173436641693,
+   "emmy_muestras": [
+    300.82133412361145,
+    300.1706600189209,
+    300.1173436641693
+   ],
+   "greedy_us": 8.984177373349667,
+   "ref_cloudrift_us": 75.39446078813992,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-masked-n-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(64,64) x (64,47)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.6229370357273343,
+   "tcompile_us": 1.5769510210810842,
+   "emmy_us": 4.306942690163851,
+   "emmy_muestras": [
+    4.306942690163851,
+    4.31122537702322,
+    4.3241349048912525
+   ],
+   "greedy_us": 2.7327551506459713,
+   "ref_cloudrift_us": 2.838818187063391,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-staging-d1-128x128x128",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.9957647271016064,
+   "tcompile_us": 2.621646970510483,
+   "emmy_us": 6.227297708392143,
+   "emmy_muestras": [
+    6.232565734535456,
+    6.23771408572793,
+    6.227297708392143
+   ],
+   "greedy_us": 9.872941300272942,
+   "ref_cloudrift_us": 3.285544540229017,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-staging-d1-64x64x64",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.1641519899609722,
+   "tcompile_us": 2.18065818653831,
+   "emmy_us": 1.3158346991986036,
+   "emmy_muestras": [
+    1.3158346991986036
+   ],
+   "greedy_us": 2.9138228856027126,
+   "ref_cloudrift_us": 1.2648314124277789,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-staging-d2-128x128x128",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.0125714354700857,
+   "tcompile_us": 2.6107012451469123,
+   "emmy_us": 6.341284606605768,
+   "emmy_muestras": [
+    6.341284606605768,
+    6.347000133246183,
+    6.360969971865416
+   ],
+   "greedy_us": 9.836052544414997,
+   "ref_cloudrift_us": 3.0576687283311155,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-staging-d2-64x64x64",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.159314181123461,
+   "tcompile_us": 2.181714347430638,
+   "emmy_us": 1.3125090626999736,
+   "emmy_muestras": [
+    1.3125090626999736
+   ],
+   "greedy_us": 2.9083427507430315,
+   "ref_cloudrift_us": 1.3773683021808492,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-staging-gmem-128x128x128",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.016648663056863,
+   "tcompile_us": 2.6058377446355045,
+   "emmy_us": 13.457270339131355,
+   "emmy_muestras": [
+    13.460129499435425,
+    13.460644520819187,
+    13.457270339131355
+   ],
+   "greedy_us": 9.819676168262959,
+   "ref_cloudrift_us": 3.240519529813296,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-staging-gmem-64x64x64",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.148154925930408,
+   "tcompile_us": 2.1797208360923355,
+   "emmy_us": 2.7191208209842443,
+   "emmy_muestras": [
+    2.7199999894946814,
+    2.7202037163078785,
+    2.7191208209842443
+   ],
+   "greedy_us": 2.917953534051776,
+   "ref_cloudrift_us": 2.001378722563535,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-tma-staged",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(2048,2048) x (2048,2048)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 184.66399610042572,
+   "tcompile_us": 175.75199902057648,
+   "emmy_us": 348.62932562828064,
+   "emmy_muestras": [
+    348.62932562828064
+   ],
+   "greedy_us": 238.00000548362732,
+   "ref_cloudrift_us": 426.1760115623474,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-tile-per-cell",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.14903700793231,
+   "tcompile_us": 2.1869036886427136,
+   "emmy_us": 1.7687375657260418,
+   "emmy_muestras": [
+    1.7687375657260418
+   ],
+   "greedy_us": 2.9098668601363897,
+   "ref_cloudrift_us": 1.907786226454582,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "NO",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-tile-reg-2d",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.1564306754332323,
+   "tcompile_us": 2.180184538547809,
+   "emmy_us": 2.8656984213739634,
+   "emmy_muestras": [
+    2.8656984213739634
+   ],
+   "greedy_us": 3.062400035560131,
+   "ref_cloudrift_us": 3.105093233333611,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-tile-reg-fn3",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.1512483654406247,
+   "tcompile_us": 2.18716783811582,
+   "emmy_us": 3.5232179798185825,
+   "emmy_muestras": [
+    3.5232179798185825
+   ],
+   "greedy_us": 3.062550211325288,
+   "ref_cloudrift_us": 3.945486112074418,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-tile-reg-inner-fn4",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.1652450561523438,
+   "tcompile_us": 2.185748310278583,
+   "emmy_us": 2.8683976270258427,
+   "emmy_muestras": [
+    2.8683976270258427
+   ],
+   "greedy_us": 2.9134834185242653,
+   "ref_cloudrift_us": 3.1378113623685056,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-tile-single-cta",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.158724610356317,
+   "tcompile_us": 2.184115890143574,
+   "emmy_us": 2.8547656256705523,
+   "emmy_muestras": [
+    2.8547656256705523
+   ],
+   "greedy_us": 2.920579630881548,
+   "ref_cloudrift_us": 2.8779711091209217,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/fp4-tma-w4a4-linear-ring",
+   "categorias": [
+    "matmul",
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "linear+index_map+reshape+elementwise+gather",
+    "shape": "(24,2048)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 279.24730466759723,
+   "tcompile_us": 53.10469606648321,
+   "emmy_us": 4.121813457459211,
+   "emmy_muestras": [
+    4.121813457459211
+   ],
+   "greedy_us": 18.16347800195217,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/fp4-tma-w4a4-split-k",
+   "categorias": [
+    "matmul",
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "linear+index_map+reshape+elementwise+gather",
+    "shape": "(24,2048)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 32.133119106292725,
+   "tcompile_us": 5.495679974555969,
+   "emmy_us": 2.842952497303486,
+   "emmy_muestras": [
+    2.842952497303486
+   ],
+   "greedy_us": 17.728639766573906,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "SI",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/imap-reshape-a-cp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+reshape",
+    "shape": "(128,256) x (128,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.5663391166079828,
+   "tcompile_us": 1.3350311241347896,
+   "emmy_us": 5.566967651247978,
+   "emmy_muestras": [
+    5.774967838078737,
+    5.566967651247978,
+    5.586175713688135
+   ],
+   "greedy_us": 1.160636660642922,
+   "ref_cloudrift_us": 1.754263582883275,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/imap-reshape-a-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+reshape",
+    "shape": "(128,256) x (128,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.5744348259075829,
+   "tcompile_us": 1.3382608961799871,
+   "emmy_us": 5.410601384937763,
+   "emmy_muestras": [
+    5.410601384937763
+   ],
+   "greedy_us": 1.166260801255703,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/imap-reshape-b-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+reshape",
+    "shape": "(64,128) x (256,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.6913027118105408,
+   "tcompile_us": 1.356036701333632,
+   "emmy_us": 5.014700815081596,
+   "emmy_muestras": [
+    5.014700815081596
+   ],
+   "greedy_us": 5.764697212725878,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/imap-slice-a-cp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+slice",
+    "shape": "(128,256) x (128,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.6673966493020511,
+   "tcompile_us": 1.3187933068035702,
+   "emmy_us": 2.606011927127838,
+   "emmy_muestras": [
+    2.6267527136951685,
+    2.607477130368352,
+    2.606011927127838
+   ],
+   "greedy_us": 1.153251389041543,
+   "ref_cloudrift_us": 1.8456087781054509,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/imap-slice-a-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+slice",
+    "shape": "(128,256) x (128,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.6679783125181455,
+   "tcompile_us": 1.3189189337395333,
+   "emmy_us": 5.436631850898266,
+   "emmy_muestras": [
+    5.436631850898266,
+    5.549411755055189,
+    5.482758395373821
+   ],
+   "greedy_us": 1.1490595061331987,
+   "ref_cloudrift_us": 2.0573031042040006,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "NO",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/imap-slice-a-tma",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+slice",
+    "shape": "(128,256) x (128,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.6678400337696075,
+   "tcompile_us": 1.3228799402713776,
+   "emmy_us": 1.832411508075893,
+   "emmy_muestras": [
+    1.832411508075893
+   ],
+   "greedy_us": 1.1548800393939018,
+   "ref_cloudrift_us": 2.103039967386346,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "NO",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/imap-transpose-a-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+transpose",
+    "shape": "(256,128) x (256,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.2644998971372843,
+   "tcompile_us": 2.2134999744594097,
+   "emmy_us": 11.666849255561829,
+   "emmy_muestras": [
+    11.962462216615677,
+    11.666849255561829,
+    11.989633552730083
+   ],
+   "greedy_us": 11.897499673068523,
+   "ref_cloudrift_us": 7.784250192344189,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "NO",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/mma-fp4-encode-epilogue",
+   "categorias": [
+    "matmul",
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+matmul",
+    "shape": "(128,256) x (256,128)",
+    "dtype": "bf16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 41.64038883166367,
+   "tcompile_us": 4.842546995212969,
+   "emmy_us": 1.7901395913213491,
+   "emmy_muestras": [
+    1.7901395913213491
+   ],
+   "greedy_us": 1.4135130913928151,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/mma-fp4-packed-block-scales",
+   "categorias": [
+    "matmul",
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+matmul",
+    "shape": "(16,32) x (32,128) x (16,8)",
+    "dtype": "f16/f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 92.1482557661078,
+   "tcompile_us": 2.3706667778784767,
+   "emmy_us": 2.0843411330133677,
+   "emmy_muestras": [
+    2.0843411330133677
+   ],
+   "greedy_us": 1.4329288387671113,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/nvfp4-runtime-rows",
+   "categorias": [
+    "matmul",
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+gather+reshape+linear",
+    "shape": "({'sym': 'num_tokens', 'hint': 40},512)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 31.28748975889513,
+   "tcompile_us": 5.467326007085793,
+   "emmy_us": 2.30526109226048,
+   "emmy_muestras": [
+    2.30526109226048
+   ],
+   "greedy_us": 2.376509364694357,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/nvfp4-unit-n",
+   "categorias": [
+    "matmul",
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+gather+reshape+linear",
+    "shape": "(1,512)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 26.66011973969614,
+   "tcompile_us": 3.8040923600149625,
+   "emmy_us": 4.425729624927044,
+   "emmy_muestras": [
+    4.425729624927044
+   ],
+   "greedy_us": 1.3911023270338774,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/nvfp4-w4a4-packed-slab-loopify",
+   "categorias": [
+    "matmul",
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+gather+reshape+linear",
+    "shape": "(128,512)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 188.45893115532107,
+   "tcompile_us": 41.58204939307236,
+   "emmy_us": 3.1270477920770645,
+   "emmy_muestras": [
+    3.1270477920770645
+   ],
+   "greedy_us": 21.775608882308006,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "attention/rmsnorm-qk-sdpa-composed-cut",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm+sdpa",
+    "shape": "(1,2,8,16) x (1,2,8,16) x (1,2,8,16) x (16) x (16)",
+    "dtype": "f16",
+    "family": "attention"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.987942218780518,
+   "tcompile_us": 4.736231720965842,
+   "emmy_us": 3.491137409582734,
+   "emmy_muestras": [
+    3.491137409582734
+   ],
+   "greedy_us": 3.172869561240077,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "attention/rmsnorm-qk-sdpa-output-axis",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm+sdpa",
+    "shape": "(1,2,8,16) x (1,2,8,16) x (1,2,8,16) x (16) x (16)",
+    "dtype": "f16",
+    "family": "attention"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.973731403920188,
+   "tcompile_us": 4.725492712277085,
+   "emmy_us": 1.92497787065804,
+   "emmy_muestras": [
+    1.92497787065804
+   ],
+   "greedy_us": 3.2372537534683943,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "attention/rmsnorm-qk-sdpa-stat-b-cut",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm+sdpa",
+    "shape": "(1,2,8,16) x (1,2,8,16) x (1,2,8,16) x (16) x (16)",
+    "dtype": "f16",
+    "family": "attention"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.9678504400164165,
+   "tcompile_us": 4.7306167745144565,
+   "emmy_us": 4.209937062114477,
+   "emmy_muestras": [
+    4.209937062114477
+   ],
+   "greedy_us": 3.1925232615321875,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "attention/rmsnorm-qk-sdpa-stat-cut",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm+sdpa",
+    "shape": "(1,2,8,16) x (1,2,8,16) x (1,2,8,16) x (16) x (16)",
+    "dtype": "f16",
+    "family": "attention"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.964328031070897,
+   "tcompile_us": 4.721573630317312,
+   "emmy_us": 3.5097794607281685,
+   "emmy_muestras": [
+    3.5097794607281685
+   ],
+   "greedy_us": 3.169573610648513,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/norm-linear-f16-scalar-reduce",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm+linear",
+    "shape": "(1,32,128) x (128) x (512,128)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.9626455832654095,
+   "tcompile_us": 2.2140471484717423,
+   "emmy_us": 106.83733224868774,
+   "emmy_muestras": [
+    106.83733224868774,
+    106.83733224868774,
+    106.85155540704727
+   ],
+   "greedy_us": 2.238236367702484,
+   "ref_cloudrift_us": 80.04266520341237,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/norm-linear-f16-warp-masked-m",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm+linear",
+    "shape": "(1,32,128) x (128) x (512,128)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.9576827739847116,
+   "tcompile_us": 2.2199172398139693,
+   "emmy_us": 6.429824978113174,
+   "emmy_muestras": [
+    6.429824978113174
+   ],
+   "greedy_us": 2.214620588347316,
+   "ref_cloudrift_us": 11.583255473957506,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/norm-weight-linear-f16-computed-b",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "linear+rms_norm",
+    "shape": "(64,128) x (64,128) x (128)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.3279999413273553,
+   "tcompile_us": 2.277818254449151,
+   "emmy_us": 78.8213312625885,
+   "emmy_muestras": [
+    78.8213312625885
+   ],
+   "greedy_us": 90.82473069429398,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-knorm-s128",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,8,128,128) x (128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.7195130171983137,
+   "tcompile_us": 1.211408687674481,
+   "emmy_us": 1.3491612626239657,
+   "emmy_muestras": [
+    1.3491612626239657
+   ],
+   "greedy_us": 1.3339826837182045,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-knorm-s32",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,8,32,128) x (128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.6425774436615501,
+   "tcompile_us": 1.0456903584332646,
+   "emmy_us": 1.22920167632401,
+   "emmy_muestras": [
+    1.22920167632401
+   ],
+   "greedy_us": 1.2407698668539524,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-knorm-s512",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,8,512,128) x (128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.2850525488978937,
+   "tcompile_us": 1.5941052452514046,
+   "emmy_us": 2.710143569856882,
+   "emmy_muestras": [
+    2.710143569856882
+   ],
+   "greedy_us": 2.7191578410565853,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-layer-s128",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,128,1024) x (1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.119309708551707,
+   "tcompile_us": 1.5299898113696102,
+   "emmy_us": 1.4532499480992556,
+   "emmy_muestras": [
+    1.4532499480992556
+   ],
+   "greedy_us": 1.4637158019468188,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-layer-s32",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,32,1024) x (1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.8577506839323188,
+   "tcompile_us": 1.0533738643565076,
+   "emmy_us": 1.1646351777017117,
+   "emmy_muestras": [
+    1.1646351777017117
+   ],
+   "greedy_us": 1.169215771369636,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-layer-s512",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,512,1024) x (1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.539174581961657,
+   "tcompile_us": 1.865650768633242,
+   "emmy_us": 1.883580000139773,
+   "emmy_muestras": [
+    1.883580000139773
+   ],
+   "greedy_us": 1.8832591595128179,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-qnorm-s128",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,16,128,128) x (128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.3762124829587683,
+   "tcompile_us": 1.3608496009776023,
+   "emmy_us": 1.7921808175742626,
+   "emmy_muestras": [
+    1.7921808175742626
+   ],
+   "greedy_us": 1.7925662687048316,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-qnorm-s32",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,16,32,128) x (128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.6530950309178016,
+   "tcompile_us": 1.0652960845212032,
+   "emmy_us": 1.2422353029251099,
+   "emmy_muestras": [
+    1.2422353029251099
+   ],
+   "greedy_us": 1.2449609348550439,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-qnorm-s512",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,16,512,128) x (128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.198297771156257,
+   "tcompile_us": 2.4576453452414655,
+   "emmy_us": 4.634576383978128,
+   "emmy_muestras": [
+    4.634576383978128
+   ],
+   "greedy_us": 4.616170190274715,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "reduce/fused-add-rms-norm",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "elementwise+rms_norm",
+    "shape": "(8,256) x (8,256) x (256)",
+    "dtype": "f32",
+    "family": "reduce"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.339845563209108,
+   "tcompile_us": 0.9146781054689137,
+   "emmy_us": 1.0521600488573313,
+   "emmy_muestras": [
+    1.0521600488573313
+   ],
+   "greedy_us": 1.0706953471526504,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "reduce/fused-add-rms-norm-escaping-residual",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "elementwise+rms_norm",
+    "shape": "(8,256) x (8,256) x (256)",
+    "dtype": "f32",
+    "family": "reduce"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.3379026232538997,
+   "tcompile_us": 0.9094918901855881,
+   "emmy_us": 1.0660226689651608,
+   "emmy_muestras": [
+    1.0660226689651608
+   ],
+   "greedy_us": 1.0719135170802474,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "reduce/rms-norm-cut-sweep-work",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(512,4096)",
+    "dtype": "f32",
+    "family": "reduce"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.137530617091967,
+   "tcompile_us": 4.596869323564612,
+   "emmy_us": 358.12267661094666,
+   "emmy_muestras": [
+    358.12267661094666
+   ],
+   "greedy_us": 4.911582451313734,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "reduce/rms-norm-packed-cells",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(2048,128)",
+    "dtype": "f16",
+    "family": "reduce"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.324732396524277,
+   "tcompile_us": 1.2616713841756184,
+   "emmy_us": 1.433457829989493,
+   "emmy_muestras": [
+    1.433457829989493
+   ],
+   "greedy_us": 1.959661953151226,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/fp4-tma-w4a4-two-channel-p2",
+   "categorias": [
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+gather+reshape+linear",
+    "shape": "(24,2048)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 64.61389441239207,
+   "tcompile_us": 10.58189492476614,
+   "emmy_us": 5.145806353539228,
+   "emmy_muestras": [
+    5.145806353539228
+   ],
+   "greedy_us": 24.40505288541317,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/nvfp4-gate-up-requant-full-projection-cut",
+   "categorias": [
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "linear+elementwise+reduce+reshape+index_map+gather",
+    "shape": "(128,512)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 171.97866859675952,
+   "tcompile_us": 12.393682430952023,
+   "emmy_us": 497.5839853286743,
+   "emmy_muestras": [
+    497.5839853286743
+   ],
+   "greedy_us": 61.13399937748909,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/nvfp4-gate-up-requant-place-cut",
+   "categorias": [
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "linear+elementwise+reduce+reshape+index_map+gather",
+    "shape": "(128,512)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 171.97952270507812,
+   "tcompile_us": 12.382647521059278,
+   "emmy_us": 646.7199921607971,
+   "emmy_muestras": [
+    646.7199921607971
+   ],
+   "greedy_us": 61.37600168585777,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/nvfp4-quantize-cut-shared-normalizer",
+   "categorias": [
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+mean+reduce+reshape",
+    "shape": "(32,128)",
+    "dtype": "f32",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 127.12270043762436,
+   "tcompile_us": 3.0987657135747178,
+   "emmy_us": 38.47507759928703,
+   "emmy_muestras": [
+    38.47507759928703
+   ],
+   "greedy_us": 36.837927997112274,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/nvfp4-w4a16-sibling-cut-async",
+   "categorias": [
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+linear+reshape+gather",
+    "shape": "(48,256)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 38.9689101448542,
+   "tcompile_us": 6.321822917914089,
+   "emmy_us": 12.772693298757076,
+   "emmy_muestras": [
+    12.772693298757076
+   ],
+   "greedy_us": 7.073855027556419,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/nvfp4-w4a16-sibling-cut-tma-p2",
+   "categorias": [
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+linear+reshape+gather",
+    "shape": "(48,256)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 38.95576545475844,
+   "tcompile_us": 6.312035658968938,
+   "emmy_us": 13.600450940430164,
+   "emmy_muestras": [
+    13.600450940430164
+   ],
+   "greedy_us": 7.063188590109348,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/gated-mlp-s128",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,128,1024) x (1024,3072) x (1024,3072)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 31.808000057935715,
+   "tcompile_us": 29.055999591946602,
+   "emmy_us": 438.81601095199585,
+   "emmy_muestras": [
+    438.81601095199585
+   ],
+   "greedy_us": 7323.328018188477,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/gated-mlp-s32",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,32,1024) x (1024,3072) x (1024,3072)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 28.28799933195114,
+   "tcompile_us": 22.911999374628067,
+   "emmy_us": 117.12399870157242,
+   "emmy_muestras": [
+    117.12399870157242
+   ],
+   "greedy_us": 1842.8159952163696,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/gated-mlp-s512",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,512,1024) x (1024,3072) x (1024,3072)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 104.35199737548828,
+   "tcompile_us": 92.67199784517288,
+   "emmy_us": 1736.1279726028442,
+   "emmy_muestras": [
+    1736.1279726028442
+   ],
+   "greedy_us": 28864.160537719727,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-add-downproj-s128",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,128,3072) x (3072,1024) x (1,128,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 13.254767250416526,
+   "tcompile_us": 13.208430300476731,
+   "emmy_us": 38.11895474791527,
+   "emmy_muestras": [
+    38.11895474791527
+   ],
+   "greedy_us": 19.720960408449173,
+   "ref_cloudrift_us": 44.56145384094932,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-add-downproj-s32",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,32,3072) x (3072,1024) x (1,32,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 13.887999579310417,
+   "tcompile_us": 14.015999622642994,
+   "emmy_us": 33.61257165670395,
+   "emmy_muestras": [
+    33.61257165670395
+   ],
+   "greedy_us": 903.551995754242,
+   "ref_cloudrift_us": 39.57376003265381,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-add-downproj-s512",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,512,3072) x (3072,1024) x (1,512,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 38.44800094763438,
+   "tcompile_us": 38.26666623353958,
+   "emmy_us": 133.69600474834442,
+   "emmy_muestras": [
+    133.69600474834442
+   ],
+   "greedy_us": 82.23466575145721,
+   "ref_cloudrift_us": 153.71732910474142,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-add-oproj-s128",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,128,2048) x (2048,1024) x (1,128,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 10.995058452381807,
+   "tcompile_us": 10.938823223114014,
+   "emmy_us": 25.12444369494915,
+   "emmy_muestras": [
+    25.12444369494915
+   ],
+   "greedy_us": 13.999543152749538,
+   "ref_cloudrift_us": 30.06060556931929,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-add-oproj-s32",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,32,2048) x (2048,1024) x (1,32,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 10.367999784648418,
+   "tcompile_us": 9.584000334143639,
+   "emmy_us": 22.733474150300026,
+   "emmy_muestras": [
+    22.733474150300026
+   ],
+   "greedy_us": 598.1919765472412,
+   "ref_cloudrift_us": 26.935351861489785,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-add-oproj-s512",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,512,2048) x (2048,1024) x (1,512,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 26.519111461109585,
+   "tcompile_us": 26.543999711672466,
+   "emmy_us": 89.35272693634033,
+   "emmy_muestras": [
+    89.35272693634033
+   ],
+   "greedy_us": 56.18666857481003,
+   "ref_cloudrift_us": 102.91199684143066,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-kvproj-s128",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,128,1024) x (1024,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 13.138051216418926,
+   "tcompile_us": 10.092717714798756,
+   "emmy_us": 13.681835494935513,
+   "emmy_muestras": [
+    13.681835494935513
+   ],
+   "greedy_us": 11.784205213189125,
+   "ref_cloudrift_us": 15.688126995449975,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-kvproj-s32",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,32,1024) x (1024,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 7.370666911204656,
+   "tcompile_us": 6.677333265542984,
+   "emmy_us": 11.99441310018301,
+   "emmy_muestras": [
+    11.99441310018301
+   ],
+   "greedy_us": 296.9493269920349,
+   "ref_cloudrift_us": 13.773333695199755,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-kvproj-s512",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,512,1024) x (1024,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 13.990400731563568,
+   "tcompile_us": 13.628800213336945,
+   "emmy_us": 45.65440118312836,
+   "emmy_muestras": [
+    45.65440118312836
+   ],
+   "greedy_us": 23.49199913442135,
+   "ref_cloudrift_us": 52.618105160562614,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-qproj-s128",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,128,1024) x (1024,2048)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 13.05600041050022,
+   "tcompile_us": 13.06250842951112,
+   "emmy_us": 27.589818462729454,
+   "emmy_muestras": [
+    27.589818462729454
+   ],
+   "greedy_us": 15.058441087603569,
+   "ref_cloudrift_us": 31.247999519109726,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-qproj-s32",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,32,1024) x (1024,2048)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 8.42295651850493,
+   "tcompile_us": 8.400347569714421,
+   "emmy_us": 12.333850376307964,
+   "emmy_muestras": [
+    12.333850376307964
+   ],
+   "greedy_us": 8.054261095821857,
+   "ref_cloudrift_us": 14.20342837061201,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-qproj-s512",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,512,1024) x (1024,2048)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 25.742769241333008,
+   "tcompile_us": 25.543384827100315,
+   "emmy_us": 55.64047023653984,
+   "emmy_muestras": [
+    55.64047023653984
+   ],
+   "greedy_us": 38.89846429228783,
+   "ref_cloudrift_us": 62.238000333309174,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/sdpa-s128",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "sdpa",
+    "shape": "(1,16,128,128) x (1,8,128,128) x (1,8,128,128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 27.583999559283257,
+   "tcompile_us": 25.05600079894066,
+   "emmy_us": 1441.6639804840088,
+   "emmy_muestras": [
+    1441.6639804840088
+   ],
+   "greedy_us": 9176.608085632324,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/sdpa-s32",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "sdpa",
+    "shape": "(1,16,32,128) x (1,8,32,128) x (1,8,32,128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 18.783999606966972,
+   "tcompile_us": 18.239999189972878,
+   "emmy_us": 95.94560414552689,
+   "emmy_muestras": [
+    95.94560414552689
+   ],
+   "greedy_us": 581.4399719238281,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/sdpa-s512",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "sdpa",
+    "shape": "(1,16,512,128) x (1,8,512,128) x (1,8,512,128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 89.37600255012512,
+   "tcompile_us": 86.36800199747086,
+   "emmy_us": 18452.12745666504,
+   "emmy_muestras": [
+    18452.12745666504
+   ],
+   "greedy_us": 143489.7003173828,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "",
+   "tune_s": 0.0
+  }
+ ]
+}

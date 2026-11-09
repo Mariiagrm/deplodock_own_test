@@ -1,0 +1,85 @@
+====================================================================================================
+CASO matmul/f32-epilogue-scale
+  Categorías : matmul
+  Qué es     : matmul+elementwise · dtype f32 · entradas (1,64,64) x (64,64) x (1)
+  Fichero    : tests/compiler/realization/cases/matmul/f32-epilogue-scale.json  (fila fijada: k_matmul_52fa39)
+====================================================================================================
+
+TIEMPOS (µs; 100 iteraciones tras 10 de calentamiento, captura en CUDA graph)
+  PyTorch eager ............................      4.24
+  torch.compile ............................      3.02   (1.41x vs eager)
+  emmy, schedule fijado (CloudRift) ........      1.73   (2.45x vs eager)  ← lo que mide la suite
+  emmy, greedy (emmy elige sin ayuda) ......      3.39   (1.25x vs eager)
+  Referencia CloudRift RTX 5090 (emmy) .....      2.09   → aquí tardamos 0.83× su tiempo  (dentro de la banda del 5%)
+  Corrección frente a eager: torch.compile=pass, Emmy=pass
+
+SCHEDULE (parámetros que deciden las optimizaciones; ver tfm_pruebas/README.md)
+  fijado  [k_matmul_52fa39] WORK=t16x16  TILE=f2x2  STAGE=d2/smem-tma  REDUCE=  RASTER=
+  greedy  [k_matmul_52fa39] WORK=t128  TILE=  STAGE=  REDUCE=coop  RASTER=
+  interruptores: FAST_MATH=False, FAST_EXP=False, F16_MMA_F32_ACC=False, FP8_MMA=False, PLACE=fuse
+  fusión: las operaciones matmul+elementwise van en UN solo kernel (sin ida y vuelta a memoria global entre ellas)
+
+NCU (Nsight Compute) — emmy perfila el programa GREEDY, no el schedule fijado:
+  greedy [k_matmul_52fa39] ocupación 77% · SM 18% · Tensor 0% · FMA 4% · DRAM 0% · conflictos smem ld/st 55/0 · 18 regs/hilo · 5.79 µs
+
+----------------------------------------------------------------------------------------------------
+KERNEL k_matmul_52fa39  ·  1.73 µs  ·  smem 16.0 KB  ·  __launch_bounds__(256)
+  ncu: el greedy eligió otro schedule, así que sus métricas (arriba) no describen este kernel
+
+  1. INTENSIDAD ARITMÉTICA Y CÓMPUTO
+    [SI ] Factorización de bucles
+          Qué se ha hecho : Bloque 32×32 → 16×16 hilos (256) → cada hilo 2×2 celdas en registros (núcleos CUDA, FMA escalar).
+          Evidencia       : WORK='t16x16' | TILE=f2x2 | __launch_bounds__(256)
+          Qué supone      : Alinea cada nivel del bucle con un nivel del hardware (bloque → warp → hilo → registro → átomo de Tensor Core), de modo que cada nivel reutiliza lo que el nivel superior trajo a una memoria más rápida.
+    [SI ] Register tiling
+          Qué se ha hecho : Sub-rejilla 2×2 por hilo: 2+2 cargas alimentan 4 productos → 1.00 FMA por valor cargado (sin tiling: 0.50).
+          Evidencia       : TILE=f2x2
+          Qué supone      : Cada hilo/warp calcula una sub-rejilla FM×FN como producto exterior en registros: con FM+FN cargas hace FM·FN productos, así que el kernel pasa de estar limitado por cargas (load-bound) a estar limitado por FMA/MMA.
+    [NO ] Cargas vectorizadas e intercalado
+          Qué se ha hecho : Sin LDG/STG vectorizados por hilo: además las cargas global→smem van por TMA (2 copias de baldosa entera), así que el ancho de la transacción ya lo da el hardware de copia.
+          Evidencia       : reglas vectorize_*/interleave_loads: sin cambios en este kernel
+    [NO ] Tensor Cores (mma.sync + ldmatrix)
+          Qué se ha hecho : Camino escalar: FMA en núcleos CUDA, sin mma.sync.
+          Evidencia       : TILE='f2x2'
+
+  2. FLUJO DE DATOS Y SOLAPAMIENTO ASÍNCRONO
+    [SI ] Almacenamiento por fases en smem
+          Qué se ha hecho : Baldosas cargadas cooperativamente en smem: _a_smem[2048] float (8.0 KB), _b_smem[2048] float (8.0 KB); total 16.0 KB (el lanzamiento reserva 16.0 KB).
+          Evidencia       : STAGE=d2/smem-tma
+          Qué supone      : El bloque carga una vez cada baldosa BK en memoria compartida y todos sus hilos la reutilizan: el tráfico a global baja en un factor ~BM (para B) y ~BN (para A).
+    [SI ] Transferencias asíncronas (cp.async / TMA)
+          Qué se ha hecho : TMA: 2 copias de baldosa 2D/3D global→smem emitidas por un solo hilo, sin pasar por registros; sincronizadas con 3 operaciones mbarrier (arrive_expect_tx / try_wait.parity).
+          Evidencia       : STAGE=d2/smem-tma | descriptores CUtensorMap como argumentos del kernel
+          Qué supone      : La copia global→smem no pasa por los registros de los hilos: con cp.async cada hilo emite la copia y sigue; con TMA un solo hilo pide una baldosa 2D/3D completa al motor de copia y una mbarrier avisa cuando llegan los bytes. Libera registros e instrucciones para el cálculo.
+    [SI ] Software pipelining / doble búfer
+          Qué se ha hecho : anillo de 2 etapas global→smem: prólogo carga 1 baldosa(s) por adelantado y el bucle principal calcula la baldosa k mientras llega la k+1.
+          Evidencia       : STAGE=d2/smem-tma
+          Qué supone      : Con varias baldosas en vuelo (prólogo, bucle principal y epílogo), la latencia de memoria de la baldosa siguiente queda oculta tras el cálculo de la actual. d<n> = etapas global→smem; p<n> = ping-pong smem→registros.
+    [N/A] Especialización de warps
+          Qué se ha hecho : Camino escalar: no aplica.
+
+  3. ELIMINACIÓN DE CONFLICTOS DE BANCO
+    [NO ] Padding y swizzling
+          Qué se ha hecho : Baldosas en smem sin relleno ni swizzle detectables: posibles accesos serializados (con --ncu se ve el número real de conflictos).
+
+  4. PLANIFICACIÓN DE LA REJILLA
+    [NO ] CTA swizzle (rasterizado agrupado)
+          Qué se ha hecho : Orden plano por filas (N más rápido).
+          Evidencia       : RASTER vacío
+    [NO ] Split-K
+          Qué se ha hecho : Toda la reducción en K la hace un mismo bloque.
+          Evidencia       : REDUCE=''
+
+  5. EXTRA (EN LA SUITE, FUERA DE LA LISTA)
+    [N/A] Reducción cooperativa (shuffle / árbol)
+          Qué se ha hecho : Sin reducción cooperativa entre hilos.
+    [SI ] Programmatic Dependent Launch
+          Qué se ha hecho : Programmatic Dependent Launch (griddepcontrol.wait): el kernel puede lanzarse mientras termina el anterior y solo espera justo antes de leer sus datos, lo que oculta latencia de lanzamiento.
+          Evidencia       : 1 griddepcontrol en el cuerpo
+          Qué supone      : griddepcontrol permite solapar el arranque de un kernel con el final del anterior: importa en kernels de pocos µs, donde el lanzamiento pesa.
+
+----------------------------------------------------------------------------------------------------
+REGLAS DE LA BAJADA A KERNEL (pasada 09_lowering_kernel del compilador)
+  cambiaron el kernel : 010_materialize, 030_stamp_types
+  sin efecto          : 050_vectorize_loads, 080_vectorize_stores, 085_fast_exp, 090_guard_reductions, 095_interleave_loads, 096_pair_ldmatrix_loads, 100_loopify
+  Volcado completo (IR de cada pasada + CUDA): casos/matmul__f32-epilogue-scale/dump/
