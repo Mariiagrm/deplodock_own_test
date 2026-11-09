@@ -1,0 +1,16 @@
+{
+ "fecha": "2026-11-08T20:17:08",
+ "gpu": "NVIDIA GeForce RTX 5090",
+ "sm": "sm_120",
+ "driver": "610.43.02",
+ "git": "6764d63a 2026-11-08",
+ "torch": "2.15.0+cu132",
+ "host": "d15d65db1daa",
+ "cats": [
+  "matmul",
+  "rmsnorm/fused",
+  "nvfp4",
+  "qwen3emb"
+ ],
+ "ncu": false
+}

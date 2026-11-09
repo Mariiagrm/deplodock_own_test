@@ -1,0 +1,22 @@
+services:
+  app:
+    container_name: cutlass-gemm
+    build:
+      context: .
+      dockerfile: dockerfile
+    shm_size: 16gb
+    # ncu (Nsight Compute) necesita los contadores de la GPU; con el driver en modo
+    # "solo admin" hace falta SYS_ADMIN y ejecutar ncu como root dentro del contenedor.
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - .:/workspace/
+    deploy:
+          resources:
+            reservations:
+              devices:
+                - driver: nvidia
+                  count: all
+                  capabilities: [gpu]
+#docker exec -it cutlass-gemm bash
+#docker build -t cutlass-gemm -f dockerfile .

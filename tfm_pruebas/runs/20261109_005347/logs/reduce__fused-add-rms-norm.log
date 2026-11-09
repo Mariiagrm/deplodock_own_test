@@ -1,0 +1,76 @@
+====================================================================================================
+CASO reduce/fused-add-rms-norm
+  Categorías : rmsnorm/fused
+  Qué es     : elementwise+rms_norm · dtype f32 · entradas (8,256) x (8,256) x (256)
+  Fichero    : tests/compiler/realization/cases/reduce/fused-add-rms-norm.json  (fila fijada: k_rms_norm_a74d3b)
+====================================================================================================
+
+TIEMPOS (µs; 100 iteraciones tras 10 de calentamiento, captura en CUDA graph)
+  PyTorch eager ............................      2.33
+  torch.compile ............................      0.92   (2.53x vs eager)
+  emmy, schedule fijado (CloudRift) ........      0.95   (2.45x vs eager)  ← lo que mide la suite
+  emmy, greedy (emmy elige sin ayuda) ......      0.91   (2.57x vs eager)  ← tras --tune (24/24 variantes medidas, la mejor 0.80 µs; 25s)
+  Referencia CloudRift RTX 5090 ............ (el caso no tiene latencia guardada para esta GPU)
+  Corrección frente a eager: torch.compile=pass, Emmy=pass
+
+SCHEDULE (parámetros que deciden las optimizaciones; ver tfm_pruebas/README.md)
+  fijado  [k_rms_norm_ad534e] WORK=t128  REDUCE=coop  RASTER=
+  greedy  [k_rms_norm_ad534e] WORK=t32  REDUCE=coop/v2  RASTER=
+  interruptores: FAST_MATH=False, FAST_EXP=False, F16_MMA_F32_ACC=False, FP8_MMA=False, PLACE=fuse
+  fusión: las operaciones elementwise+rms_norm van en UN solo kernel (sin ida y vuelta a memoria global entre ellas)
+
+----------------------------------------------------------------------------------------------------
+KERNEL k_rms_norm_ad534e  ·  0.95 µs  ·  smem 0.0 KB  ·  __launch_bounds__(128)
+
+  1. INTENSIDAD ARITMÉTICA Y CÓMPUTO
+    [N/A] Factorización de bucles
+          Qué se ha hecho : Kernel sin contracción en baldosas (p. ej. RMSNorm/elementwise): jerarquía bloque → 128 hilos que cooperan, sin nivel de registro ni Tensor Core.
+          Evidencia       : WORK=t128 | TILE vacío
+    [N/A] Register tiling
+          Qué se ha hecho : Sin contracción: no hay producto exterior que reutilizar en registros.
+    [SI ] Cargas vectorizadas e intercalado
+          Qué se ha hecho : regla interleave_loads: cargas recolocadas junto a su primer uso.
+          Evidencia       : regla disparada: 095_interleave_loads
+          Qué supone      : Una transacción de 64/128 bits (LDG.64/LDG.128) sustituye 2-4 cargas escalares: menos instrucciones de memoria y mejor uso de cada sector de 32 B. Colocar cada carga junto a su primer uso acorta la vida de los registros y mejora la planificación.
+    [NO ] Tensor Cores (mma.sync + ldmatrix)
+          Qué se ha hecho : Camino escalar: FMA en núcleos CUDA, sin mma.sync.
+          Evidencia       : TILE=''
+
+  2. FLUJO DE DATOS Y SOLAPAMIENTO ASÍNCRONO
+    [NO ] Almacenamiento por fases en smem
+          Qué se ha hecho : Sin staging en memoria compartida: operandos directos de global a registros; la smem que hay (acc0_smem[4]) es espacio de trabajo de la reducción entre warps, no staging de operandos.
+          Evidencia       : STAGE=''
+    [N/A] Transferencias asíncronas (cp.async / TMA)
+          Qué se ha hecho : Sin copias asíncronas (no hay staging en smem).
+          Evidencia       : STAGE=''
+    [N/A] Software pipelining / doble búfer
+          Qué se ha hecho : Sin staging en smem: no hay baldosas en vuelo que solapar.
+          Evidencia       : STAGE=''
+    [N/A] Especialización de warps
+          Qué se ha hecho : Camino escalar: no aplica.
+
+  3. ELIMINACIÓN DE CONFLICTOS DE BANCO
+    [N/A] Padding y swizzling
+          Qué se ha hecho : Solo smem de trabajo para la reducción (pocos elementos, un acceso por warp): no hay baldosas de operandos que proteger.
+
+  4. PLANIFICACIÓN DE LA REJILLA
+    [N/A] CTA swizzle (rasterizado agrupado)
+          Qué se ha hecho : Rejilla 1-D sin baldosas 2-D: el orden de los bloques no cambia la reutilización.
+    [N/A] Split-K
+          Qué se ha hecho : Sin contracción en baldosas.
+
+  5. EXTRA (EN LA SUITE, FUERA DE LA LISTA)
+    [SI ] Reducción cooperativa (shuffle / árbol)
+          Qué se ha hecho : reducción cooperativa: 128 hilos se reparten el eje reducido y combinan con mariposa __shfl_xor_sync (7 shuffles) y árbol en smem entre warps.
+          Evidencia       : REDUCE='coop' | WORK='t128'
+          Qué supone      : Para reducciones como RMSNorm: varios hilos se reparten la fila y combinan con __shfl_xor_sync (dentro del warp) y un árbol en smem (entre warps), en vez de un hilo por fila.
+    [SI ] Programmatic Dependent Launch
+          Qué se ha hecho : Programmatic Dependent Launch (griddepcontrol.wait): el kernel puede lanzarse mientras termina el anterior y solo espera justo antes de leer sus datos, lo que oculta latencia de lanzamiento.
+          Evidencia       : 1 griddepcontrol en el cuerpo
+          Qué supone      : griddepcontrol permite solapar el arranque de un kernel con el final del anterior: importa en kernels de pocos µs, donde el lanzamiento pesa.
+
+----------------------------------------------------------------------------------------------------
+REGLAS DE LA BAJADA A KERNEL (pasada 09_lowering_kernel del compilador)
+  cambiaron el kernel : 010_materialize, 030_stamp_types, 047_reuse_lane_loads, 095_interleave_loads
+  sin efecto          : 050_vectorize_loads, 080_vectorize_stores, 085_fast_exp, 090_guard_reductions, 096_pair_ldmatrix_loads, 100_loopify
+  Volcado completo (IR de cada pasada + CUDA): casos/reduce__fused-add-rms-norm/dump/
