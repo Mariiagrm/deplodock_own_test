@@ -1,0 +1,13 @@
+
+Backend        Latency (us)  vs Eager
+-------------------------------------
+Eager PyTorch            33     1.00x
+Emmy                     24     1.38x
+
+knobs (greedy pick); golden / ab rows are red where they differ from the greedy pick:
+Kernel                          us       %  grid  block   smem  regs  local B  occ   WORK  TILE  REDUCE        STAGE  LOOPIFY  RASTER  SHARED_CARRY
+k_matmul_bd3b61               24.0  100.0%   128    128  96.0K    87        0   8%  t16x8  f4x8          d3/smem-tma        0                     0
+greedy (isolated)             24.3      --   128    128  96.0K    87        0   8%  t16x8  f4x8          d3/smem-tma        0                     0
+golden k_matmul_bd3b61 [std]  46.2      --   128    512  64.0K    48        0  33%  t64x8  f1x8          d1/smem-tma        0                     0
+TOTAL                         24.0
+A/B record → tfm_pruebas/verif/3_fp32/qwen3emb__matmul-kvproj-s512_tf32override0.json

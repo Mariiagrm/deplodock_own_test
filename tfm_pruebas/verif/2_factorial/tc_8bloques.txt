@@ -1,0 +1,10 @@
+
+Backend  Latency (us)
+---------------------
+Emmy                2
+
+knobs (greedy pick); golden / ab rows are red where they differ from the greedy pick:
+Kernel            us       %  grid  block   smem  regs  local B  occ  WORK                          TILE  REDUCE          STAGE  LOOPIFY  RASTER  SHARED_CARRY
+k_matmul_38922c  1.5  100.0%     8    128  24.0K    50        0  33%  w2x2  mma_m16n8k16_f16_f32/f2x2/k8          d2/smem-async        0                     0
+TOTAL            1.5
+A/B record → tfm_pruebas/verif/2_factorial/tc_8bloques.json

@@ -1,0 +1,26 @@
+{
+  "k_matmul_bd3b61": {
+    "dram__throughput.avg.pct_of_peak_sustained_elapsed": 9.94,
+    "gpu__time_duration.sum": 36160.0,
+    "l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_ld.sum": 0.0,
+    "l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_st.sum": 0.0,
+    "launch__registers_per_thread": 87.0,
+    "sm__pipe_fma_cycles_active.avg.pct_of_peak_sustained_active": 52.46,
+    "sm__pipe_tensor_cycles_active.avg.pct_of_peak_sustained_active": 0.0,
+    "sm__throughput.avg.pct_of_peak_sustained_elapsed": 38.69,
+    "sm__warps_active.avg.pct_of_peak_sustained_active": 8.34,
+    "smsp__inst_executed_pipe_lsu.sum": 1582080.0
+  },
+  "void cutlass::Kernel2<cutlass_80_simt_sgemm_128x64_8x5_nn_align1>(T1::Params)": {
+    "dram__throughput.avg.pct_of_peak_sustained_elapsed": 7.55,
+    "gpu__time_duration.sum": 47552.0,
+    "l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_ld.sum": 4032.0,
+    "l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_st.sum": 2362.0,
+    "launch__registers_per_thread": 128.0,
+    "sm__pipe_fma_cycles_active.avg.pct_of_peak_sustained_active": 34.36,
+    "sm__pipe_tensor_cycles_active.avg.pct_of_peak_sustained_active": 0.0,
+    "sm__throughput.avg.pct_of_peak_sustained_elapsed": 37.37,
+    "sm__warps_active.avg.pct_of_peak_sustained_active": 18.3,
+    "smsp__inst_executed_pipe_lsu.sum": 2454400.0
+  }
+}

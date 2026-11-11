@@ -1,0 +1,86 @@
+====================================================================================================
+CASO matmul/bf16-mma-trans-b-masked-n-tma
+  Categorías : matmul
+  Qué es     : linear · dtype bf16 · entradas (128,128) x (72,128)
+  Fichero    : tests/compiler/realization/cases/matmul/bf16-mma-trans-b-masked-n-tma.json  (fila fijada: k_linear_masked_n)
+====================================================================================================
+
+TIEMPOS (µs; 100 iteraciones tras 10 de calentamiento, captura en CUDA graph)
+  PyTorch eager ............................      1.56
+  torch.compile ............................      1.56   (1.00x vs eager)
+  emmy, schedule fijado (CloudRift) ........      4.11   (0.38x vs eager)  ← lo que mide la suite
+  emmy, greedy (emmy elige sin ayuda) ......      0.96   (1.61x vs eager)
+  Referencia CloudRift RTX 5090 ............ (el caso no tiene latencia guardada para esta GPU)
+  Corrección frente a eager: torch.compile=pass, Emmy=pass
+
+SCHEDULE (parámetros que deciden las optimizaciones; ver tfm_pruebas/README.md)
+  fijado  [k_linear_04b358] WORK=w2x2  TILE=mma_m16n8k16_bf16_f32/f4x4/k2  STAGE=d2/smem-tma  REDUCE=  RASTER=
+  greedy  [k_linear_04b358] WORK=w1x2  TILE=mma_m16n8k16_bf16_f32/f1x1/k8  STAGE=d2/smem-async  REDUCE=  RASTER=
+  interruptores: FAST_MATH=False, FAST_EXP=False, F16_MMA_F32_ACC=False, FP8_MMA=False, PLACE=fuse
+  NOTA: el schedule fijado es 4.3× más lento que el greedy. Los casos del corpus fijan a propósito un schedule
+        para cubrir un camino concreto del compilador (caso de cobertura), no el más rápido: para rendimiento mira la columna greedy.
+
+----------------------------------------------------------------------------------------------------
+KERNEL k_linear_04b358  ·  4.11 µs  ·  smem 24.0 KB  ·  __launch_bounds__(128)
+
+  1. INTENSIDAD ARITMÉTICA Y CÓMPUTO
+    [SI ] Factorización de bucles
+          Qué se ha hecho : Bloque 128×64 (BK=32) → 2×2 warps (128 hilos) → cada warp 4×4 átomos de 16×8×16 → cada hilo 64 acumuladores f32 en registros → átomo Tensor Core m16n8k16.
+          Evidencia       : WORK=w2x2 | TILE=mma_m16n8k16_bf16_f32/f4x4/k2
+          Qué supone      : Alinea cada nivel del bucle con un nivel del hardware (bloque → warp → hilo → registro → átomo de Tensor Core), de modo que cada nivel reutiliza lo que el nivel superior trajo a una memoria más rápida.
+    [SI ] Register tiling
+          Qué se ha hecho : Sub-rejilla 4×4 por warp: 4+4 cargas alimentan 16 productos → 2.00 MMA por fragmento cargado (sin tiling: 0.50).
+          Evidencia       : TILE=mma_m16n8k16_bf16_f32/f4x4/k2 | 16 llamadas MMA en el cuerpo del kernel
+          Qué supone      : Cada hilo/warp calcula una sub-rejilla FM×FN como producto exterior en registros: con FM+FN cargas hace FM·FN productos, así que el kernel pasa de estar limitado por cargas (load-bound) a estar limitado por FMA/MMA.
+    [NO ] Cargas vectorizadas e intercalado
+          Qué se ha hecho : Sin LDG/STG vectorizados por hilo: además las cargas global→smem van por TMA (4 copias de baldosa entera); 6 ldmatrix.x4 (4 matrices 8×8 de smem a registros por instrucción), así que el ancho de la transacción ya lo da el hardware de copia.
+          Evidencia       : reglas vectorize_*/interleave_loads: sin cambios en este kernel
+    [SI ] Tensor Cores (mma.sync + ldmatrix)
+          Qué se ha hecho : mma.sync m16n8k16 (bf16 → acumulador f32) emitida como PTX: 16 instrucciones MMA por iteración desenrollada; operandos a registros con 6 ldmatrix.
+          Evidencia       : átomo mma_m16n8k16_bf16_f32
+          Qué supone      : La instrucción mma.sync hace un bloque 16×8×16 por warp (4096 FMA) en un solo paso; ldmatrix lleva los fragmentos de smem a registros en la disposición que espera la MMA. En una RTX 5090 la potencia en fp16 con Tensor Cores es un orden de magnitud mayor que con núcleos CUDA.
+
+  2. FLUJO DE DATOS Y SOLAPAMIENTO ASÍNCRONO
+    [SI ] Almacenamiento por fases en smem
+          Qué se ha hecho : Baldosas cargadas cooperativamente en smem: _a_smem[8192] __nv_bfloat16 (16.0 KB), _b_smem[4096] __nv_bfloat16 (8.0 KB); total 24.0 KB (el lanzamiento reserva 24.0 KB). Cada elemento de A se reutiliza en 64 columnas y cada uno de B en 128 filas del bloque, en vez de leerlo de global cada vez.
+          Evidencia       : STAGE=d2/smem-tma
+          Qué supone      : El bloque carga una vez cada baldosa BK en memoria compartida y todos sus hilos la reutilizan: el tráfico a global baja en un factor ~BM (para B) y ~BN (para A).
+    [SI ] Transferencias asíncronas (cp.async / TMA)
+          Qué se ha hecho : TMA: 4 copias de baldosa 2D global→smem emitidas por un solo hilo, sin pasar por registros; sincronizadas con 5 operaciones mbarrier (arrive_expect_tx / try_wait.parity).
+          Evidencia       : STAGE=d2/smem-tma | descriptores CUtensorMap como argumentos del kernel
+          Qué supone      : La copia global→smem no pasa por los registros de los hilos: con cp.async cada hilo emite la copia y sigue; con TMA un solo hilo pide una baldosa 2D/3D completa al motor de copia y una mbarrier avisa cuando llegan los bytes. Libera registros e instrucciones para el cálculo.
+    [SI ] Software pipelining / doble búfer
+          Qué se ha hecho : anillo de 2 etapas global→smem: prólogo carga 1 baldosa(s) por adelantado y el bucle principal calcula la baldosa k mientras llega la k+1.
+          Evidencia       : STAGE=d2/smem-tma
+          Qué supone      : Con varias baldosas en vuelo (prólogo, bucle principal y epílogo), la latencia de memoria de la baldosa siguiente queda oculta tras el cálculo de la actual. d<n> = etapas global→smem; p<n> = ping-pong smem→registros.
+    [NO ] Especialización de warps
+          Qué se ha hecho : Todos los warps hacen carga y cálculo (pipeline uniforme SIMT).
+          Evidencia       : WORK=w2x2
+
+  3. ELIMINACIÓN DE CONFLICTOS DE BANCO
+    [SI ] Padding y swizzling
+          Qué se ha hecho : swizzle XOR de direcciones (B64) en las lecturas ldmatrix, el mismo patrón con el que el TMA escribe la baldosa.
+          Evidencia       : 12 llamadas emmy_swizzle_* en el cuerpo
+          Qué supone      : La smem tiene 32 bancos de 4 B; si varios hilos de un warp tocan el mismo banco, el acceso se serializa. El relleno (+1/+8 elementos por fila) o el swizzle XOR (modos B32/B64/B128 del TMA) reparten las direcciones entre bancos distintos.
+
+  4. PLANIFICACIÓN DE LA REJILLA
+    [NO ] CTA swizzle (rasterizado agrupado)
+          Qué se ha hecho : Orden plano por filas (N más rápido).
+          Evidencia       : RASTER vacío
+    [NO ] Split-K
+          Qué se ha hecho : Toda la reducción en K la hace un mismo bloque.
+          Evidencia       : REDUCE=''
+
+  5. EXTRA (EN LA SUITE, FUERA DE LA LISTA)
+    [N/A] Reducción cooperativa (shuffle / árbol)
+          Qué se ha hecho : Sin reducción cooperativa entre hilos.
+    [SI ] Programmatic Dependent Launch
+          Qué se ha hecho : Programmatic Dependent Launch (griddepcontrol.wait): el kernel puede lanzarse mientras termina el anterior y solo espera justo antes de leer sus datos, lo que oculta latencia de lanzamiento.
+          Evidencia       : 1 griddepcontrol en el cuerpo
+          Qué supone      : griddepcontrol permite solapar el arranque de un kernel con el final del anterior: importa en kernels de pocos µs, donde el lanzamiento pesa.
+
+----------------------------------------------------------------------------------------------------
+REGLAS DE LA BAJADA A KERNEL (pasada 09_lowering_kernel del compilador)
+  cambiaron el kernel : 010_materialize, 096_pair_ldmatrix_loads
+  sin efecto          : 050_vectorize_loads, 080_vectorize_stores, 085_fast_exp, 090_guard_reductions, 095_interleave_loads, 100_loopify
+  Volcado completo (IR de cada pasada + CUDA): casos/matmul__bf16-mma-trans-b-masked-n-tma/dump/

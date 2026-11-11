@@ -1,0 +1,11 @@
+
+Backend        Latency (us)  vs Eager
+-------------------------------------
+Eager PyTorch             6     1.00x
+Emmy                     24     0.27x
+
+knobs (greedy pick); golden / ab rows are red where they differ from the greedy pick:
+Kernel             us       %   grid  block  smem  regs  local B   occ  WORK  TILE  REDUCE  STAGE  LOOPIFY  RASTER  SHARED_CARRY
+k_linear_76198c  24.1  100.0%  32768    128  0.0K    28        0  100%  t128          coop               0                     0
+TOTAL            24.1
+A/B record → tfm_pruebas/verif/4_prior/code_2.json

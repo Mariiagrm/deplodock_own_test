@@ -1,0 +1,63 @@
+{
+  "cold_cache": false,
+  "input": "torch.nn.functional.linear(torch.randn(512,1024),torch.randn(1024,1024))",
+  "golden": null,
+  "dynamic": [],
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "warmup": 10,
+  "iters": 100,
+  "backends": {
+    "Eager PyTorch": {
+      "latency_us": 13.744941529105692,
+      "captured": true,
+      "timing_semantics": "captured_whole_forward",
+      "speedup_vs_eager": 1.0
+    },
+    "Emmy": {
+      "latency_us": 55.56517466902733,
+      "captured": true,
+      "timing_semantics": "captured_whole_forward",
+      "correctness": {
+        "status": "pass",
+        "reference": "eager",
+        "tolerance": "scaled"
+      },
+      "speedup_vs_eager": 0.24736611755433355
+    }
+  },
+  "greedy": {
+    "status": "ok",
+    "lane": "fm",
+    "total_us": 55.56517466902733,
+    "timing_semantics": "single_launch",
+    "captured": true,
+    "num_launches": 1,
+    "kernels": [
+      {
+        "kernel": "k_linear_bce2e3",
+        "us": 55.56517466902733,
+        "smem_bytes": 65552,
+        "knobs": {
+          "WORK": "t16x8",
+          "TILE": "f4x8",
+          "REDUCE": "",
+          "STAGE": "d2/smem-tma",
+          "LOOPIFY": "0",
+          "RASTER": "",
+          "SHARED_CARRY": "0"
+        },
+        "record_knobs": {
+          "WORK": "t16x8",
+          "TILE": "f4x8",
+          "REDUCE": "",
+          "STAGE": "d2/smem-tma",
+          "LOOPIFY": "0",
+          "RASTER": "",
+          "SHARED_CARRY": "0"
+        },
+        "source_sha256": "2e921e7d7c4bef2d59daecf6ea17e64d612b0fc7a8860992ceef9ddf43d74b03"
+      }
+    ]
+  },
+  "pinned": []
+}

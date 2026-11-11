@@ -1,0 +1,83 @@
+{
+  "cold_cache": false,
+  "input": "torch.matmul(torch.randn(128,1024),torch.randn(1024,1024))",
+  "golden": null,
+  "dynamic": [],
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "warmup": 10,
+  "iters": 100,
+  "backends": {
+    "Eager PyTorch": {
+      "latency_us": 13.034126426600203,
+      "captured": true,
+      "timing_semantics": "captured_whole_forward",
+      "speedup_vs_eager": 1.0
+    },
+    "Emmy": {
+      "latency_us": 8.220689371228218,
+      "captured": true,
+      "timing_semantics": "captured_whole_forward",
+      "correctness": {
+        "status": "pass",
+        "reference": "eager",
+        "tolerance": "scaled"
+      },
+      "speedup_vs_eager": 1.5855271788055445
+    }
+  },
+  "greedy": {
+    "status": "ok",
+    "lane": "fm",
+    "total_us": 8.220689371228218,
+    "timing_semantics": "whole_program_e2e",
+    "captured": true,
+    "num_launches": 2,
+    "kernels": [
+      {
+        "kernel": "k_matmul_970260__partial",
+        "us": 7.596000097692013,
+        "smem_bytes": 65552,
+        "knobs": {
+          "WORK": "t16x8",
+          "TILE": "f4x8",
+          "REDUCE": "",
+          "STAGE": "d2/smem-tma",
+          "LOOPIFY": "0",
+          "RASTER": "",
+          "SHARED_CARRY": "0"
+        },
+        "record_knobs": {
+          "WORK": "t16x8",
+          "TILE": "f4x8",
+          "REDUCE": "",
+          "STAGE": "d2/smem-tma",
+          "LOOPIFY": "0",
+          "RASTER": "",
+          "SHARED_CARRY": "0"
+        },
+        "source_sha256": "b5272ce40cc4137ec38cbad29456f1d2134bc4284b19bed8dfa80f3b71890c57"
+      },
+      {
+        "kernel": "k_matmul_970260",
+        "us": 0.9929451625794172,
+        "smem_bytes": 0,
+        "knobs": {
+          "WORK": "",
+          "REDUCE": "",
+          "LOOPIFY": "0",
+          "RASTER": "",
+          "SHARED_CARRY": "0"
+        },
+        "record_knobs": {
+          "WORK": "",
+          "REDUCE": "",
+          "LOOPIFY": "0",
+          "RASTER": "",
+          "SHARED_CARRY": "0"
+        },
+        "source_sha256": "53eb140334227e9fd5c6fcc1eac981973407cb7ed924531adfc6d5da3ba94c3e"
+      }
+    ]
+  },
+  "pinned": []
+}

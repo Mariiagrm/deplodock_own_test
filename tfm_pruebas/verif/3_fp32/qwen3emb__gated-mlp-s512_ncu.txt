@@ -1,0 +1,27 @@
+
+Backend        Latency (us)  vs Eager
+-------------------------------------
+Eager PyTorch           146     1.00x
+Emmy                    121     1.20x
+
+knobs (greedy pick); golden / ab rows are red where they differ from the greedy pick:
+Kernel                                   us       %   grid  block   smem  regs  local B   occ   WORK   TILE  REDUCE    STAGE  LOOPIFY  RASTER  SHARED_CARRY
+k_matmul_reduce_17f7d4                121.3  100.0%    168    256  86.5K   187        0   17%  t32x8  f4x10          d2/smem        0                     0
+greedy (isolated)                     121.8      --    168    256  86.5K   187        0   17%  t32x8  f4x10          d2/smem        0                     0
+golden k_matmul_reduce_64a7c8 [std]  1737.3      --  49152    256   2.0K    40        0  100%   t256         coop-t                 0                     0
+TOTAL                                 121.3
+A/B record → tfm_pruebas/verif/3_fp32/qwen3emb__gated-mlp-s512_ncu.json
+
+================================================================================
+ncu --csv (curated hardware metrics)
+================================================================================
+
+ncu compare — emmy kernels vs the torch/cuBLAS reference (same counters, one table):
+side  kernel                                                        dur (ns)  occ%   sm%  dram%  fma%  tensor%   lsu.inst  ld.cnflct  st.cnflct  regs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+dep   k_matmul_reduce_17f7d4                                         196,320  16.7  48.9    7.9  49.8        0  7,218,048          0    162,505   187
+ref   void cutlass::Kernel2<cutlass_80_simt_sgemm_256x128_8x4_n...   208,352  16.5  47.5    8.0  49.9        0  9,295,992          0          0   210
+ref   void at::vectorized_elementwise_kernel<4, at::BinaryFunct...    11,840  49.8   2.1   60.5   0.7        0     43,008          0          0    40
+ref   void at::vectorized_elementwise_kernel<4, at::<unnamed>::...     8,000  50.0  12.5   45.0   8.9        0     30,720          0          0    36
+ncu metrics → tfm_pruebas/verif/3_fp32/ncu_qwen3emb__gated-mlp-s512/61_ncu_metrics.csv
+ncu metrics → tfm_pruebas/verif/3_fp32/ncu_qwen3emb__gated-mlp-s512/61_ncu_metrics.json

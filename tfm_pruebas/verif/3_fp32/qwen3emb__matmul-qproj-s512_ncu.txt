@@ -1,0 +1,25 @@
+
+Backend        Latency (us)  vs Eager
+-------------------------------------
+Eager PyTorch            45     1.00x
+Emmy                     39     1.14x
+
+knobs (greedy pick); golden / ab rows are red where they differ from the greedy pick:
+Kernel                          us       %  grid  block   smem  regs  local B  occ   WORK   TILE  REDUCE        STAGE  LOOPIFY  RASTER  SHARED_CARRY
+k_matmul_92786f               39.4  100.0%   128    256  96.0K    89        0  17%  t32x8   f4x8          d2/smem-tma        0                     0
+greedy (isolated)             39.3      --   128    256  96.0K    89        0  17%  t32x8   f4x8          d2/smem-tma        0                     0
+golden k_matmul_92786f [std]  55.5      --   160    256  88.0K    86        0  17%  t32x8  f2x14          d1/smem-tma        0                     0
+TOTAL                         39.4
+A/B record → tfm_pruebas/verif/3_fp32/qwen3emb__matmul-qproj-s512_ncu.json
+
+================================================================================
+ncu --csv (curated hardware metrics)
+================================================================================
+
+ncu compare — emmy kernels vs the torch/cuBLAS reference (same counters, one table):
+side  kernel                                                        dur (ns)  occ%   sm%  dram%  fma%  tensor%   lsu.inst  ld.cnflct  st.cnflct  regs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+dep   k_matmul_92786f                                                 57,536  16.6  49.7   10.4  67.7        0  3,159,296          0          0    89
+ref   void cutlass::Kernel2<cutlass_80_simt_sgemm_128x64_8x5_nn...    65,376  22.3  56.9    9.1  54.1        0  4,538,022     24,064     15,204   128
+ncu metrics → tfm_pruebas/verif/3_fp32/ncu_qwen3emb__matmul-qproj-s512/61_ncu_metrics.csv
+ncu metrics → tfm_pruebas/verif/3_fp32/ncu_qwen3emb__matmul-qproj-s512/61_ncu_metrics.json

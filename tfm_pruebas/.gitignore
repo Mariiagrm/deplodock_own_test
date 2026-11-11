@@ -11,3 +11,9 @@ runs/20261109_005132/
 # Caché de Inductor (binarios y PTX de las ~39 variantes de su autotuning, ~73 MB); su elección
 # está copiada en porque/<caso>/inductor/best_config.json y el código final en torch_compile_debug/.
 porque/*/inductor/cache/
+# verif/: se suben los resultados (txt/json) y las métricas ncu; no los volcados ni la base de datos
+verif/*/dump_*/
+verif/4_prior/dataset*
+verif/3_fp32/ncu_*/*
+!verif/3_fp32/ncu_*/61_ncu_metrics.csv
+!verif/3_fp32/ncu_*/61_ncu_metrics.json

@@ -1,0 +1,25 @@
+
+Backend        Latency (us)  vs Eager
+-------------------------------------
+Eager PyTorch            33     1.00x
+Emmy                     24     1.38x
+
+knobs (greedy pick); golden / ab rows are red where they differ from the greedy pick:
+Kernel                          us       %  grid  block   smem  regs  local B  occ   WORK  TILE  REDUCE        STAGE  LOOPIFY  RASTER  SHARED_CARRY
+k_matmul_bd3b61               24.0  100.0%   128    128  96.0K    87        0   8%  t16x8  f4x8          d3/smem-tma        0                     0
+greedy (isolated)             24.2      --   128    128  96.0K    87        0   8%  t16x8  f4x8          d3/smem-tma        0                     0
+golden k_matmul_bd3b61 [std]  46.0      --   128    512  64.0K    48        0  33%  t64x8  f1x8          d1/smem-tma        0                     0
+TOTAL                         24.0
+A/B record → tfm_pruebas/verif/3_fp32/qwen3emb__matmul-kvproj-s512_ncu.json
+
+================================================================================
+ncu --csv (curated hardware metrics)
+================================================================================
+
+ncu compare — emmy kernels vs the torch/cuBLAS reference (same counters, one table):
+side  kernel                                                        dur (ns)  occ%   sm%  dram%  fma%  tensor%   lsu.inst  ld.cnflct  st.cnflct  regs
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+dep   k_matmul_bd3b61                                                 36,160   8.3  38.7    9.9  52.5        0  1,582,080          0          0    87
+ref   void cutlass::Kernel2<cutlass_80_simt_sgemm_128x64_8x5_nn...    47,552  18.3  37.4    7.5  34.4        0  2,454,400      4,032      2,362   128
+ncu metrics → tfm_pruebas/verif/3_fp32/ncu_qwen3emb__matmul-kvproj-s512/61_ncu_metrics.csv
+ncu metrics → tfm_pruebas/verif/3_fp32/ncu_qwen3emb__matmul-kvproj-s512/61_ncu_metrics.json

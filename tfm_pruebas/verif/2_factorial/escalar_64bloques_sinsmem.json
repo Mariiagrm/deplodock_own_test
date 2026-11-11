@@ -1,0 +1,47 @@
+{
+  "cold_cache": false,
+  "input": "tfm_pruebas/runs/20261111_102641/casos/matmul__f16-mma-m128n128k128-f32/dump/00_input.json",
+  "golden": null,
+  "dynamic": [],
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "warmup": 10,
+  "iters": 100,
+  "backends": {
+    "Emmy": {
+      "latency_us": 3.883111057803035,
+      "captured": true,
+      "timing_semantics": "captured_whole_forward",
+      "correctness": {
+        "status": "unchecked"
+      }
+    }
+  },
+  "greedy": {
+    "status": "ok",
+    "lane": "fm",
+    "total_us": 3.8764444179832935,
+    "timing_semantics": "single_launch",
+    "captured": true,
+    "num_launches": 1,
+    "kernels": [
+      {
+        "kernel": "k_matmul_38922c",
+        "us": 3.8764444179832935,
+        "smem_bytes": 0,
+        "knobs": {
+          "LOOPIFY": "0",
+          "SHARED_CARRY": "0"
+        },
+        "record_knobs": {
+          "LOOPIFY": "0",
+          "SHARED_CARRY": "0"
+        },
+        "source_sha256": "94a77388fd4ee5ff3169c154a74730ff8fe19cebe2b5c8e9b35cece04a44f090"
+      }
+    ],
+    "flags": [
+      "unreproducible pin: TILE=f2x2 realized (unset) (refused: pick cannot reach a kernel allowed by the schedule restriction) \u2014 the env pin did not realize, so this row is the planner's own pick"
+    ]
+  },
+  "pinned": []
+}

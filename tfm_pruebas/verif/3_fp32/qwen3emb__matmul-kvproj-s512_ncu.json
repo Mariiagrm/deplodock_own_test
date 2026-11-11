@@ -1,0 +1,153 @@
+{
+  "cold_cache": false,
+  "input": null,
+  "golden": "k_matmul_bd3b61",
+  "dynamic": [],
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "warmup": 10,
+  "iters": 100,
+  "backends": {
+    "Eager PyTorch": {
+      "latency_us": 33.081600069999695,
+      "captured": true,
+      "timing_semantics": "captured_whole_forward",
+      "speedup_vs_eager": 1.0
+    },
+    "Emmy": {
+      "latency_us": 24.003200232982635,
+      "captured": true,
+      "timing_semantics": "captured_whole_forward",
+      "correctness": {
+        "status": "pass",
+        "reference": "eager",
+        "tolerance": "scaled"
+      },
+      "speedup_vs_eager": 1.3782162273738188
+    }
+  },
+  "greedy": {
+    "status": "ok",
+    "lane": "std",
+    "total_us": 24.003200232982635,
+    "timing_semantics": "single_launch",
+    "captured": true,
+    "num_launches": 1,
+    "kernels": [
+      {
+        "kernel": "k_matmul_bd3b61",
+        "us": 24.003200232982635,
+        "smem_bytes": 98328,
+        "knobs": {
+          "WORK": "t16x8",
+          "TILE": "f4x8",
+          "REDUCE": "",
+          "STAGE": "d3/smem-tma",
+          "LOOPIFY": "0",
+          "RASTER": "",
+          "SHARED_CARRY": "0"
+        },
+        "record_knobs": {
+          "WORK": "t16x8",
+          "TILE": "f4x8",
+          "REDUCE": "",
+          "STAGE": "d3/smem-tma",
+          "LOOPIFY": "0",
+          "RASTER": "",
+          "SHARED_CARRY": "0"
+        },
+        "source_sha256": "27b9039d2d210ef6aecc84d0a7b99f1df3727202df31ef55edc3417c4bbbe461"
+      }
+    ],
+    "reference_run_us": 37.567999213933945,
+    "isolated": {
+      "status": "ok",
+      "total_us": 24.173837155103683,
+      "timing_semantics": "single_launch",
+      "captured": true,
+      "num_launches": 1,
+      "e2e_us": null,
+      "kernels": [
+        {
+          "kernel": "k_matmul_bd3b61",
+          "us": 24.173837155103683,
+          "smem_bytes": 98328,
+          "knobs": {
+            "WORK": "t16x8",
+            "TILE": "f4x8",
+            "REDUCE": "",
+            "STAGE": "d3/smem-tma",
+            "LOOPIFY": "0",
+            "RASTER": "",
+            "SHARED_CARRY": "0"
+          },
+          "record_knobs": {
+            "WORK": "t16x8",
+            "TILE": "f4x8",
+            "REDUCE": "",
+            "STAGE": "d3/smem-tma",
+            "LOOPIFY": "0",
+            "RASTER": "",
+            "SHARED_CARRY": "0"
+          },
+          "source_sha256": "27b9039d2d210ef6aecc84d0a7b99f1df3727202df31ef55edc3417c4bbbe461"
+        }
+      ],
+      "flags": []
+    }
+  },
+  "pinned": [
+    {
+      "name": "k_matmul_bd3b61",
+      "kind": "golden",
+      "lane": "std",
+      "status": "ok",
+      "pinned_knobs": {
+        "FAST_MATH": "False",
+        "FAST_EXP": "False",
+        "F16_MMA_F32_ACC": "False",
+        "FP8_MMA": "False",
+        "PLACE": "fuse",
+        "WORK": "t64x8",
+        "TILE": "f1x8",
+        "REDUCE": "",
+        "STAGE": "d1/smem-tma",
+        "RASTER": ""
+      },
+      "total_us": 46.028800308704376,
+      "timing_semantics": "single_launch",
+      "captured": true,
+      "num_launches": 1,
+      "e2e_us": null,
+      "kernels": [
+        {
+          "kernel": "k_matmul_bd3b61",
+          "us": 46.028800308704376,
+          "smem_bytes": 65544,
+          "knobs": {
+            "WORK": "t64x8",
+            "TILE": "f1x8",
+            "REDUCE": "",
+            "STAGE": "d1/smem-tma",
+            "LOOPIFY": "0",
+            "RASTER": "",
+            "SHARED_CARRY": "0"
+          },
+          "record_knobs": {
+            "WORK": "t64x8",
+            "TILE": "f1x8",
+            "REDUCE": "",
+            "STAGE": "d1/smem-tma",
+            "LOOPIFY": "0",
+            "RASTER": "",
+            "SHARED_CARRY": "0"
+          },
+          "source_sha256": "216d62d60b307144b6a0d10f22410aecb600a5d322bbab45014696fcd35d5434"
+        }
+      ],
+      "flags": [],
+      "correctness": null,
+      "recorded_emmy_us": null,
+      "recorded_ref_us": null
+    }
+  ]
+}

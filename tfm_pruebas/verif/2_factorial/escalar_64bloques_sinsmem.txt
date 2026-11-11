@@ -1,0 +1,11 @@
+
+Backend  Latency (us)
+---------------------
+Emmy                4
+
+knobs (greedy pick); golden / ab rows are red where they differ from the greedy pick:
+Kernel            us       %  grid  block  smem  regs  local B   occ  LOOPIFY  SHARED_CARRY
+k_matmul_38922c  3.9  100.0%    64    256  0.0K    39        0  100%        0             0
+TOTAL            3.9
+unreproducible pin: TILE=f2x2 realized (unset) (refused: pick cannot reach a kernel allowed by the schedule restriction) — EMMY_KNOBS / EMMY_<KNOB> pin did not realize; the greedy row below is the planner's own pick, not the pinned config
+A/B record → tfm_pruebas/verif/2_factorial/escalar_64bloques_sinsmem.json
