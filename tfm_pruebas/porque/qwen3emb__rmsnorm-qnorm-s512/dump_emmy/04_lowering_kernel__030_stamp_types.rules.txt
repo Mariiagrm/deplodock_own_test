@@ -1,0 +1,60 @@
+>>> k:030_stamp_types
+@@ matched at o @@
+@@ -2,31 +2,31 @@
+       Tile(axes=(a0 in 0..8192, a1_co in 0..16), block_threads=128):
+           for a1 in a1_co * 4..128 step 64 unroll=true:
+-              in0 = load x[0, a0 / 512, a0 % 512, a1]
+-              v0 = multiply(in0, in0)
+-              acc0 <- add(acc0, v0) over a1
+-              in0__r1 = load x[0, a0 / 512, a0 % 512, a1 + 1]
+-              v0__r1 = multiply(in0__r1, in0__r1)
+-              acc0__r1 <- add(acc0__r1, v0__r1) over a1
+-              in0__r2 = load x[0, a0 / 512, a0 % 512, a1 + 2]
+-              v0__r2 = multiply(in0__r2, in0__r2)
+-              acc0__r2 <- add(acc0__r2, v0__r2) over a1
+-              in0__r3 = load x[0, a0 / 512, a0 % 512, a1 + 3]
+-              v0__r3 = multiply(in0__r3, in0__r3)
+-              acc0__r3 <- add(acc0__r3, v0__r3) over a1
+-          acc0 <- add(acc0, acc0__r1)
+-          acc0 <- add(acc0, acc0__r2)
+-          acc0 <- add(acc0, acc0__r3)
++              f32 in0 = load x[0, a0 / 512, a0 % 512, a1]
++              f32 v0 = multiply(in0, in0)
++              f32 acc0 <- add(acc0, v0) over a1
++              f32 in0__r1 = load x[0, a0 / 512, a0 % 512, a1 + 1]
++              f32 v0__r1 = multiply(in0__r1, in0__r1)
++              f32 acc0__r1 <- add(acc0__r1, v0__r1) over a1
++              f32 in0__r2 = load x[0, a0 / 512, a0 % 512, a1 + 2]
++              f32 v0__r2 = multiply(in0__r2, in0__r2)
++              f32 acc0__r2 <- add(acc0__r2, v0__r2) over a1
++              f32 in0__r3 = load x[0, a0 / 512, a0 % 512, a1 + 3]
++              f32 v0__r3 = multiply(in0__r3, in0__r3)
++              f32 acc0__r3 <- add(acc0__r3, v0__r3) over a1
++          f32 acc0 <- add(acc0, acc0__r1)
++          f32 acc0 <- add(acc0, acc0__r2)
++          f32 acc0 <- add(acc0, acc0__r3)
+           WarpShuffle(state=(acc0), state_b=(acc0__o), length=16):
+               combine_states:
+                   acc0 = add(acc0, acc0__o)
+-          let v1__t0 = 0.0078125
+-          v1__t1 = multiply(acc0, v1__t0)
+-          let v1__t2 = 9.999999974752427e-07
+-          v1 = add(v1__t1, v1__t2)
+-          v2 = rsqrt(v1)
++          let f32 v1__t0 = 0.0078125
++          f32 v1__t1 = multiply(acc0, v1__t0)
++          let f32 v1__t2 = 9.999999974752427e-07
++          f32 v1 = add(v1__t1, v1__t2)
++          f32 v2 = rsqrt(v1)
+           for a2 in a1_co..128 step 16 unroll=true:
+-              in2 = load w[a2]
+-              in1 = load x[0, a0 / 512, a0 % 512, a2]
+-              v3 = multiply(in1, v2)
+-              v4 = multiply(in2, v3)
+-              o[0, a0 / 512, a0 % 512, a2] = v4
++              f32 in2 = load w[a2]
++              f32 in1 = load x[0, a0 / 512, a0 % 512, a2]
++              f32 v3 = multiply(in1, v2)
++              f32 v4 = multiply(in2, v3)
++              f32 o[0, a0 / 512, a0 % 512, a2] = v4
+<<< k:030_stamp_types

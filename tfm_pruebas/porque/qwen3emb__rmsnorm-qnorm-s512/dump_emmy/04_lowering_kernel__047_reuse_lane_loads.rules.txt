@@ -1,0 +1,98 @@
+>>> k:047_reuse_lane_loads
+@@ matched at o @@
+@@ -1,17 +1,32 @@
+ o = KernelOp(x, w)
+       Tile(axes=(a0 in 0..8192, a1_co in 0..16), block_threads=128):
+-          for a1 in a1_co * 4..128 step 64 unroll=true:
+-              f32 in0 = load x[0, a0 / 512, a0 % 512, a1]
+-              f32 v0 = multiply(in0, in0)
+-              f32 acc0 <- add(acc0, v0) over a1
+-              f32 in0__r1 = load x[0, a0 / 512, a0 % 512, a1 + 1]
+-              f32 v0__r1 = multiply(in0__r1, in0__r1)
+-              f32 acc0__r1 <- add(acc0__r1, v0__r1) over a1
+-              f32 in0__r2 = load x[0, a0 / 512, a0 % 512, a1 + 2]
+-              f32 v0__r2 = multiply(in0__r2, in0__r2)
+-              f32 acc0__r2 <- add(acc0__r2, v0__r2) over a1
+-              f32 in0__r3 = load x[0, a0 / 512, a0 % 512, a1 + 3]
+-              f32 v0__r3 = multiply(in0__r3, in0__r3)
+-              f32 acc0__r3 <- add(acc0__r3, v0__r3) over a1
++          init f32 acc0 = 0
++          init f32 acc0__r1 = 0
++          init f32 acc0__r2 = 0
++          init f32 acc0__r3 = 0
++          f32 in0__u0 = load x[0, a0 / 512, a0 % 512, a1_co * 4]
++          f32 v0__u0 = multiply(in0__u0, in0__u0)
++          f32 acc0 <- add(acc0, v0__u0) over a1_co
++          f32 in0__r1__u0 = load x[0, a0 / 512, a0 % 512, a1_co * 4 + 1]
++          f32 v0__r1__u0 = multiply(in0__r1__u0, in0__r1__u0)
++          f32 acc0__r1 <- add(acc0__r1, v0__r1__u0) over a1_co
++          f32 in0__r2__u0 = load x[0, a0 / 512, a0 % 512, a1_co * 4 + 2]
++          f32 v0__r2__u0 = multiply(in0__r2__u0, in0__r2__u0)
++          f32 acc0__r2 <- add(acc0__r2, v0__r2__u0) over a1_co
++          f32 in0__r3__u0 = load x[0, a0 / 512, a0 % 512, a1_co * 4 + 3]
++          f32 v0__r3__u0 = multiply(in0__r3__u0, in0__r3__u0)
++          f32 acc0__r3 <- add(acc0__r3, v0__r3__u0) over a1_co
++          f32 in0__u1 = load x[0, a0 / 512, a0 % 512, a1_co * 4 + 64]
++          f32 v0__u1 = multiply(in0__u1, in0__u1)
++          f32 acc0 <- add(acc0, v0__u1) over a1_co
++          f32 in0__r1__u1 = load x[0, a0 / 512, a0 % 512, a1_co * 4 + 64 + 1]
++          f32 v0__r1__u1 = multiply(in0__r1__u1, in0__r1__u1)
++          f32 acc0__r1 <- add(acc0__r1, v0__r1__u1) over a1_co
++          f32 in0__r2__u1 = load x[0, a0 / 512, a0 % 512, a1_co * 4 + 64 + 2]
++          f32 v0__r2__u1 = multiply(in0__r2__u1, in0__r2__u1)
++          f32 acc0__r2 <- add(acc0__r2, v0__r2__u1) over a1_co
++          f32 in0__r3__u1 = load x[0, a0 / 512, a0 % 512, a1_co * 4 + 64 + 3]
++          f32 v0__r3__u1 = multiply(in0__r3__u1, in0__r3__u1)
++          f32 acc0__r3 <- add(acc0__r3, v0__r3__u1) over a1_co
+           f32 acc0 <- add(acc0, acc0__r1)
+           f32 acc0 <- add(acc0, acc0__r2)
+@@ -25,8 +40,42 @@
+           f32 v1 = add(v1__t1, v1__t2)
+           f32 v2 = rsqrt(v1)
+-          for a2 in a1_co..128 step 16 unroll=true:
+-              f32 in2 = load w[a2]
+-              f32 in1 = load x[0, a0 / 512, a0 % 512, a2]
+-              f32 v3 = multiply(in1, v2)
+-              f32 v4 = multiply(in2, v3)
+-              f32 o[0, a0 / 512, a0 % 512, a2] = v4
++          f32 in2__u0 = load w[a1_co]
++          f32 in1__u0 = load x[0, a0 / 512, a0 % 512, a1_co]
++          f32 v3__u0 = multiply(in1__u0, v2)
++          f32 v4__u0 = multiply(in2__u0, v3__u0)
++          f32 o[0, a0 / 512, a0 % 512, a1_co + 0] = v4__u0
++          f32 in2__u1 = load w[a1_co + 16]
++          f32 in1__u1 = load x[0, a0 / 512, a0 % 512, a1_co + 16]
++          f32 v3__u1 = multiply(in1__u1, v2)
++          f32 v4__u1 = multiply(in2__u1, v3__u1)
++          f32 o[0, a0 / 512, a0 % 512, a1_co + 16] = v4__u1
++          f32 in2__u2 = load w[a1_co + 32]
++          f32 in1__u2 = load x[0, a0 / 512, a0 % 512, a1_co + 32]
++          f32 v3__u2 = multiply(in1__u2, v2)
++          f32 v4__u2 = multiply(in2__u2, v3__u2)
++          f32 o[0, a0 / 512, a0 % 512, a1_co + 32] = v4__u2
++          f32 in2__u3 = load w[a1_co + 48]
++          f32 in1__u3 = load x[0, a0 / 512, a0 % 512, a1_co + 48]
++          f32 v3__u3 = multiply(in1__u3, v2)
++          f32 v4__u3 = multiply(in2__u3, v3__u3)
++          f32 o[0, a0 / 512, a0 % 512, a1_co + 48] = v4__u3
++          f32 in2__u4 = load w[a1_co + 64]
++          f32 in1__u4 = load x[0, a0 / 512, a0 % 512, a1_co + 64]
++          f32 v3__u4 = multiply(in1__u4, v2)
++          f32 v4__u4 = multiply(in2__u4, v3__u4)
++          f32 o[0, a0 / 512, a0 % 512, a1_co + 64] = v4__u4
++          f32 in2__u5 = load w[a1_co + 80]
++          f32 in1__u5 = load x[0, a0 / 512, a0 % 512, a1_co + 80]
++          f32 v3__u5 = multiply(in1__u5, v2)
++          f32 v4__u5 = multiply(in2__u5, v3__u5)
++          f32 o[0, a0 / 512, a0 % 512, a1_co + 80] = v4__u5
++          f32 in2__u6 = load w[a1_co + 96]
++          f32 in1__u6 = load x[0, a0 / 512, a0 % 512, a1_co + 96]
++          f32 v3__u6 = multiply(in1__u6, v2)
++          f32 v4__u6 = multiply(in2__u6, v3__u6)
++          f32 o[0, a0 / 512, a0 % 512, a1_co + 96] = v4__u6
++          f32 in2__u7 = load w[a1_co + 112]
++          f32 in1__u7 = load x[0, a0 / 512, a0 % 512, a1_co + 112]
++          f32 v3__u7 = multiply(in1__u7, v2)
++          f32 v4__u7 = multiply(in2__u7, v3__u7)
++          f32 o[0, a0 / 512, a0 % 512, a1_co + 112] = v4__u7
+<<< k:047_reuse_lane_loads

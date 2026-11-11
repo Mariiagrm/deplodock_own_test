@@ -1,0 +1,18 @@
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k128-f32/golden_stdout.txt:Backend        Latency (us)  vs Eager
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k128-f32/golden_stdout.txt:Eager PyTorch             5     1.00x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k128-f32/golden_stdout.txt:torch.compile             3     1.38x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k128-f32/golden_stdout.txt:Emmy                      1     4.15x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k128-f32/golden_stdout.txt:k_matmul_38922c               1.1  100.0%    64     64   8.0K    32        0  50%  w1x2  mma_m16n8k16_f16_f32
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k128-f32/emmy_stdout.txt:Emmy                1
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k128-f32/emmy_stdout.txt:k_matmul_38922c  1.0  100.0%    64     64  8.0K    32        0  50%  w1x2  mma_m16n8k16_f16_f32/f1x1/k8        
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k128-f32/inductor/cache/kj/ckjvv4576dbnenyiqobquze7qxpa7xy5cwrl7ono6p3watoyd7lc.debug/output_code.py
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k128-f32/inductor/torch_compile_debug/run_2026_11_10_12_12_06_429577-pid_1321/torchinductor/model__0_inference_0.0/output_code.py
+/workspace/deplodock/tfm_pruebas/porque/qwen3emb__rmsnorm-qnorm-s512/golden_stdout.txt:Backend        Latency (us)  vs Eager
+/workspace/deplodock/tfm_pruebas/porque/qwen3emb__rmsnorm-qnorm-s512/golden_stdout.txt:Eager PyTorch             5     1.00x
+/workspace/deplodock/tfm_pruebas/porque/qwen3emb__rmsnorm-qnorm-s512/golden_stdout.txt:torch.compile             2     2.12x
+/workspace/deplodock/tfm_pruebas/porque/qwen3emb__rmsnorm-qnorm-s512/golden_stdout.txt:Emmy                      2     2.19x
+/workspace/deplodock/tfm_pruebas/porque/qwen3emb__rmsnorm-qnorm-s512/golden_stdout.txt:k_rms_norm_0687b4               2.4  100.0%  1024    128  0.0K    38        0  100%  t16x8  coop/v4        0     
+/workspace/deplodock/tfm_pruebas/porque/qwen3emb__rmsnorm-qnorm-s512/emmy_stdout.txt:Emmy                2
+/workspace/deplodock/tfm_pruebas/porque/qwen3emb__rmsnorm-qnorm-s512/emmy_stdout.txt:k_rms_norm_0687b4  2.4  100.0%  1024    128  0.0K    38        0  100%  t16x8  coop/v4        0                    
+/workspace/deplodock/tfm_pruebas/porque/qwen3emb__rmsnorm-qnorm-s512/inductor/cache/ku/ckup4elza7kuhz2yw5jd53oxx26nj5t7q5jmqurks7th3g7qus2h.debug/output_code.py
+/workspace/deplodock/tfm_pruebas/porque/qwen3emb__rmsnorm-qnorm-s512/inductor/torch_compile_debug/run_2026_11_10_12_12_25_987776-pid_1590/torchinductor/model__0_inference_0.0/output_code.py

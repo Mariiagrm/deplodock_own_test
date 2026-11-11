@@ -1,0 +1,32 @@
+>>> k:050_vectorize_loads
+@@ matched at o @@
+@@ -5,26 +5,20 @@
+           init f32 acc0__r2 = 0
+           init f32 acc0__r3 = 0
+-          f32 in0__u0 = load x[0, a0 / 512, a0 % 512, a1_co * 4]
++          f32 in0__u0, in0__r1__u0, in0__r2__u0, in0__r3__u0 = load x[0, a0 / 512, a0 % 512, a1_co * 4]
+           f32 v0__u0 = multiply(in0__u0, in0__u0)
+           f32 acc0 <- add(acc0, v0__u0) over a1_co
+-          f32 in0__r1__u0 = load x[0, a0 / 512, a0 % 512, a1_co * 4 + 1]
+           f32 v0__r1__u0 = multiply(in0__r1__u0, in0__r1__u0)
+           f32 acc0__r1 <- add(acc0__r1, v0__r1__u0) over a1_co
+-          f32 in0__r2__u0 = load x[0, a0 / 512, a0 % 512, a1_co * 4 + 2]
+           f32 v0__r2__u0 = multiply(in0__r2__u0, in0__r2__u0)
+           f32 acc0__r2 <- add(acc0__r2, v0__r2__u0) over a1_co
+-          f32 in0__r3__u0 = load x[0, a0 / 512, a0 % 512, a1_co * 4 + 3]
+           f32 v0__r3__u0 = multiply(in0__r3__u0, in0__r3__u0)
+           f32 acc0__r3 <- add(acc0__r3, v0__r3__u0) over a1_co
+-          f32 in0__u1 = load x[0, a0 / 512, a0 % 512, a1_co * 4 + 64]
++          f32 in0__u1, in0__r1__u1, in0__r2__u1, in0__r3__u1 = load x[0, a0 / 512, a0 % 512, a1_co * 4 + 64]
+           f32 v0__u1 = multiply(in0__u1, in0__u1)
+           f32 acc0 <- add(acc0, v0__u1) over a1_co
+-          f32 in0__r1__u1 = load x[0, a0 / 512, a0 % 512, a1_co * 4 + 64 + 1]
+           f32 v0__r1__u1 = multiply(in0__r1__u1, in0__r1__u1)
+           f32 acc0__r1 <- add(acc0__r1, v0__r1__u1) over a1_co
+-          f32 in0__r2__u1 = load x[0, a0 / 512, a0 % 512, a1_co * 4 + 64 + 2]
+           f32 v0__r2__u1 = multiply(in0__r2__u1, in0__r2__u1)
+           f32 acc0__r2 <- add(acc0__r2, v0__r2__u1) over a1_co
+-          f32 in0__r3__u1 = load x[0, a0 / 512, a0 % 512, a1_co * 4 + 64 + 3]
+           f32 v0__r3__u1 = multiply(in0__r3__u1, in0__r3__u1)
+           f32 acc0__r3 <- add(acc0__r3, v0__r3__u1) over a1_co
+<<< k:050_vectorize_loads

@@ -1,0 +1,54 @@
+>>> k:095_interleave_loads
+@@ matched at o @@
+@@ -34,42 +34,42 @@
+           f32 v1 = add(v1__t1, v1__t2)
+           f32 v2 = rsqrt(v1)
+-          f32 in2__u0 = load w[a1_co]
+           f32 in1__u0 = load x[0, a0 / 512, a0 % 512, a1_co]
+           f32 v3__u0 = multiply(in1__u0, v2)
++          f32 in2__u0 = load w[a1_co]
+           f32 v4__u0 = multiply(in2__u0, v3__u0)
+           f32 o[0, a0 / 512, a0 % 512, a1_co + 0] = v4__u0
+-          f32 in2__u1 = load w[a1_co + 16]
+           f32 in1__u1 = load x[0, a0 / 512, a0 % 512, a1_co + 16]
+           f32 v3__u1 = multiply(in1__u1, v2)
++          f32 in2__u1 = load w[a1_co + 16]
+           f32 v4__u1 = multiply(in2__u1, v3__u1)
+           f32 o[0, a0 / 512, a0 % 512, a1_co + 16] = v4__u1
+-          f32 in2__u2 = load w[a1_co + 32]
+           f32 in1__u2 = load x[0, a0 / 512, a0 % 512, a1_co + 32]
+           f32 v3__u2 = multiply(in1__u2, v2)
++          f32 in2__u2 = load w[a1_co + 32]
+           f32 v4__u2 = multiply(in2__u2, v3__u2)
+           f32 o[0, a0 / 512, a0 % 512, a1_co + 32] = v4__u2
+-          f32 in2__u3 = load w[a1_co + 48]
+           f32 in1__u3 = load x[0, a0 / 512, a0 % 512, a1_co + 48]
+           f32 v3__u3 = multiply(in1__u3, v2)
++          f32 in2__u3 = load w[a1_co + 48]
+           f32 v4__u3 = multiply(in2__u3, v3__u3)
+           f32 o[0, a0 / 512, a0 % 512, a1_co + 48] = v4__u3
+-          f32 in2__u4 = load w[a1_co + 64]
+           f32 in1__u4 = load x[0, a0 / 512, a0 % 512, a1_co + 64]
+           f32 v3__u4 = multiply(in1__u4, v2)
++          f32 in2__u4 = load w[a1_co + 64]
+           f32 v4__u4 = multiply(in2__u4, v3__u4)
+           f32 o[0, a0 / 512, a0 % 512, a1_co + 64] = v4__u4
+-          f32 in2__u5 = load w[a1_co + 80]
+           f32 in1__u5 = load x[0, a0 / 512, a0 % 512, a1_co + 80]
+           f32 v3__u5 = multiply(in1__u5, v2)
++          f32 in2__u5 = load w[a1_co + 80]
+           f32 v4__u5 = multiply(in2__u5, v3__u5)
+           f32 o[0, a0 / 512, a0 % 512, a1_co + 80] = v4__u5
+-          f32 in2__u6 = load w[a1_co + 96]
+           f32 in1__u6 = load x[0, a0 / 512, a0 % 512, a1_co + 96]
+           f32 v3__u6 = multiply(in1__u6, v2)
++          f32 in2__u6 = load w[a1_co + 96]
+           f32 v4__u6 = multiply(in2__u6, v3__u6)
+           f32 o[0, a0 / 512, a0 % 512, a1_co + 96] = v4__u6
+-          f32 in2__u7 = load w[a1_co + 112]
+           f32 in1__u7 = load x[0, a0 / 512, a0 % 512, a1_co + 112]
+           f32 v3__u7 = multiply(in1__u7, v2)
++          f32 in2__u7 = load w[a1_co + 112]
+           f32 v4__u7 = multiply(in2__u7, v3__u7)
+           f32 o[0, a0 / 512, a0 % 512, a1_co + 112] = v4__u7
+<<< k:095_interleave_loads

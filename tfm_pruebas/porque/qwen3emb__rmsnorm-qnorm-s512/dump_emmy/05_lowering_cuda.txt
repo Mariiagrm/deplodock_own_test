@@ -1,0 +1,125 @@
+// 3 nodes, 2 inputs, 1 outputs
+
+struct Dynamic {}
+
+struct Inputs<dynamic: Dynamic> {
+    x: f32[1,16,512,128],
+    w: f32[128],
+}
+
+struct Outputs<dynamic: Dynamic> {
+    o: f32[1,16,512,128],
+}
+
+fn main(dynamic: Dynamic, inputs: Inputs<dynamic>) -> Outputs<dynamic> {
+  let o: f32[1,16,512,128]
+      = cuda(inputs.x, inputs.w) {
+    extern "C" __global__
+    __launch_bounds__(128) void k_rms_norm_0687b4(const float* __restrict__ x, const float* __restrict__ w, float* __restrict__ o) {
+    #if defined(__CUDA_ARCH__) && __CUDA_ARCH__ >= 900
+        asm volatile("griddepcontrol.wait;" ::: "memory");
+    #endif
+        int lane = threadIdx.x & 31;
+        int warp = threadIdx.x >> 5;
+        int _gid = blockIdx.x * blockDim.x + threadIdx.x;
+            int a0 = _gid / 16;
+            int a1_co = (_gid) % 16;
+            float acc0 = 0.0f;
+            float acc0__r1 = 0.0f;
+            float acc0__r2 = 0.0f;
+            float acc0__r3 = 0.0f;
+            float4 _v_in0__u0 = *reinterpret_cast<const float4*>(&x[a0 * 128 + a1_co * 4]);
+            float in0__u0 = _v_in0__u0.x;
+            float in0__r1__u0 = _v_in0__u0.y;
+            float in0__r2__u0 = _v_in0__u0.z;
+            float in0__r3__u0 = _v_in0__u0.w;
+            float v0__u0 = in0__u0 * in0__u0;
+            acc0 += v0__u0;
+            float v0__r1__u0 = in0__r1__u0 * in0__r1__u0;
+            acc0__r1 += v0__r1__u0;
+            float v0__r2__u0 = in0__r2__u0 * in0__r2__u0;
+            acc0__r2 += v0__r2__u0;
+            float v0__r3__u0 = in0__r3__u0 * in0__r3__u0;
+            acc0__r3 += v0__r3__u0;
+            float4 _v_in0__u1 = *reinterpret_cast<const float4*>(&x[a0 * 128 + (a1_co * 4 + 64)]);
+            float in0__u1 = _v_in0__u1.x;
+            float in0__r1__u1 = _v_in0__u1.y;
+            float in0__r2__u1 = _v_in0__u1.z;
+            float in0__r3__u1 = _v_in0__u1.w;
+            float v0__u1 = in0__u1 * in0__u1;
+            acc0 += v0__u1;
+            float v0__r1__u1 = in0__r1__u1 * in0__r1__u1;
+            acc0__r1 += v0__r1__u1;
+            float v0__r2__u1 = in0__r2__u1 * in0__r2__u1;
+            acc0__r2 += v0__r2__u1;
+            float v0__r3__u1 = in0__r3__u1 * in0__r3__u1;
+            acc0__r3 += v0__r3__u1;
+            acc0 += acc0__r1;
+            acc0 += acc0__r2;
+            acc0 += acc0__r3;
+            {
+                float acc0__o = __shfl_xor_sync(__activemask(), acc0, 8);
+                acc0 = acc0 + acc0__o;
+            }
+            {
+                float acc0__o = __shfl_xor_sync(__activemask(), acc0, 4);
+                acc0 = acc0 + acc0__o;
+            }
+            {
+                float acc0__o = __shfl_xor_sync(__activemask(), acc0, 2);
+                acc0 = acc0 + acc0__o;
+            }
+            {
+                float acc0__o = __shfl_xor_sync(__activemask(), acc0, 1);
+                acc0 = acc0 + acc0__o;
+            }
+            float v1__t0 = 0.0078125f;
+            float v1__t1 = acc0 * v1__t0;
+            float v1__t2 = 9.999999974752427e-07f;
+            float v1 = v1__t1 + v1__t2;
+            float v2 = rsqrtf(v1);
+            float in1__u0 = x[a0 * 128 + a1_co];
+            float v3__u0 = in1__u0 * v2;
+            float in2__u0 = w[a1_co];
+            float v4__u0 = in2__u0 * v3__u0;
+            o[a0 * 128 + a1_co] = v4__u0;
+            float in1__u1 = x[a0 * 128 + (a1_co + 16)];
+            float v3__u1 = in1__u1 * v2;
+            float in2__u1 = w[a1_co + 16];
+            float v4__u1 = in2__u1 * v3__u1;
+            o[a0 * 128 + (a1_co + 16)] = v4__u1;
+            float in1__u2 = x[a0 * 128 + (a1_co + 32)];
+            float v3__u2 = in1__u2 * v2;
+            float in2__u2 = w[a1_co + 32];
+            float v4__u2 = in2__u2 * v3__u2;
+            o[a0 * 128 + (a1_co + 32)] = v4__u2;
+            float in1__u3 = x[a0 * 128 + (a1_co + 48)];
+            float v3__u3 = in1__u3 * v2;
+            float in2__u3 = w[a1_co + 48];
+            float v4__u3 = in2__u3 * v3__u3;
+            o[a0 * 128 + (a1_co + 48)] = v4__u3;
+            float in1__u4 = x[a0 * 128 + (a1_co + 64)];
+            float v3__u4 = in1__u4 * v2;
+            float in2__u4 = w[a1_co + 64];
+            float v4__u4 = in2__u4 * v3__u4;
+            o[a0 * 128 + (a1_co + 64)] = v4__u4;
+            float in1__u5 = x[a0 * 128 + (a1_co + 80)];
+            float v3__u5 = in1__u5 * v2;
+            float in2__u5 = w[a1_co + 80];
+            float v4__u5 = in2__u5 * v3__u5;
+            o[a0 * 128 + (a1_co + 80)] = v4__u5;
+            float in1__u6 = x[a0 * 128 + (a1_co + 96)];
+            float v3__u6 = in1__u6 * v2;
+            float in2__u6 = w[a1_co + 96];
+            float v4__u6 = in2__u6 * v3__u6;
+            o[a0 * 128 + (a1_co + 96)] = v4__u6;
+            float in1__u7 = x[a0 * 128 + (a1_co + 112)];
+            float v3__u7 = in1__u7 * v2;
+            float in2__u7 = w[a1_co + 112];
+            float v4__u7 = in2__u7 * v3__u7;
+            o[a0 * 128 + (a1_co + 112)] = v4__u7;
+    }
+  };
+
+  Outputs { o }
+}

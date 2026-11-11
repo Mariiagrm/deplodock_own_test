@@ -1,0 +1,10 @@
+
+Backend  Latency (us)
+---------------------
+Emmy                2
+
+knobs (greedy pick); golden / ab rows are red where they differ from the greedy pick:
+Kernel              us       %  grid  block  smem  regs  local B   occ   WORK   REDUCE  LOOPIFY  RASTER  SHARED_CARRY
+k_rms_norm_0687b4  2.4  100.0%  1024    128  0.0K    38        0  100%  t16x8  coop/v4        0                     0
+TOTAL              2.4
+A/B record → /workspace/deplodock/tfm_pruebas/porque/qwen3emb__rmsnorm-qnorm-s512/bench_emmy.json

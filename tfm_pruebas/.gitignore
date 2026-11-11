@@ -8,3 +8,8 @@ runs/20261108_210524/
 runs/20261108_210624/
 runs/20261109_005101/
 runs/20261109_005132/
+# Caché de Inductor (binarios y PTX de las ~39 variantes de su autotuning, ~73 MB); su elección
+# está copiada en porque/<caso>/inductor/best_config.json y el código final en torch_compile_debug/.
+porque/*/inductor/cache/
+# Ejecución --tune --workers 1 en curso: se añade cuando termine.
+runs/20261111_090638/

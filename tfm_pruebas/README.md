@@ -88,3 +88,17 @@ Siempre mirando el **cuerpo del `__global__`** (el preámbulo trae todas las fun
 | Split-K | regla `030_cut` (Fold[0..K] → parcial Fold[0..K/n]), kernel `__partial`, `atomicAdd` |
 | Reducción cooperativa (extra) | `REDUCE=coop`, `__shfl_xor_sync` |
 | PDL (extra) | `griddepcontrol.wait` |
+
+## porque/: por qué emmy gana (o no) a torch.compile en un caso
+
+`porque/generar.sh <familia/caso> "<KNOBS>"` reconstruye las dos versiones de un caso de la ejecución con `--tune`:
+
+- `inductor/torch_compile_debug/.../output_code.py`: el kernel Triton que genera `torch.compile` (max-autotune),
+  `fx_graph_readable.py` el grafo que compila y `inductor/best_config.json` la configuración que eligió.
+- `dump_emmy/05_lowering_cuda.kernels/<kernel>.txt`: el CUDA del kernel que eligió emmy tras el autotuning
+  (fijado con `EMMY_KNOBS`); las líneas anteriores al `__global__` son funciones auxiliares (PTX).
+- `bench_golden.json`: tiempos eager / torch.compile / emmy de esa repetición aislada.
+
+Casos hechos: `matmul/f16-mma-m128n128k128-f32` (Inductor convierte a fp32 y multiplica sin Tensor Cores con 8
+bloques; emmy usa `mma.m16n8k16` fp16→fp32 con 64 bloques) y `qwen3emb/rmsnorm-qnorm-s512` (estructuras casi
+iguales: empate). Ojo: `torch.compile` medido con `--workers > 1` sale ruidoso; para compararlo, `--workers 1`.

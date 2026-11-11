@@ -1,0 +1,12 @@
+>>> h:040_schedule
+@@ matched at o @@
+@@ -1,5 +1,6 @@
+ o = TileOp(b, a)
+-      place  free=(a0, a1)  unmapped
+-      Fold[a2 in 0..128] contraction
++      place  free=(a0, a1)  grid=(a0, a1)
++      work   w1x2
++      Fold[a2 in 0..128] contraction   ⟨TILE=mma_m16n8k16_f16_f32/f1x1/k8 STAGE=d4/smem-async⟩
+       ├─ operand[in0]: load a[a0, a2]   ‹materialized›
+       ├─ operand[in1]: load b[a2, a1]   ‹materialized›
+<<< h:040_schedule

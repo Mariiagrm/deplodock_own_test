@@ -1,0 +1,109 @@
+{
+  "inputs": [
+    "x",
+    "w"
+  ],
+  "outputs": [
+    "o"
+  ],
+  "nodes": {
+    "w": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "w",
+          "shape": [
+            128
+          ],
+          "dtype": "f32"
+        }
+      ]
+    },
+    "x": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "x",
+          "shape": [
+            1,
+            16,
+            512,
+            128
+          ],
+          "dtype": "f32"
+        }
+      ]
+    },
+    "o": {
+      "op": "CudaOp",
+      "op_fields": {
+        "kernel_source": "extern \"C\" __global__\n__launch_bounds__(128) void k_rms_norm_0687b4(const float* __restrict__ x, const float* __restrict__ w, float* __restrict__ o) {\n#if defined(__CUDA_ARCH__) && __CUDA_ARCH__ >= 900\n    asm volatile(\"griddepcontrol.wait;\" ::: \"memory\");\n#endif\n    int lane = threadIdx.x & 31;\n    int warp = threadIdx.x >> 5;\n    int _gid = blockIdx.x * blockDim.x + threadIdx.x;\n        int a0 = _gid / 16;\n        int a1_co = (_gid) % 16;\n        float acc0 = 0.0f;\n        float acc0__r1 = 0.0f;\n        float acc0__r2 = 0.0f;\n        float acc0__r3 = 0.0f;\n        float4 _v_in0__u0 = *reinterpret_cast<const float4*>(&x[a0 * 128 + a1_co * 4]);\n        float in0__u0 = _v_in0__u0.x;\n        float in0__r1__u0 = _v_in0__u0.y;\n        float in0__r2__u0 = _v_in0__u0.z;\n        float in0__r3__u0 = _v_in0__u0.w;\n        float v0__u0 = in0__u0 * in0__u0;\n        acc0 += v0__u0;\n        float v0__r1__u0 = in0__r1__u0 * in0__r1__u0;\n        acc0__r1 += v0__r1__u0;\n        float v0__r2__u0 = in0__r2__u0 * in0__r2__u0;\n        acc0__r2 += v0__r2__u0;\n        float v0__r3__u0 = in0__r3__u0 * in0__r3__u0;\n        acc0__r3 += v0__r3__u0;\n        float4 _v_in0__u1 = *reinterpret_cast<const float4*>(&x[a0 * 128 + (a1_co * 4 + 64)]);\n        float in0__u1 = _v_in0__u1.x;\n        float in0__r1__u1 = _v_in0__u1.y;\n        float in0__r2__u1 = _v_in0__u1.z;\n        float in0__r3__u1 = _v_in0__u1.w;\n        float v0__u1 = in0__u1 * in0__u1;\n        acc0 += v0__u1;\n        float v0__r1__u1 = in0__r1__u1 * in0__r1__u1;\n        acc0__r1 += v0__r1__u1;\n        float v0__r2__u1 = in0__r2__u1 * in0__r2__u1;\n        acc0__r2 += v0__r2__u1;\n        float v0__r3__u1 = in0__r3__u1 * in0__r3__u1;\n        acc0__r3 += v0__r3__u1;\n        acc0 += acc0__r1;\n        acc0 += acc0__r2;\n        acc0 += acc0__r3;\n        {\n            float acc0__o = __shfl_xor_sync(__activemask(), acc0, 8);\n            acc0 = acc0 + acc0__o;\n        }\n        {\n            float acc0__o = __shfl_xor_sync(__activemask(), acc0, 4);\n            acc0 = acc0 + acc0__o;\n        }\n        {\n            float acc0__o = __shfl_xor_sync(__activemask(), acc0, 2);\n            acc0 = acc0 + acc0__o;\n        }\n        {\n            float acc0__o = __shfl_xor_sync(__activemask(), acc0, 1);\n            acc0 = acc0 + acc0__o;\n        }\n        float v1__t0 = 0.0078125f;\n        float v1__t1 = acc0 * v1__t0;\n        float v1__t2 = 9.999999974752427e-07f;\n        float v1 = v1__t1 + v1__t2;\n        float v2 = rsqrtf(v1);\n        float in1__u0 = x[a0 * 128 + a1_co];\n        float v3__u0 = in1__u0 * v2;\n        float in2__u0 = w[a1_co];\n        float v4__u0 = in2__u0 * v3__u0;\n        o[a0 * 128 + a1_co] = v4__u0;\n        float in1__u1 = x[a0 * 128 + (a1_co + 16)];\n        float v3__u1 = in1__u1 * v2;\n        float in2__u1 = w[a1_co + 16];\n        float v4__u1 = in2__u1 * v3__u1;\n        o[a0 * 128 + (a1_co + 16)] = v4__u1;\n        float in1__u2 = x[a0 * 128 + (a1_co + 32)];\n        float v3__u2 = in1__u2 * v2;\n        float in2__u2 = w[a1_co + 32];\n        float v4__u2 = in2__u2 * v3__u2;\n        o[a0 * 128 + (a1_co + 32)] = v4__u2;\n        float in1__u3 = x[a0 * 128 + (a1_co + 48)];\n        float v3__u3 = in1__u3 * v2;\n        float in2__u3 = w[a1_co + 48];\n        float v4__u3 = in2__u3 * v3__u3;\n        o[a0 * 128 + (a1_co + 48)] = v4__u3;\n        float in1__u4 = x[a0 * 128 + (a1_co + 64)];\n        float v3__u4 = in1__u4 * v2;\n        float in2__u4 = w[a1_co + 64];\n        float v4__u4 = in2__u4 * v3__u4;\n        o[a0 * 128 + (a1_co + 64)] = v4__u4;\n        float in1__u5 = x[a0 * 128 + (a1_co + 80)];\n        float v3__u5 = in1__u5 * v2;\n        float in2__u5 = w[a1_co + 80];\n        float v4__u5 = in2__u5 * v3__u5;\n        o[a0 * 128 + (a1_co + 80)] = v4__u5;\n        float in1__u6 = x[a0 * 128 + (a1_co + 96)];\n        float v3__u6 = in1__u6 * v2;\n        float in2__u6 = w[a1_co + 96];\n        float v4__u6 = in2__u6 * v3__u6;\n        o[a0 * 128 + (a1_co + 96)] = v4__u6;\n        float in1__u7 = x[a0 * 128 + (a1_co + 112)];\n        float v3__u7 = in1__u7 * v2;\n        float in2__u7 = w[a1_co + 112];\n        float v4__u7 = in2__u7 * v3__u7;\n        o[a0 * 128 + (a1_co + 112)] = v4__u7;\n}\n",
+        "kernel_name": "k_rms_norm_0687b4",
+        "arg_order": [
+          "x",
+          "w",
+          "o"
+        ],
+        "grid": [
+          [
+            1024
+          ],
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ],
+        "block": [
+          [
+            128
+          ],
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ],
+        "smem_bytes": 0,
+        "zero_outputs": [],
+        "zero_prologues": [],
+        "comment": "k_rms_norm_0687b4",
+        "tma_descriptors": [],
+        "runtime_args": [],
+        "serial": []
+      },
+      "inputs": [
+        "x",
+        "w"
+      ],
+      "outputs": [
+        {
+          "name": "o",
+          "shape": [
+            1,
+            16,
+            512,
+            128
+          ],
+          "dtype": "f32"
+        }
+      ],
+      "hints": {
+        "prov": {
+          "o": {
+            "kind": "LoopOp",
+            "pieces": [
+              "o"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

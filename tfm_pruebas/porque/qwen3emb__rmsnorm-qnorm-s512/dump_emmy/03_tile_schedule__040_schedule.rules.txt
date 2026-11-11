@@ -1,0 +1,14 @@
+>>> h:040_schedule
+@@ matched at o @@
+@@ -1,7 +1,8 @@
+ o = TileOp(x, w)
+-      place  free=(a0)  unmapped
++      place  free=(a0)  grid=(a0)
++      work   t16x8
+       Fold  free
+       ├─ operand[v2]: Fold  free   ‹computed›
+-      │  ├─ operand[acc0]: Fold[a1 in 0..128] reduce   ‹computed›
++      │  ├─ operand[acc0]: Fold[a1 in 0..128] reduce   ⟨REDUCE=coop/v4⟩   ‹computed›
+       │  │  ├─ operand[in0]: load x[0, a0 / 512, a0 % 512, a1]   ‹materialized›
+       │  │  ├─ init: (0)
+<<< h:040_schedule

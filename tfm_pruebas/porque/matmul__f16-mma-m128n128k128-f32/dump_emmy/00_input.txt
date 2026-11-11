@@ -1,0 +1,28 @@
+// 3 nodes, 2 inputs, 1 outputs
+
+struct Dynamic {}
+
+struct Inputs<dynamic: Dynamic> {
+    b: f16[128,128],
+    a: f16[128,128],
+}
+
+struct Outputs<dynamic: Dynamic> {
+    o: f32[128,128],
+}
+
+fn main(dynamic: Dynamic, inputs: Inputs<dynamic>) -> Outputs<dynamic> {
+  let o: f32[128,128]
+      = loop(inputs.b, inputs.a) {
+        for a0 in 0..128:
+            for a1 in 0..128:
+                for a2 in 0..128:
+                    in0 = load a[a0, a2]
+                    in1 = load b[a2, a1]
+                    f32 v0 = multiply(in0, in1)
+                    acc0 <- add(acc0, v0) over a2
+                o[a0, a1] = acc0
+  };
+
+  Outputs { o }
+}

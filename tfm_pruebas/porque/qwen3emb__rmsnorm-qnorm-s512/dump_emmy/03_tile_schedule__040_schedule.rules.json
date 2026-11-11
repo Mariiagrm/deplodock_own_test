@@ -1,0 +1,63 @@
+[
+  {
+    "root": "o",
+    "matched_pattern_nodes": {
+      "root": "o"
+    },
+    "before": [
+      {
+        "id": "o",
+        "op_class": "TileOp",
+        "inputs": [
+          "x",
+          "w"
+        ],
+        "output_shape": [
+          "1",
+          "16",
+          "512",
+          "128"
+        ],
+        "output_dtype": "f32"
+      }
+    ],
+    "after": [
+      {
+        "id": "w",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "128"
+        ],
+        "output_dtype": "f32"
+      },
+      {
+        "id": "x",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "1",
+          "16",
+          "512",
+          "128"
+        ],
+        "output_dtype": "f32"
+      },
+      {
+        "id": "o",
+        "op_class": "TileOp",
+        "inputs": [
+          "x",
+          "w"
+        ],
+        "output_shape": [
+          "1",
+          "16",
+          "512",
+          "128"
+        ],
+        "output_dtype": "f32"
+      }
+    ]
+  }
+]
