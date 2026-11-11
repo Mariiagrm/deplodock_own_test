@@ -1,0 +1,20 @@
+>>> k:030_stamp_types
+@@ matched at o @@
+@@ -25,10 +25,10 @@
+                   in0__c0_0 = load _a_smem[_ks / 128 % 2 * 8 + (a0_b * 8 + a0_u * 1 + 0 - a0_b * 8), _ki]
+                   in1__c0_0 = load _b_smem[_ks / 128 % 2 * 128 + _ki, a1_b * 32 + a1_u * 2 + 0 - a1_b * 32]
+-                  acc0__v__c0_0 = multiply(in1__c0_0, in0__c0_0)
+-                  acc0__c0_0 <- add(acc0__c0_0, acc0__v__c0_0) over _ki
++                  f32 acc0__v__c0_0 = multiply(in1__c0_0, in0__c0_0)
++                  f32 acc0__c0_0 <- add(acc0__c0_0, acc0__v__c0_0) over _ki
+                   in1__c0_1 = load _b_smem[_ks / 128 % 2 * 128 + _ki, a1_b * 32 + a1_u * 2 + 1 - a1_b * 32]
+-                  acc0__v__c0_1 = multiply(in1__c0_1, in0__c0_0)
+-                  acc0__c0_1 <- add(acc0__c0_1, acc0__v__c0_1) over _ki
++                  f32 acc0__v__c0_1 = multiply(in1__c0_1, in0__c0_0)
++                  f32 acc0__c0_1 <- add(acc0__c0_1, acc0__v__c0_1) over _ki
+               Sync
+-          o[0, a0_b * 8 + a0_u * 1 + 0, a1_b * 32 + a1_u * 2 + 0] = acc0__c0_0
+-          o[0, a0_b * 8 + a0_u * 1 + 0, a1_b * 32 + a1_u * 2 + 1] = acc0__c0_1
++          f32 o[0, a0_b * 8 + a0_u * 1 + 0, a1_b * 32 + a1_u * 2 + 0] = acc0__c0_0
++          f32 o[0, a0_b * 8 + a0_u * 1 + 0, a1_b * 32 + a1_u * 2 + 1] = acc0__c0_1
+<<< k:030_stamp_types

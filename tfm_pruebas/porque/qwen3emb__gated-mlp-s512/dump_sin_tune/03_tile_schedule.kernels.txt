@@ -1,0 +1,23 @@
+=== 0: k_matmul_reduce_17f7d4 ===
+    place  free=(a0, a1)  grid=(a0, a1)
+    work   t128
+    Fold  free
+    ├─ operand[acc0, acc1]: Fold[a2 in 0..1024] contraction   ⟨REDUCE=coop⟩   ‹computed›
+    │  ├─ operand[in0]: load x[0, a0, a2]   ‹materialized›
+    │  ├─ operand[in1]: load wg[a2, a1]   ‹materialized›
+    │  ├─ operand[in2]: load wu[a2, a1]   ‹materialized›
+    │  ├─ init: (0, 0)
+    │  ├─ lift: λ(a2, in0, in1, in2) -> (v0, v1)
+    │  │    v0 = multiply(in0, in1)
+    │  │    v1 = multiply(in0, in2)
+    │  └─ combine: λ(acc0, acc1, acc0__o, acc1__o) -> (acc0, acc1)
+    │       acc0 = add(acc0, acc0__o)
+    │       acc1 = add(acc1, acc1__o)
+    └─ lift: λ(acc0, acc1) -> (v6)
+         v2 = -acc0
+         v3 = exp(v2)
+         v4 = v3 + 1
+         v5 = divide(acc0, v4)
+         v6 = multiply(acc1, v5)
+    outputs
+    └─ o[0, a0, a1] = v6

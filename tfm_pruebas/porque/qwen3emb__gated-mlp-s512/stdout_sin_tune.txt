@@ -1,0 +1,10 @@
+
+Backend  Latency (us)
+---------------------
+Emmy            29096
+
+knobs (greedy pick); golden / ab rows are red where they differ from the greedy pick:
+Kernel                       us       %     grid  block  smem  regs  local B   occ  WORK  TILE  REDUCE  STAGE  LOOPIFY  RASTER  SHARED_CARRY
+k_matmul_reduce_17f7d4  29053.9  100.0%  1572864    128  0.0K    40        0  100%  t128          coop               0                     0
+TOTAL                   29053.9
+A/B record → tfm_pruebas/porque/qwen3emb__gated-mlp-s512/bench_sin_tune.json

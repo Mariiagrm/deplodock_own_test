@@ -1,0 +1,28 @@
+>>> k:030_stamp_types
+@@ matched at o @@
+@@ -2,8 +2,8 @@
+       Tile(axes=(a0 in 0..32, a1 in 0..1024, a2_co in 0..128), block_threads=128):
+           for a2 in a2_co..1024 step 128 unroll=true:
+-              in0 = load a[0, a0, a2]
+-              in1 = load b[a2, a1]
+-              v0 = multiply(in0, in1)
+-              acc0 <- add(acc0, v0) over a2
++              f32 in0 = load a[0, a0, a2]
++              f32 in1 = load b[a2, a1]
++              f32 v0 = multiply(in0, in1)
++              f32 acc0 <- add(acc0, v0) over a2
+           WarpShuffle(state=(acc0), state_b=(acc0__o), length=32):
+               combine_states:
+@@ -11,5 +11,5 @@
+           Smem(name=acc0_smem, extents=(4))
+           if lane == 0:
+-              acc0_smem[warp] = acc0
++              f32 acc0_smem[warp] = acc0
+           Sync
+           TreeHalve(bufs=(acc0_smem), state=(acc0), state_b=(acc0__o), length=4, tid_var=warp):
+@@ -17,3 +17,3 @@
+                   acc0 = add(acc0, acc0__o)
+           if a2_co == 0:
+-              o[0, a0, a1] = acc0
++              f32 o[0, a0, a1] = acc0
+<<< k:030_stamp_types

@@ -1,0 +1,56 @@
+>>> k:047_reuse_lane_loads
+@@ matched at o @@
+@@ -87,20 +87,40 @@
+               f32 _a_copy0, _a_copy1, _a_copy2, _a_copy3 = load x[0, a0_b * 80 + _fa * 4 / 32 < 512 ? a0_b * 80 + _fa * 4 / 32 : 512 - 1, 0 + _fa * 4 % 32]
+               f32 _a_smem[_fa * 4 / 32, _fa * 4 % 32] = (_a_copy0, _a_copy1, _a_copy2, _a_copy3)
+-          for _fb in a0_u * 32 + a1_u..1024 step 256:
+-              f32 _b_copy0, _b_copy1, _b_copy2, _b_copy3 = load wg[0 + _fb * 4 / 128, a1_b * 128 + _fb * 4 % 128]
+-              f32 _b_smem[_fb * 4 / 128, _fb * 4 % 128] = (_b_copy0, _b_copy1, _b_copy2, _b_copy3)
+-          for _fb_x1 in a0_u * 32 + a1_u..1024 step 256:
+-              f32 _b_x1_copy0, _b_x1_copy1, _b_x1_copy2, _b_x1_copy3 = load wu[0 + _fb_x1 * 4 / 128, a1_b * 128 + _fb_x1 * 4 % 128]
+-              f32 _b_x1_smem[_fb_x1 * 4 / 128, _fb_x1 * 4 % 128] = (_b_x1_copy0, _b_x1_copy1, _b_x1_copy2, _b_x1_copy3)
++          f32 _b_copy0__u0, _b_copy1__u0, _b_copy2__u0, _b_copy3__u0 = load wg[0 + (a0_u * 32 + a1_u + 0) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 0) * 4 % 128]
++          f32 _b_smem[(a0_u * 32 + a1_u + 0) * 4 / 128, (a0_u * 32 + a1_u + 0) * 4 % 128] = (_b_copy0__u0, _b_copy1__u0, _b_copy2__u0, _b_copy3__u0)
++          f32 _b_copy0__u1, _b_copy1__u1, _b_copy2__u1, _b_copy3__u1 = load wg[0 + (a0_u * 32 + a1_u + 256) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 256) * 4 % 128]
++          f32 _b_smem[(a0_u * 32 + a1_u + 256) * 4 / 128, (a0_u * 32 + a1_u + 256) * 4 % 128] = (_b_copy0__u1, _b_copy1__u1, _b_copy2__u1, _b_copy3__u1)
++          f32 _b_copy0__u2, _b_copy1__u2, _b_copy2__u2, _b_copy3__u2 = load wg[0 + (a0_u * 32 + a1_u + 512) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 512) * 4 % 128]
++          f32 _b_smem[(a0_u * 32 + a1_u + 512) * 4 / 128, (a0_u * 32 + a1_u + 512) * 4 % 128] = (_b_copy0__u2, _b_copy1__u2, _b_copy2__u2, _b_copy3__u2)
++          f32 _b_copy0__u3, _b_copy1__u3, _b_copy2__u3, _b_copy3__u3 = load wg[0 + (a0_u * 32 + a1_u + 768) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 768) * 4 % 128]
++          f32 _b_smem[(a0_u * 32 + a1_u + 768) * 4 / 128, (a0_u * 32 + a1_u + 768) * 4 % 128] = (_b_copy0__u3, _b_copy1__u3, _b_copy2__u3, _b_copy3__u3)
++          f32 _b_x1_copy0__u0, _b_x1_copy1__u0, _b_x1_copy2__u0, _b_x1_copy3__u0 = load wu[0 + (a0_u * 32 + a1_u + 0) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 0) * 4 % 128]
++          f32 _b_x1_smem[(a0_u * 32 + a1_u + 0) * 4 / 128, (a0_u * 32 + a1_u + 0) * 4 % 128] = (_b_x1_copy0__u0, _b_x1_copy1__u0, _b_x1_copy2__u0, _b_x1_copy3__u0)
++          f32 _b_x1_copy0__u1, _b_x1_copy1__u1, _b_x1_copy2__u1, _b_x1_copy3__u1 = load wu[0 + (a0_u * 32 + a1_u + 256) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 256) * 4 % 128]
++          f32 _b_x1_smem[(a0_u * 32 + a1_u + 256) * 4 / 128, (a0_u * 32 + a1_u + 256) * 4 % 128] = (_b_x1_copy0__u1, _b_x1_copy1__u1, _b_x1_copy2__u1, _b_x1_copy3__u1)
++          f32 _b_x1_copy0__u2, _b_x1_copy1__u2, _b_x1_copy2__u2, _b_x1_copy3__u2 = load wu[0 + (a0_u * 32 + a1_u + 512) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 512) * 4 % 128]
++          f32 _b_x1_smem[(a0_u * 32 + a1_u + 512) * 4 / 128, (a0_u * 32 + a1_u + 512) * 4 % 128] = (_b_x1_copy0__u2, _b_x1_copy1__u2, _b_x1_copy2__u2, _b_x1_copy3__u2)
++          f32 _b_x1_copy0__u3, _b_x1_copy1__u3, _b_x1_copy2__u3, _b_x1_copy3__u3 = load wu[0 + (a0_u * 32 + a1_u + 768) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 768) * 4 % 128]
++          f32 _b_x1_smem[(a0_u * 32 + a1_u + 768) * 4 / 128, (a0_u * 32 + a1_u + 768) * 4 % 128] = (_b_x1_copy0__u3, _b_x1_copy1__u3, _b_x1_copy2__u3, _b_x1_copy3__u3)
+           for _ks in 0..1024 step 32:
+               for _fa in a0_u * 32 + a1_u..640 step 256:
+                   f32 _a_copy0, _a_copy1, _a_copy2, _a_copy3 = load x[0, a0_b * 80 + _fa * 4 / 32 < 512 ? a0_b * 80 + _fa * 4 / 32 : 512 - 1, (_ks + 32 < 1024 ? _ks + 32 : 992) + _fa * 4 % 32]
+                   f32 _a_smem[(_ks / 32 + 1) % 2 * 80 + _fa * 4 / 32, _fa * 4 % 32] = (_a_copy0, _a_copy1, _a_copy2, _a_copy3)
+-              for _fb in a0_u * 32 + a1_u..1024 step 256:
+-                  f32 _b_copy0, _b_copy1, _b_copy2, _b_copy3 = load wg[(_ks + 32 < 1024 ? _ks + 32 : 992) + _fb * 4 / 128, a1_b * 128 + _fb * 4 % 128]
+-                  f32 _b_smem[(_ks / 32 + 1) % 2 * 32 + _fb * 4 / 128, _fb * 4 % 128] = (_b_copy0, _b_copy1, _b_copy2, _b_copy3)
+-              for _fb_x1 in a0_u * 32 + a1_u..1024 step 256:
+-                  f32 _b_x1_copy0, _b_x1_copy1, _b_x1_copy2, _b_x1_copy3 = load wu[(_ks + 32 < 1024 ? _ks + 32 : 992) + _fb_x1 * 4 / 128, a1_b * 128 + _fb_x1 * 4 % 128]
+-                  f32 _b_x1_smem[(_ks / 32 + 1) % 2 * 32 + _fb_x1 * 4 / 128, _fb_x1 * 4 % 128] = (_b_x1_copy0, _b_x1_copy1, _b_x1_copy2, _b_x1_copy3)
++              f32 _b_copy0__u0, _b_copy1__u0, _b_copy2__u0, _b_copy3__u0 = load wg[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 0) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 0) * 4 % 128]
++              f32 _b_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 0) * 4 / 128, (a0_u * 32 + a1_u + 0) * 4 % 128] = (_b_copy0__u0, _b_copy1__u0, _b_copy2__u0, _b_copy3__u0)
++              f32 _b_copy0__u1, _b_copy1__u1, _b_copy2__u1, _b_copy3__u1 = load wg[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 256) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 256) * 4 % 128]
++              f32 _b_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 256) * 4 / 128, (a0_u * 32 + a1_u + 256) * 4 % 128] = (_b_copy0__u1, _b_copy1__u1, _b_copy2__u1, _b_copy3__u1)
++              f32 _b_copy0__u2, _b_copy1__u2, _b_copy2__u2, _b_copy3__u2 = load wg[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 512) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 512) * 4 % 128]
++              f32 _b_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 512) * 4 / 128, (a0_u * 32 + a1_u + 512) * 4 % 128] = (_b_copy0__u2, _b_copy1__u2, _b_copy2__u2, _b_copy3__u2)
++              f32 _b_copy0__u3, _b_copy1__u3, _b_copy2__u3, _b_copy3__u3 = load wg[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 768) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 768) * 4 % 128]
++              f32 _b_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 768) * 4 / 128, (a0_u * 32 + a1_u + 768) * 4 % 128] = (_b_copy0__u3, _b_copy1__u3, _b_copy2__u3, _b_copy3__u3)
++              f32 _b_x1_copy0__u0, _b_x1_copy1__u0, _b_x1_copy2__u0, _b_x1_copy3__u0 = load wu[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 0) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 0) * 4 % 128]
++              f32 _b_x1_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 0) * 4 / 128, (a0_u * 32 + a1_u + 0) * 4 % 128] = (_b_x1_copy0__u0, _b_x1_copy1__u0, _b_x1_copy2__u0, _b_x1_copy3__u0)
++              f32 _b_x1_copy0__u1, _b_x1_copy1__u1, _b_x1_copy2__u1, _b_x1_copy3__u1 = load wu[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 256) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 256) * 4 % 128]
++              f32 _b_x1_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 256) * 4 / 128, (a0_u * 32 + a1_u + 256) * 4 % 128] = (_b_x1_copy0__u1, _b_x1_copy1__u1, _b_x1_copy2__u1, _b_x1_copy3__u1)
++              f32 _b_x1_copy0__u2, _b_x1_copy1__u2, _b_x1_copy2__u2, _b_x1_copy3__u2 = load wu[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 512) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 512) * 4 % 128]
++              f32 _b_x1_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 512) * 4 / 128, (a0_u * 32 + a1_u + 512) * 4 % 128] = (_b_x1_copy0__u2, _b_x1_copy1__u2, _b_x1_copy2__u2, _b_x1_copy3__u2)
++              f32 _b_x1_copy0__u3, _b_x1_copy1__u3, _b_x1_copy2__u3, _b_x1_copy3__u3 = load wu[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 768) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 768) * 4 % 128]
++              f32 _b_x1_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 768) * 4 / 128, (a0_u * 32 + a1_u + 768) * 4 % 128] = (_b_x1_copy0__u3, _b_x1_copy1__u3, _b_x1_copy2__u3, _b_x1_copy3__u3)
+               Sync
+               for _ki in 0..32 unroll=true seed=false:
+<<< k:047_reuse_lane_loads

@@ -1,0 +1,16 @@
+    for a0 in 0..512:
+        for a1 in 0..3072:
+            for a2 in 0..1024:
+                in0 = load x[0, a0, a2]
+                in1 = load wg[a2, a1]
+                v0 = multiply(in1, in0)
+                acc0 <- add(acc0, v0) over a2
+                in2 = load wu[a2, a1]
+                v1 = multiply(in2, in0)
+                acc1 <- add(acc1, v1) over a2
+            v2 = -acc0
+            v3 = exp(v2)
+            v4 = v3 + 1
+            v5 = divide(acc0, v4)
+            v6 = multiply(acc1, v5)
+            o[0, a0, a1] = v6

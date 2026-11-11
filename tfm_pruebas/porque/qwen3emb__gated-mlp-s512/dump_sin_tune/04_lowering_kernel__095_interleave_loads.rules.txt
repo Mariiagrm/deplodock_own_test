@@ -1,0 +1,67 @@
+>>> k:095_interleave_loads
+@@ matched at o @@
+@@ -5,6 +5,6 @@
+           f32 in0__u0 = load x[0, a0, a2_co]
+           f32 in1__u0 = load wg[a2_co, a1]
++          f32 v0__u0 = multiply(in0__u0, in1__u0)
+           f32 in2__u0 = load wu[a2_co, a1]
+-          f32 v0__u0 = multiply(in0__u0, in1__u0)
+           f32 v1__u0 = multiply(in0__u0, in2__u0)
+           f32 acc0 <- add(acc0, v0__u0) over a2_co
+@@ -12,6 +12,6 @@
+           f32 in0__u1 = load x[0, a0, a2_co + 128]
+           f32 in1__u1 = load wg[a2_co + 128, a1]
++          f32 v0__u1 = multiply(in0__u1, in1__u1)
+           f32 in2__u1 = load wu[a2_co + 128, a1]
+-          f32 v0__u1 = multiply(in0__u1, in1__u1)
+           f32 v1__u1 = multiply(in0__u1, in2__u1)
+           f32 acc0 <- add(acc0, v0__u1) over a2_co
+@@ -19,6 +19,6 @@
+           f32 in0__u2 = load x[0, a0, a2_co + 256]
+           f32 in1__u2 = load wg[a2_co + 256, a1]
++          f32 v0__u2 = multiply(in0__u2, in1__u2)
+           f32 in2__u2 = load wu[a2_co + 256, a1]
+-          f32 v0__u2 = multiply(in0__u2, in1__u2)
+           f32 v1__u2 = multiply(in0__u2, in2__u2)
+           f32 acc0 <- add(acc0, v0__u2) over a2_co
+@@ -26,6 +26,6 @@
+           f32 in0__u3 = load x[0, a0, a2_co + 384]
+           f32 in1__u3 = load wg[a2_co + 384, a1]
++          f32 v0__u3 = multiply(in0__u3, in1__u3)
+           f32 in2__u3 = load wu[a2_co + 384, a1]
+-          f32 v0__u3 = multiply(in0__u3, in1__u3)
+           f32 v1__u3 = multiply(in0__u3, in2__u3)
+           f32 acc0 <- add(acc0, v0__u3) over a2_co
+@@ -33,6 +33,6 @@
+           f32 in0__u4 = load x[0, a0, a2_co + 512]
+           f32 in1__u4 = load wg[a2_co + 512, a1]
++          f32 v0__u4 = multiply(in0__u4, in1__u4)
+           f32 in2__u4 = load wu[a2_co + 512, a1]
+-          f32 v0__u4 = multiply(in0__u4, in1__u4)
+           f32 v1__u4 = multiply(in0__u4, in2__u4)
+           f32 acc0 <- add(acc0, v0__u4) over a2_co
+@@ -40,6 +40,6 @@
+           f32 in0__u5 = load x[0, a0, a2_co + 640]
+           f32 in1__u5 = load wg[a2_co + 640, a1]
++          f32 v0__u5 = multiply(in0__u5, in1__u5)
+           f32 in2__u5 = load wu[a2_co + 640, a1]
+-          f32 v0__u5 = multiply(in0__u5, in1__u5)
+           f32 v1__u5 = multiply(in0__u5, in2__u5)
+           f32 acc0 <- add(acc0, v0__u5) over a2_co
+@@ -47,6 +47,6 @@
+           f32 in0__u6 = load x[0, a0, a2_co + 768]
+           f32 in1__u6 = load wg[a2_co + 768, a1]
++          f32 v0__u6 = multiply(in0__u6, in1__u6)
+           f32 in2__u6 = load wu[a2_co + 768, a1]
+-          f32 v0__u6 = multiply(in0__u6, in1__u6)
+           f32 v1__u6 = multiply(in0__u6, in2__u6)
+           f32 acc0 <- add(acc0, v0__u6) over a2_co
+@@ -54,6 +54,6 @@
+           f32 in0__u7 = load x[0, a0, a2_co + 896]
+           f32 in1__u7 = load wg[a2_co + 896, a1]
++          f32 v0__u7 = multiply(in0__u7, in1__u7)
+           f32 in2__u7 = load wu[a2_co + 896, a1]
+-          f32 v0__u7 = multiply(in0__u7, in1__u7)
+           f32 v1__u7 = multiply(in0__u7, in2__u7)
+           f32 acc0 <- add(acc0, v0__u7) over a2_co
+<<< k:095_interleave_loads

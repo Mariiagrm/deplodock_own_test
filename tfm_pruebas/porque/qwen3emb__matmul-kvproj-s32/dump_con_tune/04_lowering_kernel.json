@@ -1,0 +1,76 @@
+{
+  "inputs": [
+    "b",
+    "a"
+  ],
+  "outputs": [
+    "o"
+  ],
+  "nodes": {
+    "a": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "a",
+          "shape": [
+            1,
+            32,
+            1024
+          ],
+          "dtype": "f32"
+        }
+      ]
+    },
+    "b": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "b",
+          "shape": [
+            1024,
+            1024
+          ],
+          "dtype": "f32"
+        }
+      ]
+    },
+    "o": {
+      "op": "KernelOp",
+      "op_fields": {
+        "body": "Tile(axes=(a0_b in 0..4 window(parent=a0 in 0..32), a1_b in 0..32 window(parent=a1 in 0..1024), a0_u in 0..8, a1_u in 0..16), block_threads=128, raster_axes=(a0_b, a1_b)):\n    init f32 acc0__c0_0 = 0\n    init f32 acc0__c0_1 = 0\n    TmaDescriptor(name=_desc_a, src_buf=a, src_shape=(), box_extents=(1, 8, 128))\n    TmaDescriptor(name=_desc_b, src_buf=b, src_shape=(), box_extents=(128, 32))\n    Smem(name=_a_smem, extents=(16, 128), align=128)\n    Smem(name=_b_smem, extents=(256, 32), align=128)\n    Smem(name=_mbar, extents=(2), dtype=`unsigned long long`)\n    if a0_u * 16 + a1_u == 0:\n        MbarrierInit(mbar=_mbar, slot=0)\n        MbarrierInit(mbar=_mbar, slot=1)\n    Sync\n    if a0_u * 16 + a1_u == 0:\n        MbarrierArriveExpectTx(mbar=_mbar, bytes_=20480, slot=0)\n        TmaLoad(smem=_a_smem, smem_index=(0, 0), desc=_desc_a, coords=(0, a0_b * 8, 0), mbar=_mbar, mbar_slot=0)\n        TmaLoad(smem=_b_smem, smem_index=(0, 0), desc=_desc_b, coords=(0, a1_b * 32), mbar=_mbar, mbar_slot=0)\n    for _ks in 0..1024 step 128:\n        if a0_u * 16 + a1_u == 0:\n            MbarrierArriveExpectTx(mbar=_mbar, bytes_=20480, slot=(_ks / 128 + 1) % 2)\n            TmaLoad(smem=_a_smem, smem_index=((_ks / 128 + 1) % 2 * 8, 0), desc=_desc_a, coords=(0, a0_b * 8, _ks + 128 < 1024 ? _ks + 128 : 896), mbar=_mbar, mbar_slot=(_ks / 128 + 1) % 2)\n            TmaLoad(smem=_b_smem, smem_index=((_ks / 128 + 1) % 2 * 128, 0), desc=_desc_b, coords=(_ks + 128 < 1024 ? _ks + 128 : 896, a1_b * 32), mbar=_mbar, mbar_slot=(_ks / 128 + 1) % 2)\n        MbarrierWait(mbar=_mbar, phase=_ks / 128 / 2 % 2, slot=_ks / 128 % 2)\n        for _ki in 0..128 seed=false:\n            in0__c0_0 = load _a_smem[_ks / 128 % 2 * 8 + (a0_b * 8 + a0_u * 1 + 0 - a0_b * 8), _ki]\n            in1__c0_0 = load _b_smem[_ks / 128 % 2 * 128 + _ki, a1_b * 32 + a1_u * 2 + 0 - a1_b * 32]\n            f32 acc0__v__c0_0 = multiply(in1__c0_0, in0__c0_0)\n            f32 acc0__c0_0 <- add(acc0__c0_0, acc0__v__c0_0) over _ki\n            in1__c0_1 = load _b_smem[_ks / 128 % 2 * 128 + _ki, a1_b * 32 + a1_u * 2 + 1 - a1_b * 32]\n            f32 acc0__v__c0_1 = multiply(in1__c0_1, in0__c0_0)\n            f32 acc0__c0_1 <- add(acc0__c0_1, acc0__v__c0_1) over _ki\n        Sync\n    f32 o[0, a0_b * 8 + a0_u * 1 + 0, a1_b * 32 + a1_u * 2 + 0] = (acc0__c0_0, acc0__c0_1)",
+        "name": "k_matmul_1220f5",
+        "zero_delegated": [],
+        "serial": []
+      },
+      "inputs": [
+        "b",
+        "a"
+      ],
+      "outputs": [
+        {
+          "name": "o",
+          "shape": [
+            1,
+            32,
+            1024
+          ],
+          "dtype": "f32"
+        }
+      ],
+      "hints": {
+        "prov": {
+          "o": {
+            "kind": "LoopOp",
+            "pieces": [
+              "o"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

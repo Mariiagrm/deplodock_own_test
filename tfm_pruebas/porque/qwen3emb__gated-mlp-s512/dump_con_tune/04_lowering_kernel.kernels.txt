@@ -1,0 +1,625 @@
+=== 0: k_matmul_reduce_17f7d4 ===
+    Tile(axes=(a0_b in 0..7 window(parent=a0 in 0..512), a1_b in 0..24 window(parent=a1 in 0..3072), a0_u in 0..8, a1_u in 0..32), block_threads=256, raster_axes=(a0_b, a1_b)):
+        init f32 acc0__c0_0 = 0
+        init f32 acc0__c0_1 = 0
+        init f32 acc0__c0_2 = 0
+        init f32 acc0__c0_3 = 0
+        init f32 acc0__c1_0 = 0
+        init f32 acc0__c1_1 = 0
+        init f32 acc0__c1_2 = 0
+        init f32 acc0__c1_3 = 0
+        init f32 acc0__c2_0 = 0
+        init f32 acc0__c2_1 = 0
+        init f32 acc0__c2_2 = 0
+        init f32 acc0__c2_3 = 0
+        init f32 acc0__c3_0 = 0
+        init f32 acc0__c3_1 = 0
+        init f32 acc0__c3_2 = 0
+        init f32 acc0__c3_3 = 0
+        init f32 acc0__c4_0 = 0
+        init f32 acc0__c4_1 = 0
+        init f32 acc0__c4_2 = 0
+        init f32 acc0__c4_3 = 0
+        init f32 acc0__c5_0 = 0
+        init f32 acc0__c5_1 = 0
+        init f32 acc0__c5_2 = 0
+        init f32 acc0__c5_3 = 0
+        init f32 acc0__c6_0 = 0
+        init f32 acc0__c6_1 = 0
+        init f32 acc0__c6_2 = 0
+        init f32 acc0__c6_3 = 0
+        init f32 acc0__c7_0 = 0
+        init f32 acc0__c7_1 = 0
+        init f32 acc0__c7_2 = 0
+        init f32 acc0__c7_3 = 0
+        init f32 acc0__c8_0 = 0
+        init f32 acc0__c8_1 = 0
+        init f32 acc0__c8_2 = 0
+        init f32 acc0__c8_3 = 0
+        init f32 acc0__c9_0 = 0
+        init f32 acc0__c9_1 = 0
+        init f32 acc0__c9_2 = 0
+        init f32 acc0__c9_3 = 0
+        init f32 acc1__c0_0 = 0
+        init f32 acc1__c0_1 = 0
+        init f32 acc1__c0_2 = 0
+        init f32 acc1__c0_3 = 0
+        init f32 acc1__c1_0 = 0
+        init f32 acc1__c1_1 = 0
+        init f32 acc1__c1_2 = 0
+        init f32 acc1__c1_3 = 0
+        init f32 acc1__c2_0 = 0
+        init f32 acc1__c2_1 = 0
+        init f32 acc1__c2_2 = 0
+        init f32 acc1__c2_3 = 0
+        init f32 acc1__c3_0 = 0
+        init f32 acc1__c3_1 = 0
+        init f32 acc1__c3_2 = 0
+        init f32 acc1__c3_3 = 0
+        init f32 acc1__c4_0 = 0
+        init f32 acc1__c4_1 = 0
+        init f32 acc1__c4_2 = 0
+        init f32 acc1__c4_3 = 0
+        init f32 acc1__c5_0 = 0
+        init f32 acc1__c5_1 = 0
+        init f32 acc1__c5_2 = 0
+        init f32 acc1__c5_3 = 0
+        init f32 acc1__c6_0 = 0
+        init f32 acc1__c6_1 = 0
+        init f32 acc1__c6_2 = 0
+        init f32 acc1__c6_3 = 0
+        init f32 acc1__c7_0 = 0
+        init f32 acc1__c7_1 = 0
+        init f32 acc1__c7_2 = 0
+        init f32 acc1__c7_3 = 0
+        init f32 acc1__c8_0 = 0
+        init f32 acc1__c8_1 = 0
+        init f32 acc1__c8_2 = 0
+        init f32 acc1__c8_3 = 0
+        init f32 acc1__c9_0 = 0
+        init f32 acc1__c9_1 = 0
+        init f32 acc1__c9_2 = 0
+        init f32 acc1__c9_3 = 0
+        Smem(name=_a_smem, extents=(160, 36), align=16)
+        Smem(name=_b_smem, extents=(64, 128), align=16)
+        Smem(name=_b_x1_smem, extents=(64, 128), align=16)
+        for _fa in a0_u * 32 + a1_u..640 step 256:
+            f32 _a_copy0, _a_copy1, _a_copy2, _a_copy3 = load x[0, a0_b * 80 + _fa * 4 / 32 < 512 ? a0_b * 80 + _fa * 4 / 32 : 512 - 1, 0 + _fa * 4 % 32]
+            f32 _a_smem[_fa * 4 / 32, _fa * 4 % 32] = (_a_copy0, _a_copy1, _a_copy2, _a_copy3)
+        f32 _b_copy0__u0, _b_copy1__u0, _b_copy2__u0, _b_copy3__u0 = load wg[0 + (a0_u * 32 + a1_u + 0) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 0) * 4 % 128]
+        f32 _b_smem[(a0_u * 32 + a1_u + 0) * 4 / 128, (a0_u * 32 + a1_u + 0) * 4 % 128] = (_b_copy0__u0, _b_copy1__u0, _b_copy2__u0, _b_copy3__u0)
+        f32 _b_copy0__u1, _b_copy1__u1, _b_copy2__u1, _b_copy3__u1 = load wg[0 + (a0_u * 32 + a1_u + 256) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 256) * 4 % 128]
+        f32 _b_smem[(a0_u * 32 + a1_u + 256) * 4 / 128, (a0_u * 32 + a1_u + 256) * 4 % 128] = (_b_copy0__u1, _b_copy1__u1, _b_copy2__u1, _b_copy3__u1)
+        f32 _b_copy0__u2, _b_copy1__u2, _b_copy2__u2, _b_copy3__u2 = load wg[0 + (a0_u * 32 + a1_u + 512) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 512) * 4 % 128]
+        f32 _b_smem[(a0_u * 32 + a1_u + 512) * 4 / 128, (a0_u * 32 + a1_u + 512) * 4 % 128] = (_b_copy0__u2, _b_copy1__u2, _b_copy2__u2, _b_copy3__u2)
+        f32 _b_copy0__u3, _b_copy1__u3, _b_copy2__u3, _b_copy3__u3 = load wg[0 + (a0_u * 32 + a1_u + 768) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 768) * 4 % 128]
+        f32 _b_smem[(a0_u * 32 + a1_u + 768) * 4 / 128, (a0_u * 32 + a1_u + 768) * 4 % 128] = (_b_copy0__u3, _b_copy1__u3, _b_copy2__u3, _b_copy3__u3)
+        f32 _b_x1_copy0__u0, _b_x1_copy1__u0, _b_x1_copy2__u0, _b_x1_copy3__u0 = load wu[0 + (a0_u * 32 + a1_u + 0) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 0) * 4 % 128]
+        f32 _b_x1_smem[(a0_u * 32 + a1_u + 0) * 4 / 128, (a0_u * 32 + a1_u + 0) * 4 % 128] = (_b_x1_copy0__u0, _b_x1_copy1__u0, _b_x1_copy2__u0, _b_x1_copy3__u0)
+        f32 _b_x1_copy0__u1, _b_x1_copy1__u1, _b_x1_copy2__u1, _b_x1_copy3__u1 = load wu[0 + (a0_u * 32 + a1_u + 256) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 256) * 4 % 128]
+        f32 _b_x1_smem[(a0_u * 32 + a1_u + 256) * 4 / 128, (a0_u * 32 + a1_u + 256) * 4 % 128] = (_b_x1_copy0__u1, _b_x1_copy1__u1, _b_x1_copy2__u1, _b_x1_copy3__u1)
+        f32 _b_x1_copy0__u2, _b_x1_copy1__u2, _b_x1_copy2__u2, _b_x1_copy3__u2 = load wu[0 + (a0_u * 32 + a1_u + 512) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 512) * 4 % 128]
+        f32 _b_x1_smem[(a0_u * 32 + a1_u + 512) * 4 / 128, (a0_u * 32 + a1_u + 512) * 4 % 128] = (_b_x1_copy0__u2, _b_x1_copy1__u2, _b_x1_copy2__u2, _b_x1_copy3__u2)
+        f32 _b_x1_copy0__u3, _b_x1_copy1__u3, _b_x1_copy2__u3, _b_x1_copy3__u3 = load wu[0 + (a0_u * 32 + a1_u + 768) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 768) * 4 % 128]
+        f32 _b_x1_smem[(a0_u * 32 + a1_u + 768) * 4 / 128, (a0_u * 32 + a1_u + 768) * 4 % 128] = (_b_x1_copy0__u3, _b_x1_copy1__u3, _b_x1_copy2__u3, _b_x1_copy3__u3)
+        for _ks in 0..1024 step 32:
+            for _fa in a0_u * 32 + a1_u..640 step 256:
+                f32 _a_copy0, _a_copy1, _a_copy2, _a_copy3 = load x[0, a0_b * 80 + _fa * 4 / 32 < 512 ? a0_b * 80 + _fa * 4 / 32 : 512 - 1, (_ks + 32 < 1024 ? _ks + 32 : 992) + _fa * 4 % 32]
+                f32 _a_smem[(_ks / 32 + 1) % 2 * 80 + _fa * 4 / 32, _fa * 4 % 32] = (_a_copy0, _a_copy1, _a_copy2, _a_copy3)
+            f32 _b_copy0__u0, _b_copy1__u0, _b_copy2__u0, _b_copy3__u0 = load wg[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 0) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 0) * 4 % 128]
+            f32 _b_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 0) * 4 / 128, (a0_u * 32 + a1_u + 0) * 4 % 128] = (_b_copy0__u0, _b_copy1__u0, _b_copy2__u0, _b_copy3__u0)
+            f32 _b_copy0__u1, _b_copy1__u1, _b_copy2__u1, _b_copy3__u1 = load wg[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 256) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 256) * 4 % 128]
+            f32 _b_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 256) * 4 / 128, (a0_u * 32 + a1_u + 256) * 4 % 128] = (_b_copy0__u1, _b_copy1__u1, _b_copy2__u1, _b_copy3__u1)
+            f32 _b_copy0__u2, _b_copy1__u2, _b_copy2__u2, _b_copy3__u2 = load wg[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 512) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 512) * 4 % 128]
+            f32 _b_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 512) * 4 / 128, (a0_u * 32 + a1_u + 512) * 4 % 128] = (_b_copy0__u2, _b_copy1__u2, _b_copy2__u2, _b_copy3__u2)
+            f32 _b_copy0__u3, _b_copy1__u3, _b_copy2__u3, _b_copy3__u3 = load wg[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 768) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 768) * 4 % 128]
+            f32 _b_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 768) * 4 / 128, (a0_u * 32 + a1_u + 768) * 4 % 128] = (_b_copy0__u3, _b_copy1__u3, _b_copy2__u3, _b_copy3__u3)
+            f32 _b_x1_copy0__u0, _b_x1_copy1__u0, _b_x1_copy2__u0, _b_x1_copy3__u0 = load wu[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 0) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 0) * 4 % 128]
+            f32 _b_x1_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 0) * 4 / 128, (a0_u * 32 + a1_u + 0) * 4 % 128] = (_b_x1_copy0__u0, _b_x1_copy1__u0, _b_x1_copy2__u0, _b_x1_copy3__u0)
+            f32 _b_x1_copy0__u1, _b_x1_copy1__u1, _b_x1_copy2__u1, _b_x1_copy3__u1 = load wu[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 256) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 256) * 4 % 128]
+            f32 _b_x1_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 256) * 4 / 128, (a0_u * 32 + a1_u + 256) * 4 % 128] = (_b_x1_copy0__u1, _b_x1_copy1__u1, _b_x1_copy2__u1, _b_x1_copy3__u1)
+            f32 _b_x1_copy0__u2, _b_x1_copy1__u2, _b_x1_copy2__u2, _b_x1_copy3__u2 = load wu[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 512) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 512) * 4 % 128]
+            f32 _b_x1_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 512) * 4 / 128, (a0_u * 32 + a1_u + 512) * 4 % 128] = (_b_x1_copy0__u2, _b_x1_copy1__u2, _b_x1_copy2__u2, _b_x1_copy3__u2)
+            f32 _b_x1_copy0__u3, _b_x1_copy1__u3, _b_x1_copy2__u3, _b_x1_copy3__u3 = load wu[(_ks + 32 < 1024 ? _ks + 32 : 992) + (a0_u * 32 + a1_u + 768) * 4 / 128, a1_b * 128 + (a0_u * 32 + a1_u + 768) * 4 % 128]
+            f32 _b_x1_smem[(_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 768) * 4 / 128, (a0_u * 32 + a1_u + 768) * 4 % 128] = (_b_x1_copy0__u3, _b_x1_copy1__u3, _b_x1_copy2__u3, _b_x1_copy3__u3)
+            Sync
+            for _ki in 0..32 unroll=true seed=false:
+                in0__c0_0 = load _a_smem[_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 0 - a0_b * 80), _ki]
+                in1__c0_0 = load _b_smem[_ks / 32 % 2 * 32 + _ki, a1_b * 128 + a1_u * 4 + 0 - a1_b * 128]
+                f32 acc0__v__c0_0 = multiply(in1__c0_0, in0__c0_0)
+                f32 acc0__c0_0 <- add(acc0__c0_0, acc0__v__c0_0) over _ki
+                in2__c0_0 = load _b_x1_smem[_ks / 32 % 2 * 32 + _ki, a1_b * 128 + a1_u * 4 + 0 - a1_b * 128]
+                f32 acc1__v__c0_0 = multiply(in2__c0_0, in0__c0_0)
+                f32 acc1__c0_0 <- add(acc1__c0_0, acc1__v__c0_0) over _ki
+                in1__c0_1 = load _b_smem[_ks / 32 % 2 * 32 + _ki, a1_b * 128 + a1_u * 4 + 1 - a1_b * 128]
+                f32 acc0__v__c0_1 = multiply(in1__c0_1, in0__c0_0)
+                f32 acc0__c0_1 <- add(acc0__c0_1, acc0__v__c0_1) over _ki
+                in2__c0_1 = load _b_x1_smem[_ks / 32 % 2 * 32 + _ki, a1_b * 128 + a1_u * 4 + 1 - a1_b * 128]
+                f32 acc1__v__c0_1 = multiply(in2__c0_1, in0__c0_0)
+                f32 acc1__c0_1 <- add(acc1__c0_1, acc1__v__c0_1) over _ki
+                in1__c0_2 = load _b_smem[_ks / 32 % 2 * 32 + _ki, a1_b * 128 + a1_u * 4 + 2 - a1_b * 128]
+                f32 acc0__v__c0_2 = multiply(in1__c0_2, in0__c0_0)
+                f32 acc0__c0_2 <- add(acc0__c0_2, acc0__v__c0_2) over _ki
+                in2__c0_2 = load _b_x1_smem[_ks / 32 % 2 * 32 + _ki, a1_b * 128 + a1_u * 4 + 2 - a1_b * 128]
+                f32 acc1__v__c0_2 = multiply(in2__c0_2, in0__c0_0)
+                f32 acc1__c0_2 <- add(acc1__c0_2, acc1__v__c0_2) over _ki
+                in1__c0_3 = load _b_smem[_ks / 32 % 2 * 32 + _ki, a1_b * 128 + a1_u * 4 + 3 - a1_b * 128]
+                f32 acc0__v__c0_3 = multiply(in1__c0_3, in0__c0_0)
+                f32 acc0__c0_3 <- add(acc0__c0_3, acc0__v__c0_3) over _ki
+                in2__c0_3 = load _b_x1_smem[_ks / 32 % 2 * 32 + _ki, a1_b * 128 + a1_u * 4 + 3 - a1_b * 128]
+                f32 acc1__v__c0_3 = multiply(in2__c0_3, in0__c0_0)
+                f32 acc1__c0_3 <- add(acc1__c0_3, acc1__v__c0_3) over _ki
+                in0__c1_0 = load _a_smem[_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 1 - a0_b * 80), _ki]
+                f32 acc0__v__c1_0 = multiply(in1__c0_0, in0__c1_0)
+                f32 acc0__c1_0 <- add(acc0__c1_0, acc0__v__c1_0) over _ki
+                f32 acc1__v__c1_0 = multiply(in2__c0_0, in0__c1_0)
+                f32 acc1__c1_0 <- add(acc1__c1_0, acc1__v__c1_0) over _ki
+                f32 acc0__v__c1_1 = multiply(in1__c0_1, in0__c1_0)
+                f32 acc0__c1_1 <- add(acc0__c1_1, acc0__v__c1_1) over _ki
+                f32 acc1__v__c1_1 = multiply(in2__c0_1, in0__c1_0)
+                f32 acc1__c1_1 <- add(acc1__c1_1, acc1__v__c1_1) over _ki
+                f32 acc0__v__c1_2 = multiply(in1__c0_2, in0__c1_0)
+                f32 acc0__c1_2 <- add(acc0__c1_2, acc0__v__c1_2) over _ki
+                f32 acc1__v__c1_2 = multiply(in2__c0_2, in0__c1_0)
+                f32 acc1__c1_2 <- add(acc1__c1_2, acc1__v__c1_2) over _ki
+                f32 acc0__v__c1_3 = multiply(in1__c0_3, in0__c1_0)
+                f32 acc0__c1_3 <- add(acc0__c1_3, acc0__v__c1_3) over _ki
+                f32 acc1__v__c1_3 = multiply(in2__c0_3, in0__c1_0)
+                f32 acc1__c1_3 <- add(acc1__c1_3, acc1__v__c1_3) over _ki
+                in0__c2_0 = load _a_smem[_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 2 - a0_b * 80), _ki]
+                f32 acc0__v__c2_0 = multiply(in1__c0_0, in0__c2_0)
+                f32 acc0__c2_0 <- add(acc0__c2_0, acc0__v__c2_0) over _ki
+                f32 acc1__v__c2_0 = multiply(in2__c0_0, in0__c2_0)
+                f32 acc1__c2_0 <- add(acc1__c2_0, acc1__v__c2_0) over _ki
+                f32 acc0__v__c2_1 = multiply(in1__c0_1, in0__c2_0)
+                f32 acc0__c2_1 <- add(acc0__c2_1, acc0__v__c2_1) over _ki
+                f32 acc1__v__c2_1 = multiply(in2__c0_1, in0__c2_0)
+                f32 acc1__c2_1 <- add(acc1__c2_1, acc1__v__c2_1) over _ki
+                f32 acc0__v__c2_2 = multiply(in1__c0_2, in0__c2_0)
+                f32 acc0__c2_2 <- add(acc0__c2_2, acc0__v__c2_2) over _ki
+                f32 acc1__v__c2_2 = multiply(in2__c0_2, in0__c2_0)
+                f32 acc1__c2_2 <- add(acc1__c2_2, acc1__v__c2_2) over _ki
+                f32 acc0__v__c2_3 = multiply(in1__c0_3, in0__c2_0)
+                f32 acc0__c2_3 <- add(acc0__c2_3, acc0__v__c2_3) over _ki
+                f32 acc1__v__c2_3 = multiply(in2__c0_3, in0__c2_0)
+                f32 acc1__c2_3 <- add(acc1__c2_3, acc1__v__c2_3) over _ki
+                in0__c3_0 = load _a_smem[_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 3 - a0_b * 80), _ki]
+                f32 acc0__v__c3_0 = multiply(in1__c0_0, in0__c3_0)
+                f32 acc0__c3_0 <- add(acc0__c3_0, acc0__v__c3_0) over _ki
+                f32 acc1__v__c3_0 = multiply(in2__c0_0, in0__c3_0)
+                f32 acc1__c3_0 <- add(acc1__c3_0, acc1__v__c3_0) over _ki
+                f32 acc0__v__c3_1 = multiply(in1__c0_1, in0__c3_0)
+                f32 acc0__c3_1 <- add(acc0__c3_1, acc0__v__c3_1) over _ki
+                f32 acc1__v__c3_1 = multiply(in2__c0_1, in0__c3_0)
+                f32 acc1__c3_1 <- add(acc1__c3_1, acc1__v__c3_1) over _ki
+                f32 acc0__v__c3_2 = multiply(in1__c0_2, in0__c3_0)
+                f32 acc0__c3_2 <- add(acc0__c3_2, acc0__v__c3_2) over _ki
+                f32 acc1__v__c3_2 = multiply(in2__c0_2, in0__c3_0)
+                f32 acc1__c3_2 <- add(acc1__c3_2, acc1__v__c3_2) over _ki
+                f32 acc0__v__c3_3 = multiply(in1__c0_3, in0__c3_0)
+                f32 acc0__c3_3 <- add(acc0__c3_3, acc0__v__c3_3) over _ki
+                f32 acc1__v__c3_3 = multiply(in2__c0_3, in0__c3_0)
+                f32 acc1__c3_3 <- add(acc1__c3_3, acc1__v__c3_3) over _ki
+                in0__c4_0 = load _a_smem[_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 4 - a0_b * 80), _ki]
+                f32 acc0__v__c4_0 = multiply(in1__c0_0, in0__c4_0)
+                f32 acc0__c4_0 <- add(acc0__c4_0, acc0__v__c4_0) over _ki
+                f32 acc1__v__c4_0 = multiply(in2__c0_0, in0__c4_0)
+                f32 acc1__c4_0 <- add(acc1__c4_0, acc1__v__c4_0) over _ki
+                f32 acc0__v__c4_1 = multiply(in1__c0_1, in0__c4_0)
+                f32 acc0__c4_1 <- add(acc0__c4_1, acc0__v__c4_1) over _ki
+                f32 acc1__v__c4_1 = multiply(in2__c0_1, in0__c4_0)
+                f32 acc1__c4_1 <- add(acc1__c4_1, acc1__v__c4_1) over _ki
+                f32 acc0__v__c4_2 = multiply(in1__c0_2, in0__c4_0)
+                f32 acc0__c4_2 <- add(acc0__c4_2, acc0__v__c4_2) over _ki
+                f32 acc1__v__c4_2 = multiply(in2__c0_2, in0__c4_0)
+                f32 acc1__c4_2 <- add(acc1__c4_2, acc1__v__c4_2) over _ki
+                f32 acc0__v__c4_3 = multiply(in1__c0_3, in0__c4_0)
+                f32 acc0__c4_3 <- add(acc0__c4_3, acc0__v__c4_3) over _ki
+                f32 acc1__v__c4_3 = multiply(in2__c0_3, in0__c4_0)
+                f32 acc1__c4_3 <- add(acc1__c4_3, acc1__v__c4_3) over _ki
+                in0__c5_0 = load _a_smem[_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 5 - a0_b * 80), _ki]
+                f32 acc0__v__c5_0 = multiply(in1__c0_0, in0__c5_0)
+                f32 acc0__c5_0 <- add(acc0__c5_0, acc0__v__c5_0) over _ki
+                f32 acc1__v__c5_0 = multiply(in2__c0_0, in0__c5_0)
+                f32 acc1__c5_0 <- add(acc1__c5_0, acc1__v__c5_0) over _ki
+                f32 acc0__v__c5_1 = multiply(in1__c0_1, in0__c5_0)
+                f32 acc0__c5_1 <- add(acc0__c5_1, acc0__v__c5_1) over _ki
+                f32 acc1__v__c5_1 = multiply(in2__c0_1, in0__c5_0)
+                f32 acc1__c5_1 <- add(acc1__c5_1, acc1__v__c5_1) over _ki
+                f32 acc0__v__c5_2 = multiply(in1__c0_2, in0__c5_0)
+                f32 acc0__c5_2 <- add(acc0__c5_2, acc0__v__c5_2) over _ki
+                f32 acc1__v__c5_2 = multiply(in2__c0_2, in0__c5_0)
+                f32 acc1__c5_2 <- add(acc1__c5_2, acc1__v__c5_2) over _ki
+                f32 acc0__v__c5_3 = multiply(in1__c0_3, in0__c5_0)
+                f32 acc0__c5_3 <- add(acc0__c5_3, acc0__v__c5_3) over _ki
+                f32 acc1__v__c5_3 = multiply(in2__c0_3, in0__c5_0)
+                f32 acc1__c5_3 <- add(acc1__c5_3, acc1__v__c5_3) over _ki
+                in0__c6_0 = load _a_smem[_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 6 - a0_b * 80), _ki]
+                f32 acc0__v__c6_0 = multiply(in1__c0_0, in0__c6_0)
+                f32 acc0__c6_0 <- add(acc0__c6_0, acc0__v__c6_0) over _ki
+                f32 acc1__v__c6_0 = multiply(in2__c0_0, in0__c6_0)
+                f32 acc1__c6_0 <- add(acc1__c6_0, acc1__v__c6_0) over _ki
+                f32 acc0__v__c6_1 = multiply(in1__c0_1, in0__c6_0)
+                f32 acc0__c6_1 <- add(acc0__c6_1, acc0__v__c6_1) over _ki
+                f32 acc1__v__c6_1 = multiply(in2__c0_1, in0__c6_0)
+                f32 acc1__c6_1 <- add(acc1__c6_1, acc1__v__c6_1) over _ki
+                f32 acc0__v__c6_2 = multiply(in1__c0_2, in0__c6_0)
+                f32 acc0__c6_2 <- add(acc0__c6_2, acc0__v__c6_2) over _ki
+                f32 acc1__v__c6_2 = multiply(in2__c0_2, in0__c6_0)
+                f32 acc1__c6_2 <- add(acc1__c6_2, acc1__v__c6_2) over _ki
+                f32 acc0__v__c6_3 = multiply(in1__c0_3, in0__c6_0)
+                f32 acc0__c6_3 <- add(acc0__c6_3, acc0__v__c6_3) over _ki
+                f32 acc1__v__c6_3 = multiply(in2__c0_3, in0__c6_0)
+                f32 acc1__c6_3 <- add(acc1__c6_3, acc1__v__c6_3) over _ki
+                in0__c7_0 = load _a_smem[_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 7 - a0_b * 80), _ki]
+                f32 acc0__v__c7_0 = multiply(in1__c0_0, in0__c7_0)
+                f32 acc0__c7_0 <- add(acc0__c7_0, acc0__v__c7_0) over _ki
+                f32 acc1__v__c7_0 = multiply(in2__c0_0, in0__c7_0)
+                f32 acc1__c7_0 <- add(acc1__c7_0, acc1__v__c7_0) over _ki
+                f32 acc0__v__c7_1 = multiply(in1__c0_1, in0__c7_0)
+                f32 acc0__c7_1 <- add(acc0__c7_1, acc0__v__c7_1) over _ki
+                f32 acc1__v__c7_1 = multiply(in2__c0_1, in0__c7_0)
+                f32 acc1__c7_1 <- add(acc1__c7_1, acc1__v__c7_1) over _ki
+                f32 acc0__v__c7_2 = multiply(in1__c0_2, in0__c7_0)
+                f32 acc0__c7_2 <- add(acc0__c7_2, acc0__v__c7_2) over _ki
+                f32 acc1__v__c7_2 = multiply(in2__c0_2, in0__c7_0)
+                f32 acc1__c7_2 <- add(acc1__c7_2, acc1__v__c7_2) over _ki
+                f32 acc0__v__c7_3 = multiply(in1__c0_3, in0__c7_0)
+                f32 acc0__c7_3 <- add(acc0__c7_3, acc0__v__c7_3) over _ki
+                f32 acc1__v__c7_3 = multiply(in2__c0_3, in0__c7_0)
+                f32 acc1__c7_3 <- add(acc1__c7_3, acc1__v__c7_3) over _ki
+                in0__c8_0 = load _a_smem[_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 8 - a0_b * 80), _ki]
+                f32 acc0__v__c8_0 = multiply(in1__c0_0, in0__c8_0)
+                f32 acc0__c8_0 <- add(acc0__c8_0, acc0__v__c8_0) over _ki
+                f32 acc1__v__c8_0 = multiply(in2__c0_0, in0__c8_0)
+                f32 acc1__c8_0 <- add(acc1__c8_0, acc1__v__c8_0) over _ki
+                f32 acc0__v__c8_1 = multiply(in1__c0_1, in0__c8_0)
+                f32 acc0__c8_1 <- add(acc0__c8_1, acc0__v__c8_1) over _ki
+                f32 acc1__v__c8_1 = multiply(in2__c0_1, in0__c8_0)
+                f32 acc1__c8_1 <- add(acc1__c8_1, acc1__v__c8_1) over _ki
+                f32 acc0__v__c8_2 = multiply(in1__c0_2, in0__c8_0)
+                f32 acc0__c8_2 <- add(acc0__c8_2, acc0__v__c8_2) over _ki
+                f32 acc1__v__c8_2 = multiply(in2__c0_2, in0__c8_0)
+                f32 acc1__c8_2 <- add(acc1__c8_2, acc1__v__c8_2) over _ki
+                f32 acc0__v__c8_3 = multiply(in1__c0_3, in0__c8_0)
+                f32 acc0__c8_3 <- add(acc0__c8_3, acc0__v__c8_3) over _ki
+                f32 acc1__v__c8_3 = multiply(in2__c0_3, in0__c8_0)
+                f32 acc1__c8_3 <- add(acc1__c8_3, acc1__v__c8_3) over _ki
+                in0__c9_0 = load _a_smem[_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 9 - a0_b * 80), _ki]
+                f32 acc0__v__c9_0 = multiply(in1__c0_0, in0__c9_0)
+                f32 acc0__c9_0 <- add(acc0__c9_0, acc0__v__c9_0) over _ki
+                f32 acc1__v__c9_0 = multiply(in2__c0_0, in0__c9_0)
+                f32 acc1__c9_0 <- add(acc1__c9_0, acc1__v__c9_0) over _ki
+                f32 acc0__v__c9_1 = multiply(in1__c0_1, in0__c9_0)
+                f32 acc0__c9_1 <- add(acc0__c9_1, acc0__v__c9_1) over _ki
+                f32 acc1__v__c9_1 = multiply(in2__c0_1, in0__c9_0)
+                f32 acc1__c9_1 <- add(acc1__c9_1, acc1__v__c9_1) over _ki
+                f32 acc0__v__c9_2 = multiply(in1__c0_2, in0__c9_0)
+                f32 acc0__c9_2 <- add(acc0__c9_2, acc0__v__c9_2) over _ki
+                f32 acc1__v__c9_2 = multiply(in2__c0_2, in0__c9_0)
+                f32 acc1__c9_2 <- add(acc1__c9_2, acc1__v__c9_2) over _ki
+                f32 acc0__v__c9_3 = multiply(in1__c0_3, in0__c9_0)
+                f32 acc0__c9_3 <- add(acc0__c9_3, acc0__v__c9_3) over _ki
+                f32 acc1__v__c9_3 = multiply(in2__c0_3, in0__c9_0)
+                f32 acc1__c9_3 <- add(acc1__c9_3, acc1__v__c9_3) over _ki
+            Sync
+        f32 v2__c0_0 = negative(acc0__c0_0)
+        f32 v3__c0_0 = exp_fast(v2__c0_0)
+        let f32 v4__c0_0__t0 = 1.0
+        f32 v4__c0_0 = add(v3__c0_0, v4__c0_0__t0)
+        f32 v5__c0_0 = divide(acc0__c0_0, v4__c0_0)
+        f32 v6__c0_0 = multiply(acc1__c0_0, v5__c0_0)
+        if a0_b * 80 + a0_u * 10 + 0 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 0) % 512, a1_b * 128 + a1_u * 4 + 0] = v6__c0_0
+        f32 v2__c0_1 = negative(acc0__c0_1)
+        f32 v3__c0_1 = exp_fast(v2__c0_1)
+        let f32 v4__c0_1__t0 = 1.0
+        f32 v4__c0_1 = add(v3__c0_1, v4__c0_1__t0)
+        f32 v5__c0_1 = divide(acc0__c0_1, v4__c0_1)
+        f32 v6__c0_1 = multiply(acc1__c0_1, v5__c0_1)
+        if a0_b * 80 + a0_u * 10 + 0 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 0) % 512, a1_b * 128 + a1_u * 4 + 1] = v6__c0_1
+        f32 v2__c0_2 = negative(acc0__c0_2)
+        f32 v3__c0_2 = exp_fast(v2__c0_2)
+        let f32 v4__c0_2__t0 = 1.0
+        f32 v4__c0_2 = add(v3__c0_2, v4__c0_2__t0)
+        f32 v5__c0_2 = divide(acc0__c0_2, v4__c0_2)
+        f32 v6__c0_2 = multiply(acc1__c0_2, v5__c0_2)
+        if a0_b * 80 + a0_u * 10 + 0 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 0) % 512, a1_b * 128 + a1_u * 4 + 2] = v6__c0_2
+        f32 v2__c0_3 = negative(acc0__c0_3)
+        f32 v3__c0_3 = exp_fast(v2__c0_3)
+        let f32 v4__c0_3__t0 = 1.0
+        f32 v4__c0_3 = add(v3__c0_3, v4__c0_3__t0)
+        f32 v5__c0_3 = divide(acc0__c0_3, v4__c0_3)
+        f32 v6__c0_3 = multiply(acc1__c0_3, v5__c0_3)
+        if a0_b * 80 + a0_u * 10 + 0 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 0) % 512, a1_b * 128 + a1_u * 4 + 3] = v6__c0_3
+        f32 v2__c1_0 = negative(acc0__c1_0)
+        f32 v3__c1_0 = exp_fast(v2__c1_0)
+        let f32 v4__c1_0__t0 = 1.0
+        f32 v4__c1_0 = add(v3__c1_0, v4__c1_0__t0)
+        f32 v5__c1_0 = divide(acc0__c1_0, v4__c1_0)
+        f32 v6__c1_0 = multiply(acc1__c1_0, v5__c1_0)
+        if a0_b * 80 + a0_u * 10 + 1 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 1) % 512, a1_b * 128 + a1_u * 4 + 0] = v6__c1_0
+        f32 v2__c1_1 = negative(acc0__c1_1)
+        f32 v3__c1_1 = exp_fast(v2__c1_1)
+        let f32 v4__c1_1__t0 = 1.0
+        f32 v4__c1_1 = add(v3__c1_1, v4__c1_1__t0)
+        f32 v5__c1_1 = divide(acc0__c1_1, v4__c1_1)
+        f32 v6__c1_1 = multiply(acc1__c1_1, v5__c1_1)
+        if a0_b * 80 + a0_u * 10 + 1 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 1) % 512, a1_b * 128 + a1_u * 4 + 1] = v6__c1_1
+        f32 v2__c1_2 = negative(acc0__c1_2)
+        f32 v3__c1_2 = exp_fast(v2__c1_2)
+        let f32 v4__c1_2__t0 = 1.0
+        f32 v4__c1_2 = add(v3__c1_2, v4__c1_2__t0)
+        f32 v5__c1_2 = divide(acc0__c1_2, v4__c1_2)
+        f32 v6__c1_2 = multiply(acc1__c1_2, v5__c1_2)
+        if a0_b * 80 + a0_u * 10 + 1 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 1) % 512, a1_b * 128 + a1_u * 4 + 2] = v6__c1_2
+        f32 v2__c1_3 = negative(acc0__c1_3)
+        f32 v3__c1_3 = exp_fast(v2__c1_3)
+        let f32 v4__c1_3__t0 = 1.0
+        f32 v4__c1_3 = add(v3__c1_3, v4__c1_3__t0)
+        f32 v5__c1_3 = divide(acc0__c1_3, v4__c1_3)
+        f32 v6__c1_3 = multiply(acc1__c1_3, v5__c1_3)
+        if a0_b * 80 + a0_u * 10 + 1 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 1) % 512, a1_b * 128 + a1_u * 4 + 3] = v6__c1_3
+        f32 v2__c2_0 = negative(acc0__c2_0)
+        f32 v3__c2_0 = exp_fast(v2__c2_0)
+        let f32 v4__c2_0__t0 = 1.0
+        f32 v4__c2_0 = add(v3__c2_0, v4__c2_0__t0)
+        f32 v5__c2_0 = divide(acc0__c2_0, v4__c2_0)
+        f32 v6__c2_0 = multiply(acc1__c2_0, v5__c2_0)
+        if a0_b * 80 + a0_u * 10 + 2 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 2) % 512, a1_b * 128 + a1_u * 4 + 0] = v6__c2_0
+        f32 v2__c2_1 = negative(acc0__c2_1)
+        f32 v3__c2_1 = exp_fast(v2__c2_1)
+        let f32 v4__c2_1__t0 = 1.0
+        f32 v4__c2_1 = add(v3__c2_1, v4__c2_1__t0)
+        f32 v5__c2_1 = divide(acc0__c2_1, v4__c2_1)
+        f32 v6__c2_1 = multiply(acc1__c2_1, v5__c2_1)
+        if a0_b * 80 + a0_u * 10 + 2 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 2) % 512, a1_b * 128 + a1_u * 4 + 1] = v6__c2_1
+        f32 v2__c2_2 = negative(acc0__c2_2)
+        f32 v3__c2_2 = exp_fast(v2__c2_2)
+        let f32 v4__c2_2__t0 = 1.0
+        f32 v4__c2_2 = add(v3__c2_2, v4__c2_2__t0)
+        f32 v5__c2_2 = divide(acc0__c2_2, v4__c2_2)
+        f32 v6__c2_2 = multiply(acc1__c2_2, v5__c2_2)
+        if a0_b * 80 + a0_u * 10 + 2 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 2) % 512, a1_b * 128 + a1_u * 4 + 2] = v6__c2_2
+        f32 v2__c2_3 = negative(acc0__c2_3)
+        f32 v3__c2_3 = exp_fast(v2__c2_3)
+        let f32 v4__c2_3__t0 = 1.0
+        f32 v4__c2_3 = add(v3__c2_3, v4__c2_3__t0)
+        f32 v5__c2_3 = divide(acc0__c2_3, v4__c2_3)
+        f32 v6__c2_3 = multiply(acc1__c2_3, v5__c2_3)
+        if a0_b * 80 + a0_u * 10 + 2 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 2) % 512, a1_b * 128 + a1_u * 4 + 3] = v6__c2_3
+        f32 v2__c3_0 = negative(acc0__c3_0)
+        f32 v3__c3_0 = exp_fast(v2__c3_0)
+        let f32 v4__c3_0__t0 = 1.0
+        f32 v4__c3_0 = add(v3__c3_0, v4__c3_0__t0)
+        f32 v5__c3_0 = divide(acc0__c3_0, v4__c3_0)
+        f32 v6__c3_0 = multiply(acc1__c3_0, v5__c3_0)
+        if a0_b * 80 + a0_u * 10 + 3 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 3) % 512, a1_b * 128 + a1_u * 4 + 0] = v6__c3_0
+        f32 v2__c3_1 = negative(acc0__c3_1)
+        f32 v3__c3_1 = exp_fast(v2__c3_1)
+        let f32 v4__c3_1__t0 = 1.0
+        f32 v4__c3_1 = add(v3__c3_1, v4__c3_1__t0)
+        f32 v5__c3_1 = divide(acc0__c3_1, v4__c3_1)
+        f32 v6__c3_1 = multiply(acc1__c3_1, v5__c3_1)
+        if a0_b * 80 + a0_u * 10 + 3 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 3) % 512, a1_b * 128 + a1_u * 4 + 1] = v6__c3_1
+        f32 v2__c3_2 = negative(acc0__c3_2)
+        f32 v3__c3_2 = exp_fast(v2__c3_2)
+        let f32 v4__c3_2__t0 = 1.0
+        f32 v4__c3_2 = add(v3__c3_2, v4__c3_2__t0)
+        f32 v5__c3_2 = divide(acc0__c3_2, v4__c3_2)
+        f32 v6__c3_2 = multiply(acc1__c3_2, v5__c3_2)
+        if a0_b * 80 + a0_u * 10 + 3 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 3) % 512, a1_b * 128 + a1_u * 4 + 2] = v6__c3_2
+        f32 v2__c3_3 = negative(acc0__c3_3)
+        f32 v3__c3_3 = exp_fast(v2__c3_3)
+        let f32 v4__c3_3__t0 = 1.0
+        f32 v4__c3_3 = add(v3__c3_3, v4__c3_3__t0)
+        f32 v5__c3_3 = divide(acc0__c3_3, v4__c3_3)
+        f32 v6__c3_3 = multiply(acc1__c3_3, v5__c3_3)
+        if a0_b * 80 + a0_u * 10 + 3 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 3) % 512, a1_b * 128 + a1_u * 4 + 3] = v6__c3_3
+        f32 v2__c4_0 = negative(acc0__c4_0)
+        f32 v3__c4_0 = exp_fast(v2__c4_0)
+        let f32 v4__c4_0__t0 = 1.0
+        f32 v4__c4_0 = add(v3__c4_0, v4__c4_0__t0)
+        f32 v5__c4_0 = divide(acc0__c4_0, v4__c4_0)
+        f32 v6__c4_0 = multiply(acc1__c4_0, v5__c4_0)
+        if a0_b * 80 + a0_u * 10 + 4 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 4) % 512, a1_b * 128 + a1_u * 4 + 0] = v6__c4_0
+        f32 v2__c4_1 = negative(acc0__c4_1)
+        f32 v3__c4_1 = exp_fast(v2__c4_1)
+        let f32 v4__c4_1__t0 = 1.0
+        f32 v4__c4_1 = add(v3__c4_1, v4__c4_1__t0)
+        f32 v5__c4_1 = divide(acc0__c4_1, v4__c4_1)
+        f32 v6__c4_1 = multiply(acc1__c4_1, v5__c4_1)
+        if a0_b * 80 + a0_u * 10 + 4 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 4) % 512, a1_b * 128 + a1_u * 4 + 1] = v6__c4_1
+        f32 v2__c4_2 = negative(acc0__c4_2)
+        f32 v3__c4_2 = exp_fast(v2__c4_2)
+        let f32 v4__c4_2__t0 = 1.0
+        f32 v4__c4_2 = add(v3__c4_2, v4__c4_2__t0)
+        f32 v5__c4_2 = divide(acc0__c4_2, v4__c4_2)
+        f32 v6__c4_2 = multiply(acc1__c4_2, v5__c4_2)
+        if a0_b * 80 + a0_u * 10 + 4 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 4) % 512, a1_b * 128 + a1_u * 4 + 2] = v6__c4_2
+        f32 v2__c4_3 = negative(acc0__c4_3)
+        f32 v3__c4_3 = exp_fast(v2__c4_3)
+        let f32 v4__c4_3__t0 = 1.0
+        f32 v4__c4_3 = add(v3__c4_3, v4__c4_3__t0)
+        f32 v5__c4_3 = divide(acc0__c4_3, v4__c4_3)
+        f32 v6__c4_3 = multiply(acc1__c4_3, v5__c4_3)
+        if a0_b * 80 + a0_u * 10 + 4 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 4) % 512, a1_b * 128 + a1_u * 4 + 3] = v6__c4_3
+        f32 v2__c5_0 = negative(acc0__c5_0)
+        f32 v3__c5_0 = exp_fast(v2__c5_0)
+        let f32 v4__c5_0__t0 = 1.0
+        f32 v4__c5_0 = add(v3__c5_0, v4__c5_0__t0)
+        f32 v5__c5_0 = divide(acc0__c5_0, v4__c5_0)
+        f32 v6__c5_0 = multiply(acc1__c5_0, v5__c5_0)
+        if a0_b * 80 + a0_u * 10 + 5 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 5) % 512, a1_b * 128 + a1_u * 4 + 0] = v6__c5_0
+        f32 v2__c5_1 = negative(acc0__c5_1)
+        f32 v3__c5_1 = exp_fast(v2__c5_1)
+        let f32 v4__c5_1__t0 = 1.0
+        f32 v4__c5_1 = add(v3__c5_1, v4__c5_1__t0)
+        f32 v5__c5_1 = divide(acc0__c5_1, v4__c5_1)
+        f32 v6__c5_1 = multiply(acc1__c5_1, v5__c5_1)
+        if a0_b * 80 + a0_u * 10 + 5 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 5) % 512, a1_b * 128 + a1_u * 4 + 1] = v6__c5_1
+        f32 v2__c5_2 = negative(acc0__c5_2)
+        f32 v3__c5_2 = exp_fast(v2__c5_2)
+        let f32 v4__c5_2__t0 = 1.0
+        f32 v4__c5_2 = add(v3__c5_2, v4__c5_2__t0)
+        f32 v5__c5_2 = divide(acc0__c5_2, v4__c5_2)
+        f32 v6__c5_2 = multiply(acc1__c5_2, v5__c5_2)
+        if a0_b * 80 + a0_u * 10 + 5 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 5) % 512, a1_b * 128 + a1_u * 4 + 2] = v6__c5_2
+        f32 v2__c5_3 = negative(acc0__c5_3)
+        f32 v3__c5_3 = exp_fast(v2__c5_3)
+        let f32 v4__c5_3__t0 = 1.0
+        f32 v4__c5_3 = add(v3__c5_3, v4__c5_3__t0)
+        f32 v5__c5_3 = divide(acc0__c5_3, v4__c5_3)
+        f32 v6__c5_3 = multiply(acc1__c5_3, v5__c5_3)
+        if a0_b * 80 + a0_u * 10 + 5 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 5) % 512, a1_b * 128 + a1_u * 4 + 3] = v6__c5_3
+        f32 v2__c6_0 = negative(acc0__c6_0)
+        f32 v3__c6_0 = exp_fast(v2__c6_0)
+        let f32 v4__c6_0__t0 = 1.0
+        f32 v4__c6_0 = add(v3__c6_0, v4__c6_0__t0)
+        f32 v5__c6_0 = divide(acc0__c6_0, v4__c6_0)
+        f32 v6__c6_0 = multiply(acc1__c6_0, v5__c6_0)
+        if a0_b * 80 + a0_u * 10 + 6 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 6) % 512, a1_b * 128 + a1_u * 4 + 0] = v6__c6_0
+        f32 v2__c6_1 = negative(acc0__c6_1)
+        f32 v3__c6_1 = exp_fast(v2__c6_1)
+        let f32 v4__c6_1__t0 = 1.0
+        f32 v4__c6_1 = add(v3__c6_1, v4__c6_1__t0)
+        f32 v5__c6_1 = divide(acc0__c6_1, v4__c6_1)
+        f32 v6__c6_1 = multiply(acc1__c6_1, v5__c6_1)
+        if a0_b * 80 + a0_u * 10 + 6 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 6) % 512, a1_b * 128 + a1_u * 4 + 1] = v6__c6_1
+        f32 v2__c6_2 = negative(acc0__c6_2)
+        f32 v3__c6_2 = exp_fast(v2__c6_2)
+        let f32 v4__c6_2__t0 = 1.0
+        f32 v4__c6_2 = add(v3__c6_2, v4__c6_2__t0)
+        f32 v5__c6_2 = divide(acc0__c6_2, v4__c6_2)
+        f32 v6__c6_2 = multiply(acc1__c6_2, v5__c6_2)
+        if a0_b * 80 + a0_u * 10 + 6 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 6) % 512, a1_b * 128 + a1_u * 4 + 2] = v6__c6_2
+        f32 v2__c6_3 = negative(acc0__c6_3)
+        f32 v3__c6_3 = exp_fast(v2__c6_3)
+        let f32 v4__c6_3__t0 = 1.0
+        f32 v4__c6_3 = add(v3__c6_3, v4__c6_3__t0)
+        f32 v5__c6_3 = divide(acc0__c6_3, v4__c6_3)
+        f32 v6__c6_3 = multiply(acc1__c6_3, v5__c6_3)
+        if a0_b * 80 + a0_u * 10 + 6 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 6) % 512, a1_b * 128 + a1_u * 4 + 3] = v6__c6_3
+        f32 v2__c7_0 = negative(acc0__c7_0)
+        f32 v3__c7_0 = exp_fast(v2__c7_0)
+        let f32 v4__c7_0__t0 = 1.0
+        f32 v4__c7_0 = add(v3__c7_0, v4__c7_0__t0)
+        f32 v5__c7_0 = divide(acc0__c7_0, v4__c7_0)
+        f32 v6__c7_0 = multiply(acc1__c7_0, v5__c7_0)
+        if a0_b * 80 + a0_u * 10 + 7 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 7) % 512, a1_b * 128 + a1_u * 4 + 0] = v6__c7_0
+        f32 v2__c7_1 = negative(acc0__c7_1)
+        f32 v3__c7_1 = exp_fast(v2__c7_1)
+        let f32 v4__c7_1__t0 = 1.0
+        f32 v4__c7_1 = add(v3__c7_1, v4__c7_1__t0)
+        f32 v5__c7_1 = divide(acc0__c7_1, v4__c7_1)
+        f32 v6__c7_1 = multiply(acc1__c7_1, v5__c7_1)
+        if a0_b * 80 + a0_u * 10 + 7 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 7) % 512, a1_b * 128 + a1_u * 4 + 1] = v6__c7_1
+        f32 v2__c7_2 = negative(acc0__c7_2)
+        f32 v3__c7_2 = exp_fast(v2__c7_2)
+        let f32 v4__c7_2__t0 = 1.0
+        f32 v4__c7_2 = add(v3__c7_2, v4__c7_2__t0)
+        f32 v5__c7_2 = divide(acc0__c7_2, v4__c7_2)
+        f32 v6__c7_2 = multiply(acc1__c7_2, v5__c7_2)
+        if a0_b * 80 + a0_u * 10 + 7 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 7) % 512, a1_b * 128 + a1_u * 4 + 2] = v6__c7_2
+        f32 v2__c7_3 = negative(acc0__c7_3)
+        f32 v3__c7_3 = exp_fast(v2__c7_3)
+        let f32 v4__c7_3__t0 = 1.0
+        f32 v4__c7_3 = add(v3__c7_3, v4__c7_3__t0)
+        f32 v5__c7_3 = divide(acc0__c7_3, v4__c7_3)
+        f32 v6__c7_3 = multiply(acc1__c7_3, v5__c7_3)
+        if a0_b * 80 + a0_u * 10 + 7 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 7) % 512, a1_b * 128 + a1_u * 4 + 3] = v6__c7_3
+        f32 v2__c8_0 = negative(acc0__c8_0)
+        f32 v3__c8_0 = exp_fast(v2__c8_0)
+        let f32 v4__c8_0__t0 = 1.0
+        f32 v4__c8_0 = add(v3__c8_0, v4__c8_0__t0)
+        f32 v5__c8_0 = divide(acc0__c8_0, v4__c8_0)
+        f32 v6__c8_0 = multiply(acc1__c8_0, v5__c8_0)
+        if a0_b * 80 + a0_u * 10 + 8 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 8) % 512, a1_b * 128 + a1_u * 4 + 0] = v6__c8_0
+        f32 v2__c8_1 = negative(acc0__c8_1)
+        f32 v3__c8_1 = exp_fast(v2__c8_1)
+        let f32 v4__c8_1__t0 = 1.0
+        f32 v4__c8_1 = add(v3__c8_1, v4__c8_1__t0)
+        f32 v5__c8_1 = divide(acc0__c8_1, v4__c8_1)
+        f32 v6__c8_1 = multiply(acc1__c8_1, v5__c8_1)
+        if a0_b * 80 + a0_u * 10 + 8 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 8) % 512, a1_b * 128 + a1_u * 4 + 1] = v6__c8_1
+        f32 v2__c8_2 = negative(acc0__c8_2)
+        f32 v3__c8_2 = exp_fast(v2__c8_2)
+        let f32 v4__c8_2__t0 = 1.0
+        f32 v4__c8_2 = add(v3__c8_2, v4__c8_2__t0)
+        f32 v5__c8_2 = divide(acc0__c8_2, v4__c8_2)
+        f32 v6__c8_2 = multiply(acc1__c8_2, v5__c8_2)
+        if a0_b * 80 + a0_u * 10 + 8 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 8) % 512, a1_b * 128 + a1_u * 4 + 2] = v6__c8_2
+        f32 v2__c8_3 = negative(acc0__c8_3)
+        f32 v3__c8_3 = exp_fast(v2__c8_3)
+        let f32 v4__c8_3__t0 = 1.0
+        f32 v4__c8_3 = add(v3__c8_3, v4__c8_3__t0)
+        f32 v5__c8_3 = divide(acc0__c8_3, v4__c8_3)
+        f32 v6__c8_3 = multiply(acc1__c8_3, v5__c8_3)
+        if a0_b * 80 + a0_u * 10 + 8 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 8) % 512, a1_b * 128 + a1_u * 4 + 3] = v6__c8_3
+        f32 v2__c9_0 = negative(acc0__c9_0)
+        f32 v3__c9_0 = exp_fast(v2__c9_0)
+        let f32 v4__c9_0__t0 = 1.0
+        f32 v4__c9_0 = add(v3__c9_0, v4__c9_0__t0)
+        f32 v5__c9_0 = divide(acc0__c9_0, v4__c9_0)
+        f32 v6__c9_0 = multiply(acc1__c9_0, v5__c9_0)
+        if a0_b * 80 + a0_u * 10 + 9 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 9) % 512, a1_b * 128 + a1_u * 4 + 0] = v6__c9_0
+        f32 v2__c9_1 = negative(acc0__c9_1)
+        f32 v3__c9_1 = exp_fast(v2__c9_1)
+        let f32 v4__c9_1__t0 = 1.0
+        f32 v4__c9_1 = add(v3__c9_1, v4__c9_1__t0)
+        f32 v5__c9_1 = divide(acc0__c9_1, v4__c9_1)
+        f32 v6__c9_1 = multiply(acc1__c9_1, v5__c9_1)
+        if a0_b * 80 + a0_u * 10 + 9 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 9) % 512, a1_b * 128 + a1_u * 4 + 1] = v6__c9_1
+        f32 v2__c9_2 = negative(acc0__c9_2)
+        f32 v3__c9_2 = exp_fast(v2__c9_2)
+        let f32 v4__c9_2__t0 = 1.0
+        f32 v4__c9_2 = add(v3__c9_2, v4__c9_2__t0)
+        f32 v5__c9_2 = divide(acc0__c9_2, v4__c9_2)
+        f32 v6__c9_2 = multiply(acc1__c9_2, v5__c9_2)
+        if a0_b * 80 + a0_u * 10 + 9 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 9) % 512, a1_b * 128 + a1_u * 4 + 2] = v6__c9_2
+        f32 v2__c9_3 = negative(acc0__c9_3)
+        f32 v3__c9_3 = exp_fast(v2__c9_3)
+        let f32 v4__c9_3__t0 = 1.0
+        f32 v4__c9_3 = add(v3__c9_3, v4__c9_3__t0)
+        f32 v5__c9_3 = divide(acc0__c9_3, v4__c9_3)
+        f32 v6__c9_3 = multiply(acc1__c9_3, v5__c9_3)
+        if a0_b * 80 + a0_u * 10 + 9 < 512:
+            f32 o[0, (a0_b * 80 + a0_u * 10 + 9) % 512, a1_b * 128 + a1_u * 4 + 3] = v6__c9_3

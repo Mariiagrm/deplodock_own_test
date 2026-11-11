@@ -1,0 +1,66 @@
+{
+  "inputs": [
+    "a",
+    "b"
+  ],
+  "outputs": [
+    "o"
+  ],
+  "nodes": {
+    "a": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "a",
+          "shape": [
+            1,
+            32,
+            1024
+          ],
+          "dtype": "f32"
+        }
+      ]
+    },
+    "b": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "b",
+          "shape": [
+            1024,
+            1024
+          ],
+          "dtype": "f32"
+        }
+      ]
+    },
+    "o": {
+      "op": "KernelOp",
+      "op_fields": {
+        "body": "Tile(axes=(a0 in 0..32, a1 in 0..1024, a2_co in 0..128), block_threads=128):\n    init f32 acc0 = 0\n    f32 in0__u0 = load a[0, a0, a2_co]\n    f32 in1__u0 = load b[a2_co, a1]\n    f32 v0__u0 = multiply(in0__u0, in1__u0)\n    f32 acc0 <- add(acc0, v0__u0) over a2_co\n    f32 in0__u1 = load a[0, a0, a2_co + 128]\n    f32 in1__u1 = load b[a2_co + 128, a1]\n    f32 v0__u1 = multiply(in0__u1, in1__u1)\n    f32 acc0 <- add(acc0, v0__u1) over a2_co\n    f32 in0__u2 = load a[0, a0, a2_co + 256]\n    f32 in1__u2 = load b[a2_co + 256, a1]\n    f32 v0__u2 = multiply(in0__u2, in1__u2)\n    f32 acc0 <- add(acc0, v0__u2) over a2_co\n    f32 in0__u3 = load a[0, a0, a2_co + 384]\n    f32 in1__u3 = load b[a2_co + 384, a1]\n    f32 v0__u3 = multiply(in0__u3, in1__u3)\n    f32 acc0 <- add(acc0, v0__u3) over a2_co\n    f32 in0__u4 = load a[0, a0, a2_co + 512]\n    f32 in1__u4 = load b[a2_co + 512, a1]\n    f32 v0__u4 = multiply(in0__u4, in1__u4)\n    f32 acc0 <- add(acc0, v0__u4) over a2_co\n    f32 in0__u5 = load a[0, a0, a2_co + 640]\n    f32 in1__u5 = load b[a2_co + 640, a1]\n    f32 v0__u5 = multiply(in0__u5, in1__u5)\n    f32 acc0 <- add(acc0, v0__u5) over a2_co\n    f32 in0__u6 = load a[0, a0, a2_co + 768]\n    f32 in1__u6 = load b[a2_co + 768, a1]\n    f32 v0__u6 = multiply(in0__u6, in1__u6)\n    f32 acc0 <- add(acc0, v0__u6) over a2_co\n    f32 in0__u7 = load a[0, a0, a2_co + 896]\n    f32 in1__u7 = load b[a2_co + 896, a1]\n    f32 v0__u7 = multiply(in0__u7, in1__u7)\n    f32 acc0 <- add(acc0, v0__u7) over a2_co\n    WarpShuffle(state=(acc0), state_b=(acc0__o), length=32):\n        combine_states:\n            acc0 = add(acc0, acc0__o)\n    Smem(name=acc0_smem, extents=(4))\n    if lane == 0:\n        f32 acc0_smem[warp] = acc0\n    Sync\n    TreeHalve(bufs=(acc0_smem), state=(acc0), state_b=(acc0__o), length=4, tid_var=warp):\n        combine_states:\n            acc0 = add(acc0, acc0__o)\n    if a2_co == 0:\n        f32 o[0, a0, a1] = acc0",
+        "name": "k_matmul_1220f5",
+        "zero_delegated": [],
+        "serial": []
+      },
+      "inputs": [
+        "b",
+        "a"
+      ],
+      "outputs": [
+        {
+          "name": "o",
+          "shape": [
+            1,
+            32,
+            1024
+          ],
+          "dtype": "f32"
+        }
+      ]
+    }
+  }
+}

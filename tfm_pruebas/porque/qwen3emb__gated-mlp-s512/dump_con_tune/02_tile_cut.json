@@ -1,0 +1,106 @@
+{
+  "inputs": [
+    "wg",
+    "x",
+    "wu"
+  ],
+  "outputs": [
+    "o"
+  ],
+  "nodes": {
+    "wg": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "wg",
+          "shape": [
+            1024,
+            3072
+          ],
+          "dtype": "f32"
+        }
+      ]
+    },
+    "wu": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "wu",
+          "shape": [
+            1024,
+            3072
+          ],
+          "dtype": "f32"
+        }
+      ]
+    },
+    "x": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "x",
+          "shape": [
+            1,
+            512,
+            1024
+          ],
+          "dtype": "f32"
+        }
+      ]
+    },
+    "o": {
+      "op": "TileOp",
+      "op_fields": {
+        "op": "Fold(operands=(Fold(operands=(Fold(operands=(), lift=Lambda(params=('a0', 'a2'), body=(Load(names=('in0',), input='x', index=(Literal(value=0, dtype='int'), Var(name='a0'), Var(name='a2')), dtype=None, carried=''),), results=('in0',)), init=(), cells=(), base=None, twist=None, observe=None), Fold(operands=(), lift=Lambda(params=('a1', 'a2'), body=(Load(names=('in1',), input='wg', index=(Var(name='a2'), Var(name='a1')), dtype=None, carried=''),), results=('in1',)), init=(), cells=(), base=None, twist=None, observe=None), Fold(operands=(), lift=Lambda(params=('a1', 'a2'), body=(Load(names=('in2',), input='wu', index=(Var(name='a2'), Var(name='a1')), dtype=None, carried=''),), results=('in2',)), init=(), cells=(), base=None, twist=None, observe=None)), lift=Lambda(params=('a2', 'in0', 'in1', 'in2'), body=(Assign(name='v0', op=ElementwiseImpl('multiply'), args=('in0', 'in1'), dtype=None), Assign(name='v1', op=ElementwiseImpl('multiply'), args=('in0', 'in2'), dtype=None)), results=('v0', 'v1')), init=(0.0, 0.0), cells=(), base=Lambda(params=('acc0', 'acc1', 'acc0__o', 'acc1__o'), body=(Assign(name='acc0', op=ElementwiseImpl('add'), args=('acc0', 'acc0__o'), dtype=None), Assign(name='acc1', op=ElementwiseImpl('add'), args=('acc1', 'acc1__o'), dtype=None)), results=('acc0', 'acc1')), twist=None, observe=None),), lift=Lambda(params=('acc0', 'acc1'), body=(Affine(name='v2', args=('acc0',), coefficients=(-1.0,), offset=0.0, dtype=None), Assign(name='v3', op=ElementwiseImpl('exp'), args=('v2',), dtype=None), Affine(name='v4', args=('v3',), coefficients=(1.0,), offset=1.0, dtype=None), Assign(name='v5', op=ElementwiseImpl('divide'), args=('acc0', 'v4'), dtype=None), Assign(name='v6', op=ElementwiseImpl('multiply'), args=('acc1', 'v5'), dtype=None)), results=('v6',)), init=(), cells=(), base=None, twist=None, observe=None)",
+        "name": "k_matmul_reduce_17f7d4",
+        "place": "Placement(free=(Axis(name='a0', extent=Dim(512), window=None), Axis(name='a1', extent=Dim(3072), window=None)), grid=(), serial=(), mapped=False)",
+        "axes": [
+          "Axis(name='a0', extent=Dim(512), window=None)",
+          "Axis(name='a1', extent=Dim(3072), window=None)",
+          "Axis(name='a2', extent=Dim(1024), window=None)"
+        ],
+        "workers": null,
+        "output_specs": [
+          "OutputSpec(write=Write(output='o', index=(Literal(value=0, dtype='int'), Var(name='a0'), Var(name='a1')), values=('v6',), value_dtype=None, atomic=False, swizzle='NONE'), sweep=(), when=None)"
+        ],
+        "placement_decided": true,
+        "placement_consumed": "frozenset()",
+        "placement_step": 0,
+        "layout_decided": [],
+        "split_consumed": true
+      },
+      "inputs": [
+        "wg",
+        "x",
+        "wu"
+      ],
+      "outputs": [
+        {
+          "name": "o",
+          "shape": [
+            1,
+            512,
+            3072
+          ],
+          "dtype": "f32"
+        }
+      ],
+      "hints": {
+        "prov": {
+          "o": {
+            "kind": "LoopOp",
+            "pieces": [
+              "o"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

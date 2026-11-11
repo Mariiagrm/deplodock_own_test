@@ -1,0 +1,130 @@
+struct __align__(64) CUtensorMap { unsigned long long opaque[16]; };
+
+static __device__ __forceinline__ void mbarrier_init(unsigned long long* mbar, int count) {
+    unsigned int addr = __cvta_generic_to_shared(mbar);
+    asm volatile("mbarrier.init.shared.b64 [%0], %1;\n" :: "r"(addr), "r"(count) : "memory");
+}
+
+static __device__ __forceinline__ void mbarrier_arrive_expect_tx(unsigned long long* mbar, int bytes) {
+    // Publish barrier initialization and order prior shared-memory accesses before the TMA fill.
+    unsigned int addr = __cvta_generic_to_shared(mbar);
+    unsigned long long state;
+    asm volatile("fence.proxy.async.shared::cta;\n" ::: "memory");
+    asm volatile("mbarrier.arrive.expect_tx.shared.b64 %0, [%1], %2;\n"
+                 : "=l"(state) : "r"(addr), "r"(bytes) : "memory");
+}
+
+static __device__ __forceinline__ void mbarrier_arrive(unsigned long long* mbar) {
+    // Simple arrive — no transaction-byte count. Used by warp-specialized
+    // consumer warps to signal "slot empty" after the producer's
+    // expect-tx round has been consumed. The async-proxy fence orders the
+    // consumer's GENERIC-proxy slab reads (ldmatrix) before the producer's
+    // next ASYNC-proxy write into the slot (cp.async.bulk.tensor) — the
+    // mbarrier release alone does not cross the proxy boundary, and without
+    // the fence the refill can overtake in-flight reads (silent corruption
+    // under scheduling pressure). Mirrors CUTLASS PipelineTmaAsync's
+    // consumer_release (fence_view_async_shared + arrive).
+    unsigned int addr = __cvta_generic_to_shared(mbar);
+    unsigned long long state;
+    asm volatile("fence.proxy.async.shared::cta;\n" ::: "memory");
+    asm volatile("mbarrier.arrive.shared.b64 %0, [%1];\n"
+                 : "=l"(state) : "r"(addr) : "memory");
+}
+
+static __device__ __forceinline__ void mbarrier_wait_parity(unsigned long long* mbar, int phase) {
+    // Issue one ``mbarrier.try_wait`` first — its hint timeout makes the
+    // warp suspend rather than spin while the TMA tx drains, freeing the
+    // scheduler to run other warps. The PTX-level ``while !try_wait`` loop
+    // is required (try_wait can return early); the suspend hint prevents
+    // hot-spinning across all 256 CTA threads (~3-4× kernel speedup on
+    // small matmuls where the wait-vs-compute ratio is high).
+    //
+    // Completion makes the TMA writes visible to this thread's shared-memory reads.
+    // The memory clobber also prevents the compiler from moving those reads before the wait.
+    unsigned int addr = __cvta_generic_to_shared(mbar);
+    asm volatile("{.reg .pred P; bw: mbarrier.try_wait.parity.shared.b64 P, [%0], %1; @!P bra bw;}\n"
+                 :: "r"(addr), "r"(phase) : "memory");
+}
+
+static __device__ __forceinline__ void cp_async_bulk_tensor_2d(
+    void* smem, const CUtensorMap* desc, int c0, int c1, unsigned long long* mbar) {
+    unsigned int saddr = __cvta_generic_to_shared(smem);
+    unsigned int maddr = __cvta_generic_to_shared(mbar);
+    asm volatile("cp.async.bulk.tensor.2d.shared::cta.global.mbarrier::complete_tx::bytes "
+                 "[%0], [%1, {%2, %3}], [%4];\n"
+                 :: "r"(saddr), "l"(desc), "r"(c0), "r"(c1), "r"(maddr) : "memory");
+}
+
+static __device__ __forceinline__ void cp_async_bulk_tensor_3d(
+    void* smem, const CUtensorMap* desc, int c0, int c1, int c2, unsigned long long* mbar) {
+    unsigned int saddr = __cvta_generic_to_shared(smem);
+    unsigned int maddr = __cvta_generic_to_shared(mbar);
+    asm volatile("cp.async.bulk.tensor.3d.shared::cta.global.mbarrier::complete_tx::bytes "
+                 "[%0], [%1, {%2, %3, %4}], [%5];\n"
+                 :: "r"(saddr), "l"(desc), "r"(c0), "r"(c1), "r"(c2), "r"(maddr) : "memory");
+}
+
+static __device__ __forceinline__ void cp_async_bulk_tensor_4d(
+    void* smem, const CUtensorMap* desc, int c0, int c1, int c2, int c3, unsigned long long* mbar) {
+    unsigned int saddr = __cvta_generic_to_shared(smem);
+    unsigned int maddr = __cvta_generic_to_shared(mbar);
+    asm volatile("cp.async.bulk.tensor.4d.shared::cta.global.mbarrier::complete_tx::bytes "
+                 "[%0], [%1, {%2, %3, %4, %5}], [%6];\n"
+                 :: "r"(saddr), "l"(desc), "r"(c0), "r"(c1), "r"(c2), "r"(c3), "r"(maddr) : "memory");
+}
+
+static __device__ __forceinline__ void cp_async_bulk_tensor_5d(
+    void* smem, const CUtensorMap* desc, int c0, int c1, int c2, int c3, int c4, unsigned long long* mbar) {
+    unsigned int saddr = __cvta_generic_to_shared(smem);
+    unsigned int maddr = __cvta_generic_to_shared(mbar);
+    asm volatile("cp.async.bulk.tensor.5d.shared::cta.global.mbarrier::complete_tx::bytes "
+                 "[%0], [%1, {%2, %3, %4, %5, %6}], [%7];\n"
+                 :: "r"(saddr), "l"(desc), "r"(c0), "r"(c1), "r"(c2), "r"(c3), "r"(c4), "r"(maddr) : "memory");
+}
+
+extern "C" __global__
+__launch_bounds__(128) void k_matmul_1220f5(const float* __restrict__ b, const float* __restrict__ a, float* __restrict__ o, const CUtensorMap* __restrict__ _desc_a, const CUtensorMap* __restrict__ _desc_b) {
+#if defined(__CUDA_ARCH__) && __CUDA_ARCH__ >= 900
+    asm volatile("griddepcontrol.wait;" ::: "memory");
+#endif
+    int _gid = blockIdx.x * blockDim.x + threadIdx.x;
+        int a0_b = _gid / 4096;
+        int a1_b = (_gid / 128) % 32;
+        int a0_u = (_gid / 16) % 8;
+        int a1_u = (_gid) % 16;
+        float acc0__c0_0 = 0.0f;
+        float acc0__c0_1 = 0.0f;
+        __shared__ __align__(128) float _a_smem[2048];
+        __shared__ __align__(128) float _b_smem[8192];
+        __shared__ unsigned long long _mbar[2];
+        if (a0_u * 16 + a1_u == 0) {
+            mbarrier_init(&_mbar[0], 1);
+            mbarrier_init(&_mbar[1], 1);
+        }
+        __syncthreads();
+        if (a0_u * 16 + a1_u == 0) {
+            mbarrier_arrive_expect_tx(&_mbar[0], 20480);
+            cp_async_bulk_tensor_3d(&_a_smem[0], _desc_a, 0, a0_b * 8, 0, &_mbar[0]);
+            cp_async_bulk_tensor_2d(&_b_smem[0], _desc_b, a1_b * 32, 0, &_mbar[0]);
+        }
+        for (int _ks = 0; _ks < 1024; _ks += 128) {
+            if (a0_u * 16 + a1_u == 0) {
+                mbarrier_arrive_expect_tx(&_mbar[(_ks / 128 + 1) % 2], 20480);
+                cp_async_bulk_tensor_3d(&_a_smem[(_ks / 128 + 1) % 2 * 8 * 128], _desc_a, ((_ks + 128 < 1024) ? (_ks + 128) : (896)), a0_b * 8, 0, &_mbar[(_ks / 128 + 1) % 2]);
+                cp_async_bulk_tensor_2d(&_b_smem[(_ks / 128 + 1) % 2 * 128 * 32], _desc_b, a1_b * 32, ((_ks + 128 < 1024) ? (_ks + 128) : (896)), &_mbar[(_ks / 128 + 1) % 2]);
+            }
+            mbarrier_wait_parity(&_mbar[_ks / 128 % 2], _ks / 128 / 2 % 2);
+            for (int _ki = 0; _ki < 128; _ki++) {
+                float in0__c0_0 = _a_smem[(_ks / 128 % 2 * 8 + (a0_b * 8 + a0_u - a0_b * 8)) * 128 + _ki];
+                float in1__c0_0 = _b_smem[(_ks / 128 % 2 * 128 + _ki) * 32 + (a1_b * 32 + a1_u * 2 - a1_b * 32)];
+                float acc0__v__c0_0 = in1__c0_0 * in0__c0_0;
+                acc0__c0_0 += acc0__v__c0_0;
+                float in1__c0_1 = _b_smem[(_ks / 128 % 2 * 128 + _ki) * 32 + (a1_b * 32 + a1_u * 2 + 1 - a1_b * 32)];
+                float acc0__v__c0_1 = in1__c0_1 * in0__c0_0;
+                acc0__c0_1 += acc0__v__c0_1;
+            }
+            __syncthreads();
+        }
+        float2 _vs_acc0__c0_0_5f38652d = make_float2(acc0__c0_0, acc0__c0_1);
+        *reinterpret_cast<float2*>(&o[(a0_b * 8 + a0_u) * 1024 + (a1_b * 32 + a1_u * 2)]) = _vs_acc0__c0_0_5f38652d;
+}

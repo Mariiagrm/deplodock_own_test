@@ -1,0 +1,10 @@
+>>> k:085_fast_exp
+@@ matched at o @@
+@@ -75,5 +75,5 @@
+           if a2_co == 0:
+               f32 v2 = negative(acc0)
+-              f32 v3 = exp(v2)
++              f32 v3 = exp_fast(v2)
+               let f32 v4__t0 = 1.0
+               f32 v4 = add(v3, v4__t0)
+<<< k:085_fast_exp

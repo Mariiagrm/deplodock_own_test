@@ -1,0 +1,126 @@
+{
+  "inputs": [
+    "wg",
+    "x",
+    "wu"
+  ],
+  "outputs": [
+    "o"
+  ],
+  "nodes": {
+    "wg": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "wg",
+          "shape": [
+            1024,
+            3072
+          ],
+          "dtype": "f32"
+        }
+      ]
+    },
+    "wu": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "wu",
+          "shape": [
+            1024,
+            3072
+          ],
+          "dtype": "f32"
+        }
+      ]
+    },
+    "x": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "x",
+          "shape": [
+            1,
+            512,
+            1024
+          ],
+          "dtype": "f32"
+        }
+      ]
+    },
+    "o": {
+      "op": "CudaOp",
+      "op_fields": {
+        "kernel_source": "extern \"C\" __global__\n__launch_bounds__(128) void k_matmul_reduce_17f7d4(const float* __restrict__ wg, const float* __restrict__ x, const float* __restrict__ wu, float* __restrict__ o) {\n#if defined(__CUDA_ARCH__) && __CUDA_ARCH__ >= 900\n    asm volatile(\"griddepcontrol.wait;\" ::: \"memory\");\n#endif\n    int lane = threadIdx.x & 31;\n    int warp = threadIdx.x >> 5;\n    int _gid = blockIdx.x * blockDim.x + threadIdx.x;\n        int a0 = _gid / 393216;\n        int a1 = (_gid / 128) % 3072;\n        int a2_co = (_gid) % 128;\n        float acc0 = 0.0f;\n        float acc1 = 0.0f;\n        float in0__u0 = x[a0 * 1024 + a2_co];\n        float in1__u0 = wg[a2_co * 3072 + a1];\n        float v0__u0 = in0__u0 * in1__u0;\n        float in2__u0 = wu[a2_co * 3072 + a1];\n        float v1__u0 = in0__u0 * in2__u0;\n        acc0 += v0__u0;\n        acc1 += v1__u0;\n        float in0__u1 = x[a0 * 1024 + (a2_co + 128)];\n        float in1__u1 = wg[(a2_co + 128) * 3072 + a1];\n        float v0__u1 = in0__u1 * in1__u1;\n        float in2__u1 = wu[(a2_co + 128) * 3072 + a1];\n        float v1__u1 = in0__u1 * in2__u1;\n        acc0 += v0__u1;\n        acc1 += v1__u1;\n        float in0__u2 = x[a0 * 1024 + (a2_co + 256)];\n        float in1__u2 = wg[(a2_co + 256) * 3072 + a1];\n        float v0__u2 = in0__u2 * in1__u2;\n        float in2__u2 = wu[(a2_co + 256) * 3072 + a1];\n        float v1__u2 = in0__u2 * in2__u2;\n        acc0 += v0__u2;\n        acc1 += v1__u2;\n        float in0__u3 = x[a0 * 1024 + (a2_co + 384)];\n        float in1__u3 = wg[(a2_co + 384) * 3072 + a1];\n        float v0__u3 = in0__u3 * in1__u3;\n        float in2__u3 = wu[(a2_co + 384) * 3072 + a1];\n        float v1__u3 = in0__u3 * in2__u3;\n        acc0 += v0__u3;\n        acc1 += v1__u3;\n        float in0__u4 = x[a0 * 1024 + (a2_co + 512)];\n        float in1__u4 = wg[(a2_co + 512) * 3072 + a1];\n        float v0__u4 = in0__u4 * in1__u4;\n        float in2__u4 = wu[(a2_co + 512) * 3072 + a1];\n        float v1__u4 = in0__u4 * in2__u4;\n        acc0 += v0__u4;\n        acc1 += v1__u4;\n        float in0__u5 = x[a0 * 1024 + (a2_co + 640)];\n        float in1__u5 = wg[(a2_co + 640) * 3072 + a1];\n        float v0__u5 = in0__u5 * in1__u5;\n        float in2__u5 = wu[(a2_co + 640) * 3072 + a1];\n        float v1__u5 = in0__u5 * in2__u5;\n        acc0 += v0__u5;\n        acc1 += v1__u5;\n        float in0__u6 = x[a0 * 1024 + (a2_co + 768)];\n        float in1__u6 = wg[(a2_co + 768) * 3072 + a1];\n        float v0__u6 = in0__u6 * in1__u6;\n        float in2__u6 = wu[(a2_co + 768) * 3072 + a1];\n        float v1__u6 = in0__u6 * in2__u6;\n        acc0 += v0__u6;\n        acc1 += v1__u6;\n        float in0__u7 = x[a0 * 1024 + (a2_co + 896)];\n        float in1__u7 = wg[(a2_co + 896) * 3072 + a1];\n        float v0__u7 = in0__u7 * in1__u7;\n        float in2__u7 = wu[(a2_co + 896) * 3072 + a1];\n        float v1__u7 = in0__u7 * in2__u7;\n        acc0 += v0__u7;\n        acc1 += v1__u7;\n        {\n            float acc0__o = __shfl_xor_sync(__activemask(), acc0, 16);\n            float acc1__o = __shfl_xor_sync(__activemask(), acc1, 16);\n            acc0 = acc0 + acc0__o;\n            acc1 = acc1 + acc1__o;\n        }\n        {\n            float acc0__o = __shfl_xor_sync(__activemask(), acc0, 8);\n            float acc1__o = __shfl_xor_sync(__activemask(), acc1, 8);\n            acc0 = acc0 + acc0__o;\n            acc1 = acc1 + acc1__o;\n        }\n        {\n            float acc0__o = __shfl_xor_sync(__activemask(), acc0, 4);\n            float acc1__o = __shfl_xor_sync(__activemask(), acc1, 4);\n            acc0 = acc0 + acc0__o;\n            acc1 = acc1 + acc1__o;\n        }\n        {\n            float acc0__o = __shfl_xor_sync(__activemask(), acc0, 2);\n            float acc1__o = __shfl_xor_sync(__activemask(), acc1, 2);\n            acc0 = acc0 + acc0__o;\n            acc1 = acc1 + acc1__o;\n        }\n        {\n            float acc0__o = __shfl_xor_sync(__activemask(), acc0, 1);\n            float acc1__o = __shfl_xor_sync(__activemask(), acc1, 1);\n            acc0 = acc0 + acc0__o;\n            acc1 = acc1 + acc1__o;\n        }\n        __shared__ float acc0_smem[4];\n        __shared__ float acc1_smem[4];\n        if (lane == 0) {\n            acc0_smem[warp] = acc0;\n            acc1_smem[warp] = acc1;\n        }\n        __syncthreads();\n        if (warp == 0) {\n            float acc0 = acc0_smem[lane & 3];\n            float acc1 = acc1_smem[lane & 3];\n            {\n                float acc0__o = __shfl_xor_sync(__activemask(), acc0, 2);\n                float acc1__o = __shfl_xor_sync(__activemask(), acc1, 2);\n                acc0 = acc0 + acc0__o;\n                acc1 = acc1 + acc1__o;\n            }\n            {\n                float acc0__o = __shfl_xor_sync(__activemask(), acc0, 1);\n                float acc1__o = __shfl_xor_sync(__activemask(), acc1, 1);\n                acc0 = acc0 + acc0__o;\n                acc1 = acc1 + acc1__o;\n            }\n            if (lane == 0) {\n                acc0_smem[0] = acc0;\n                acc1_smem[0] = acc1;\n            }\n        }\n        __syncthreads();\n        acc0 = acc0_smem[0];\n        acc1 = acc1_smem[0];\n        if (a2_co == 0) {\n            float v2 = 0.0f - acc0;\n            float v3 = __expf(v2);\n            float v4__t0 = 1.0f;\n            float v4 = v3 + v4__t0;\n            float v5 = acc0 / v4;\n            float v6 = acc1 * v5;\n            o[a0 * 3072 + a1] = v6;\n        }\n}\n",
+        "kernel_name": "k_matmul_reduce_17f7d4",
+        "arg_order": [
+          "wg",
+          "x",
+          "wu",
+          "o"
+        ],
+        "grid": [
+          [
+            1572864
+          ],
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ],
+        "block": [
+          [
+            128
+          ],
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ],
+        "smem_bytes": 32,
+        "zero_outputs": [],
+        "zero_prologues": [],
+        "comment": "k_matmul_reduce_17f7d4",
+        "tma_descriptors": [],
+        "runtime_args": [],
+        "serial": []
+      },
+      "inputs": [
+        "wg",
+        "x",
+        "wu"
+      ],
+      "outputs": [
+        {
+          "name": "o",
+          "shape": [
+            1,
+            512,
+            3072
+          ],
+          "dtype": "f32"
+        }
+      ],
+      "hints": {
+        "prov": {
+          "o": {
+            "kind": "LoopOp",
+            "pieces": [
+              "o"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

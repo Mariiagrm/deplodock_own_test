@@ -1,0 +1,61 @@
+[
+  {
+    "root": "o",
+    "matched_pattern_nodes": {
+      "root": "o"
+    },
+    "before": [
+      {
+        "id": "o",
+        "op_class": "KernelOp",
+        "inputs": [
+          "b",
+          "a"
+        ],
+        "output_shape": [
+          "1",
+          "32",
+          "1024"
+        ],
+        "output_dtype": "f32"
+      }
+    ],
+    "after": [
+      {
+        "id": "a",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "1",
+          "32",
+          "1024"
+        ],
+        "output_dtype": "f32"
+      },
+      {
+        "id": "b",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "1024",
+          "1024"
+        ],
+        "output_dtype": "f32"
+      },
+      {
+        "id": "o",
+        "op_class": "CudaOp",
+        "inputs": [
+          "b",
+          "a"
+        ],
+        "output_shape": [
+          "1",
+          "32",
+          "1024"
+        ],
+        "output_dtype": "f32"
+      }
+    ]
+  }
+]

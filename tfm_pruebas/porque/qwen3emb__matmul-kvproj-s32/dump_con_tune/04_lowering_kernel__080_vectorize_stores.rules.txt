@@ -1,0 +1,9 @@
+>>> k:080_vectorize_stores
+@@ matched at o @@
+@@ -31,4 +31,3 @@
+                   f32 acc0__c0_1 <- add(acc0__c0_1, acc0__v__c0_1) over _ki
+               Sync
+-          f32 o[0, a0_b * 8 + a0_u * 1 + 0, a1_b * 32 + a1_u * 2 + 0] = acc0__c0_0
+-          f32 o[0, a0_b * 8 + a0_u * 1 + 0, a1_b * 32 + a1_u * 2 + 1] = acc0__c0_1
++          f32 o[0, a0_b * 8 + a0_u * 1 + 0, a1_b * 32 + a1_u * 2 + 0] = (acc0__c0_0, acc0__c0_1)
+<<< k:080_vectorize_stores

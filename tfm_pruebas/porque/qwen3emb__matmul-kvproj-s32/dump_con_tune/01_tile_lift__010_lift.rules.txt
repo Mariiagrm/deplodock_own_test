@@ -1,0 +1,25 @@
+>>> t:010_lift
+@@ matched at o @@
+@@ -1,9 +1,12 @@
+-o = LoopOp(b, a)
+-      for a0 in 0..32:
+-          for a1 in 0..1024:
+-              for a2 in 0..1024:
+-                  in0 = load a[0, a0, a2]
+-                  in1 = load b[a2, a1]
+-                  v0 = multiply(in1, in0)
+-                  acc0 <- add(acc0, v0) over a2
+-              o[0, a0, a1] = acc0
++o = TileOp(b, a)
++      place  free=(a0, a1)  unmapped
++      Fold[a2 in 0..1024] contraction
++      ├─ operand[in0]: load a[0, a0, a2]   ‹materialized›
++      ├─ operand[in1]: load b[a2, a1]   ‹materialized›
++      ├─ init: (0)
++      ├─ lift: λ(a2, in0, in1) -> (v0)
++      │    v0 = multiply(in0, in1)
++      └─ combine: λ(acc0, acc0__o) -> (acc0)
++           acc0 = add(acc0, acc0__o)
++      outputs
++      └─ o[0, a0, a1] = acc0
+<<< t:010_lift

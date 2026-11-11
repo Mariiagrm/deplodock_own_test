@@ -1,0 +1,32 @@
+// 3 nodes, 2 inputs, 1 outputs
+
+struct Dynamic {}
+
+struct Inputs<dynamic: Dynamic> {
+    b: f32[1024,1024],
+    a: f32[1,32,1024],
+}
+
+struct Outputs<dynamic: Dynamic> {
+    o: f32[1,32,1024],
+}
+
+fn main(dynamic: Dynamic, inputs: Inputs<dynamic>) -> Outputs<dynamic> {
+  let o: f32[1,32,1024]
+      = tile(inputs.b, inputs.a) {
+        place  free=(a0, a1)  grid=(a0, a1)
+        work   t128
+        Fold[a2 in 0..1024] contraction   ⟨REDUCE=coop⟩
+        ├─ operand[in0]: load a[0, a0, a2]   ‹materialized›
+        ├─ operand[in1]: load b[a2, a1]   ‹materialized›
+        ├─ init: (0)
+        ├─ lift: λ(a2, in0, in1) -> (v0)
+        │    v0 = multiply(in0, in1)
+        └─ combine: λ(acc0, acc0__o) -> (acc0)
+             acc0 = add(acc0, acc0__o)
+        outputs
+        └─ o[0, a0, a1] = acc0
+  };
+
+  Outputs { o }
+}

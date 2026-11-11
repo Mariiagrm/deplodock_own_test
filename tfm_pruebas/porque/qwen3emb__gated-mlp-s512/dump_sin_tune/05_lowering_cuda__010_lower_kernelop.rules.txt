@@ -1,0 +1,228 @@
+>>> c:010_lower_kernelop
+@@ matched at o @@
+# diff suppressed: 223 lines > --diff-max-lines 200
+before:
+  o = KernelOp(wg, x, wu)
+        Tile(axes=(a0 in 0..512, a1 in 0..3072, a2_co in 0..128), block_threads=128):
+            init f32 acc0 = 0
+            init f32 acc1 = 0
+            f32 in0__u0 = load x[0, a0, a2_co]
+            f32 in1__u0 = load wg[a2_co, a1]
+            f32 v0__u0 = multiply(in0__u0, in1__u0)
+            f32 in2__u0 = load wu[a2_co, a1]
+            f32 v1__u0 = multiply(in0__u0, in2__u0)
+            f32 acc0 <- add(acc0, v0__u0) over a2_co
+            f32 acc1 <- add(acc1, v1__u0) over a2_co
+            f32 in0__u1 = load x[0, a0, a2_co + 128]
+            f32 in1__u1 = load wg[a2_co + 128, a1]
+            f32 v0__u1 = multiply(in0__u1, in1__u1)
+            f32 in2__u1 = load wu[a2_co + 128, a1]
+            f32 v1__u1 = multiply(in0__u1, in2__u1)
+            f32 acc0 <- add(acc0, v0__u1) over a2_co
+            f32 acc1 <- add(acc1, v1__u1) over a2_co
+            f32 in0__u2 = load x[0, a0, a2_co + 256]
+            f32 in1__u2 = load wg[a2_co + 256, a1]
+            f32 v0__u2 = multiply(in0__u2, in1__u2)
+            f32 in2__u2 = load wu[a2_co + 256, a1]
+            f32 v1__u2 = multiply(in0__u2, in2__u2)
+            f32 acc0 <- add(acc0, v0__u2) over a2_co
+            f32 acc1 <- add(acc1, v1__u2) over a2_co
+            f32 in0__u3 = load x[0, a0, a2_co + 384]
+            f32 in1__u3 = load wg[a2_co + 384, a1]
+            f32 v0__u3 = multiply(in0__u3, in1__u3)
+            f32 in2__u3 = load wu[a2_co + 384, a1]
+            f32 v1__u3 = multiply(in0__u3, in2__u3)
+            f32 acc0 <- add(acc0, v0__u3) over a2_co
+            f32 acc1 <- add(acc1, v1__u3) over a2_co
+            f32 in0__u4 = load x[0, a0, a2_co + 512]
+            f32 in1__u4 = load wg[a2_co + 512, a1]
+            f32 v0__u4 = multiply(in0__u4, in1__u4)
+            f32 in2__u4 = load wu[a2_co + 512, a1]
+            f32 v1__u4 = multiply(in0__u4, in2__u4)
+            f32 acc0 <- add(acc0, v0__u4) over a2_co
+            f32 acc1 <- add(acc1, v1__u4) over a2_co
+            f32 in0__u5 = load x[0, a0, a2_co + 640]
+            f32 in1__u5 = load wg[a2_co + 640, a1]
+            f32 v0__u5 = multiply(in0__u5, in1__u5)
+            f32 in2__u5 = load wu[a2_co + 640, a1]
+            f32 v1__u5 = multiply(in0__u5, in2__u5)
+            f32 acc0 <- add(acc0, v0__u5) over a2_co
+            f32 acc1 <- add(acc1, v1__u5) over a2_co
+            f32 in0__u6 = load x[0, a0, a2_co + 768]
+            f32 in1__u6 = load wg[a2_co + 768, a1]
+            f32 v0__u6 = multiply(in0__u6, in1__u6)
+            f32 in2__u6 = load wu[a2_co + 768, a1]
+            f32 v1__u6 = multiply(in0__u6, in2__u6)
+            f32 acc0 <- add(acc0, v0__u6) over a2_co
+            f32 acc1 <- add(acc1, v1__u6) over a2_co
+            f32 in0__u7 = load x[0, a0, a2_co + 896]
+            f32 in1__u7 = load wg[a2_co + 896, a1]
+            f32 v0__u7 = multiply(in0__u7, in1__u7)
+            f32 in2__u7 = load wu[a2_co + 896, a1]
+            f32 v1__u7 = multiply(in0__u7, in2__u7)
+            f32 acc0 <- add(acc0, v0__u7) over a2_co
+            f32 acc1 <- add(acc1, v1__u7) over a2_co
+            WarpShuffle(state=(acc0, acc1), state_b=(acc0__o, acc1__o), length=32):
+                combine_states:
+                    acc0 = add(acc0, acc0__o)
+                    acc1 = add(acc1, acc1__o)
+            Smem(name=acc0_smem, extents=(4))
+            Smem(name=acc1_smem, extents=(4))
+            if lane == 0:
+                f32 acc0_smem[warp] = acc0
+                f32 acc1_smem[warp] = acc1
+            Sync
+            TreeHalve(bufs=(acc0_smem, acc1_smem), state=(acc0, acc1), state_b=(acc0__o, acc1__o), length=4, tid_var=warp):
+                combine_states:
+                    acc0 = add(acc0, acc0__o)
+                    acc1 = add(acc1, acc1__o)
+            if a2_co == 0:
+                f32 v2 = negative(acc0)
+                f32 v3 = exp_fast(v2)
+                let f32 v4__t0 = 1.0
+                f32 v4 = add(v3, v4__t0)
+                f32 v5 = divide(acc0, v4)
+                f32 v6 = multiply(acc1, v5)
+                f32 o[0, a0, a1] = v6
+after:
+  o = CudaOp(wg, x, wu)
+    extern "C" __global__
+    __launch_bounds__(128) void k_matmul_reduce_17f7d4(const float* __restrict__ wg, const float* __restrict__ x, const float* __restrict__ wu, float* __restrict__ o) {
+    #if defined(__CUDA_ARCH__) && __CUDA_ARCH__ >= 900
+        asm volatile("griddepcontrol.wait;" ::: "memory");
+    #endif
+        int lane = threadIdx.x & 31;
+        int warp = threadIdx.x >> 5;
+        int _gid = blockIdx.x * blockDim.x + threadIdx.x;
+            int a0 = _gid / 393216;
+            int a1 = (_gid / 128) % 3072;
+            int a2_co = (_gid) % 128;
+            float acc0 = 0.0f;
+            float acc1 = 0.0f;
+            float in0__u0 = x[a0 * 1024 + a2_co];
+            float in1__u0 = wg[a2_co * 3072 + a1];
+            float v0__u0 = in0__u0 * in1__u0;
+            float in2__u0 = wu[a2_co * 3072 + a1];
+            float v1__u0 = in0__u0 * in2__u0;
+            acc0 += v0__u0;
+            acc1 += v1__u0;
+            float in0__u1 = x[a0 * 1024 + (a2_co + 128)];
+            float in1__u1 = wg[(a2_co + 128) * 3072 + a1];
+            float v0__u1 = in0__u1 * in1__u1;
+            float in2__u1 = wu[(a2_co + 128) * 3072 + a1];
+            float v1__u1 = in0__u1 * in2__u1;
+            acc0 += v0__u1;
+            acc1 += v1__u1;
+            float in0__u2 = x[a0 * 1024 + (a2_co + 256)];
+            float in1__u2 = wg[(a2_co + 256) * 3072 + a1];
+            float v0__u2 = in0__u2 * in1__u2;
+            float in2__u2 = wu[(a2_co + 256) * 3072 + a1];
+            float v1__u2 = in0__u2 * in2__u2;
+            acc0 += v0__u2;
+            acc1 += v1__u2;
+            float in0__u3 = x[a0 * 1024 + (a2_co + 384)];
+            float in1__u3 = wg[(a2_co + 384) * 3072 + a1];
+            float v0__u3 = in0__u3 * in1__u3;
+            float in2__u3 = wu[(a2_co + 384) * 3072 + a1];
+            float v1__u3 = in0__u3 * in2__u3;
+            acc0 += v0__u3;
+            acc1 += v1__u3;
+            float in0__u4 = x[a0 * 1024 + (a2_co + 512)];
+            float in1__u4 = wg[(a2_co + 512) * 3072 + a1];
+            float v0__u4 = in0__u4 * in1__u4;
+            float in2__u4 = wu[(a2_co + 512) * 3072 + a1];
+            float v1__u4 = in0__u4 * in2__u4;
+            acc0 += v0__u4;
+            acc1 += v1__u4;
+            float in0__u5 = x[a0 * 1024 + (a2_co + 640)];
+            float in1__u5 = wg[(a2_co + 640) * 3072 + a1];
+            float v0__u5 = in0__u5 * in1__u5;
+            float in2__u5 = wu[(a2_co + 640) * 3072 + a1];
+            float v1__u5 = in0__u5 * in2__u5;
+            acc0 += v0__u5;
+            acc1 += v1__u5;
+            float in0__u6 = x[a0 * 1024 + (a2_co + 768)];
+            float in1__u6 = wg[(a2_co + 768) * 3072 + a1];
+            float v0__u6 = in0__u6 * in1__u6;
+            float in2__u6 = wu[(a2_co + 768) * 3072 + a1];
+            float v1__u6 = in0__u6 * in2__u6;
+            acc0 += v0__u6;
+            acc1 += v1__u6;
+            float in0__u7 = x[a0 * 1024 + (a2_co + 896)];
+            float in1__u7 = wg[(a2_co + 896) * 3072 + a1];
+            float v0__u7 = in0__u7 * in1__u7;
+            float in2__u7 = wu[(a2_co + 896) * 3072 + a1];
+            float v1__u7 = in0__u7 * in2__u7;
+            acc0 += v0__u7;
+            acc1 += v1__u7;
+            {
+                float acc0__o = __shfl_xor_sync(__activemask(), acc0, 16);
+                float acc1__o = __shfl_xor_sync(__activemask(), acc1, 16);
+                acc0 = acc0 + acc0__o;
+                acc1 = acc1 + acc1__o;
+            }
+            {
+                float acc0__o = __shfl_xor_sync(__activemask(), acc0, 8);
+                float acc1__o = __shfl_xor_sync(__activemask(), acc1, 8);
+                acc0 = acc0 + acc0__o;
+                acc1 = acc1 + acc1__o;
+            }
+            {
+                float acc0__o = __shfl_xor_sync(__activemask(), acc0, 4);
+                float acc1__o = __shfl_xor_sync(__activemask(), acc1, 4);
+                acc0 = acc0 + acc0__o;
+                acc1 = acc1 + acc1__o;
+            }
+            {
+                float acc0__o = __shfl_xor_sync(__activemask(), acc0, 2);
+                float acc1__o = __shfl_xor_sync(__activemask(), acc1, 2);
+                acc0 = acc0 + acc0__o;
+                acc1 = acc1 + acc1__o;
+            }
+            {
+                float acc0__o = __shfl_xor_sync(__activemask(), acc0, 1);
+                float acc1__o = __shfl_xor_sync(__activemask(), acc1, 1);
+                acc0 = acc0 + acc0__o;
+                acc1 = acc1 + acc1__o;
+            }
+            __shared__ float acc0_smem[4];
+            __shared__ float acc1_smem[4];
+            if (lane == 0) {
+                acc0_smem[warp] = acc0;
+                acc1_smem[warp] = acc1;
+            }
+            __syncthreads();
+            if (warp == 0) {
+                float acc0 = acc0_smem[lane & 3];
+                float acc1 = acc1_smem[lane & 3];
+                {
+                    float acc0__o = __shfl_xor_sync(__activemask(), acc0, 2);
+                    float acc1__o = __shfl_xor_sync(__activemask(), acc1, 2);
+                    acc0 = acc0 + acc0__o;
+                    acc1 = acc1 + acc1__o;
+                }
+                {
+                    float acc0__o = __shfl_xor_sync(__activemask(), acc0, 1);
+                    float acc1__o = __shfl_xor_sync(__activemask(), acc1, 1);
+                    acc0 = acc0 + acc0__o;
+                    acc1 = acc1 + acc1__o;
+                }
+                if (lane == 0) {
+                    acc0_smem[0] = acc0;
+                    acc1_smem[0] = acc1;
+                }
+            }
+            __syncthreads();
+            acc0 = acc0_smem[0];
+            acc1 = acc1_smem[0];
+            if (a2_co == 0) {
+                float v2 = 0.0f - acc0;
+                float v3 = __expf(v2);
+                float v4__t0 = 1.0f;
+                float v4 = v3 + v4__t0;
+                float v5 = acc0 / v4;
+                float v6 = acc1 * v5;
+                o[a0 * 3072 + a1] = v6;
+            }
+    }
+<<< c:010_lower_kernelop

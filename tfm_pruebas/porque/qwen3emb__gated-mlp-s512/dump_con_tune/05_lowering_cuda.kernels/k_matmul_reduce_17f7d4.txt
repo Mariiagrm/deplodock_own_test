@@ -1,0 +1,770 @@
+extern "C" __global__
+__launch_bounds__(256) void k_matmul_reduce_17f7d4(const float* __restrict__ wg, const float* __restrict__ x, const float* __restrict__ wu, float* __restrict__ o) {
+#if defined(__CUDA_ARCH__) && __CUDA_ARCH__ >= 900
+    asm volatile("griddepcontrol.wait;" ::: "memory");
+#endif
+    extern __shared__ __align__(16) unsigned char _smem_pool[];  // 88576 bytes
+    int _gid = blockIdx.x * blockDim.x + threadIdx.x;
+        int a0_b = _gid / 6144;
+        int a1_b = (_gid / 256) % 24;
+        int a0_u = (_gid / 32) % 8;
+        int a1_u = (_gid) % 32;
+        float acc0__c0_0 = 0.0f;
+        float acc0__c0_1 = 0.0f;
+        float acc0__c0_2 = 0.0f;
+        float acc0__c0_3 = 0.0f;
+        float acc0__c1_0 = 0.0f;
+        float acc0__c1_1 = 0.0f;
+        float acc0__c1_2 = 0.0f;
+        float acc0__c1_3 = 0.0f;
+        float acc0__c2_0 = 0.0f;
+        float acc0__c2_1 = 0.0f;
+        float acc0__c2_2 = 0.0f;
+        float acc0__c2_3 = 0.0f;
+        float acc0__c3_0 = 0.0f;
+        float acc0__c3_1 = 0.0f;
+        float acc0__c3_2 = 0.0f;
+        float acc0__c3_3 = 0.0f;
+        float acc0__c4_0 = 0.0f;
+        float acc0__c4_1 = 0.0f;
+        float acc0__c4_2 = 0.0f;
+        float acc0__c4_3 = 0.0f;
+        float acc0__c5_0 = 0.0f;
+        float acc0__c5_1 = 0.0f;
+        float acc0__c5_2 = 0.0f;
+        float acc0__c5_3 = 0.0f;
+        float acc0__c6_0 = 0.0f;
+        float acc0__c6_1 = 0.0f;
+        float acc0__c6_2 = 0.0f;
+        float acc0__c6_3 = 0.0f;
+        float acc0__c7_0 = 0.0f;
+        float acc0__c7_1 = 0.0f;
+        float acc0__c7_2 = 0.0f;
+        float acc0__c7_3 = 0.0f;
+        float acc0__c8_0 = 0.0f;
+        float acc0__c8_1 = 0.0f;
+        float acc0__c8_2 = 0.0f;
+        float acc0__c8_3 = 0.0f;
+        float acc0__c9_0 = 0.0f;
+        float acc0__c9_1 = 0.0f;
+        float acc0__c9_2 = 0.0f;
+        float acc0__c9_3 = 0.0f;
+        float acc1__c0_0 = 0.0f;
+        float acc1__c0_1 = 0.0f;
+        float acc1__c0_2 = 0.0f;
+        float acc1__c0_3 = 0.0f;
+        float acc1__c1_0 = 0.0f;
+        float acc1__c1_1 = 0.0f;
+        float acc1__c1_2 = 0.0f;
+        float acc1__c1_3 = 0.0f;
+        float acc1__c2_0 = 0.0f;
+        float acc1__c2_1 = 0.0f;
+        float acc1__c2_2 = 0.0f;
+        float acc1__c2_3 = 0.0f;
+        float acc1__c3_0 = 0.0f;
+        float acc1__c3_1 = 0.0f;
+        float acc1__c3_2 = 0.0f;
+        float acc1__c3_3 = 0.0f;
+        float acc1__c4_0 = 0.0f;
+        float acc1__c4_1 = 0.0f;
+        float acc1__c4_2 = 0.0f;
+        float acc1__c4_3 = 0.0f;
+        float acc1__c5_0 = 0.0f;
+        float acc1__c5_1 = 0.0f;
+        float acc1__c5_2 = 0.0f;
+        float acc1__c5_3 = 0.0f;
+        float acc1__c6_0 = 0.0f;
+        float acc1__c6_1 = 0.0f;
+        float acc1__c6_2 = 0.0f;
+        float acc1__c6_3 = 0.0f;
+        float acc1__c7_0 = 0.0f;
+        float acc1__c7_1 = 0.0f;
+        float acc1__c7_2 = 0.0f;
+        float acc1__c7_3 = 0.0f;
+        float acc1__c8_0 = 0.0f;
+        float acc1__c8_1 = 0.0f;
+        float acc1__c8_2 = 0.0f;
+        float acc1__c8_3 = 0.0f;
+        float acc1__c9_0 = 0.0f;
+        float acc1__c9_1 = 0.0f;
+        float acc1__c9_2 = 0.0f;
+        float acc1__c9_3 = 0.0f;
+        float* _a_smem = reinterpret_cast<float*>(_smem_pool + 0);
+        float* _b_smem = reinterpret_cast<float*>(_smem_pool + 23040);
+        float* _b_x1_smem = reinterpret_cast<float*>(_smem_pool + 55808);
+        for (int _fa = a0_u * 32 + a1_u; _fa < 640; _fa += 256) {
+            float4 _v__a_copy0 = *reinterpret_cast<const float4*>(&x[((a0_b * 80 + _fa / 8 < 512) ? (a0_b * 80 + _fa / 8) : (511)) * 1024 + 4 * (_fa % 8)]);
+            float _a_copy0 = _v__a_copy0.x;
+            float _a_copy1 = _v__a_copy0.y;
+            float _a_copy2 = _v__a_copy0.z;
+            float _a_copy3 = _v__a_copy0.w;
+            float4 _vs__a_copy0_104738c3 = make_float4(_a_copy0, _a_copy1, _a_copy2, _a_copy3);
+            *reinterpret_cast<float4*>(&_a_smem[_fa / 8 * 36 + 4 * (_fa % 8)]) = _vs__a_copy0_104738c3;
+        }
+        float4 _v__b_copy0__u0 = *reinterpret_cast<const float4*>(&wg[(a0_u * 32 + a1_u) / 32 * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u) % 32))]);
+        float _b_copy0__u0 = _v__b_copy0__u0.x;
+        float _b_copy1__u0 = _v__b_copy0__u0.y;
+        float _b_copy2__u0 = _v__b_copy0__u0.z;
+        float _b_copy3__u0 = _v__b_copy0__u0.w;
+        float4 _vs__b_copy0__u0_5fd75cdf = make_float4(_b_copy0__u0, _b_copy1__u0, _b_copy2__u0, _b_copy3__u0);
+        *reinterpret_cast<float4*>(&_b_smem[(a0_u * 32 + a1_u) * 4]) = _vs__b_copy0__u0_5fd75cdf;
+        float4 _v__b_copy0__u1 = *reinterpret_cast<const float4*>(&wg[(a0_u * 32 + a1_u + 256) / 32 * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u + 256) % 32))]);
+        float _b_copy0__u1 = _v__b_copy0__u1.x;
+        float _b_copy1__u1 = _v__b_copy0__u1.y;
+        float _b_copy2__u1 = _v__b_copy0__u1.z;
+        float _b_copy3__u1 = _v__b_copy0__u1.w;
+        float4 _vs__b_copy0__u1_78feedc5 = make_float4(_b_copy0__u1, _b_copy1__u1, _b_copy2__u1, _b_copy3__u1);
+        *reinterpret_cast<float4*>(&_b_smem[(a0_u * 32 + a1_u + 256) * 4]) = _vs__b_copy0__u1_78feedc5;
+        float4 _v__b_copy0__u2 = *reinterpret_cast<const float4*>(&wg[(a0_u * 32 + a1_u + 512) / 32 * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u + 512) % 32))]);
+        float _b_copy0__u2 = _v__b_copy0__u2.x;
+        float _b_copy1__u2 = _v__b_copy0__u2.y;
+        float _b_copy2__u2 = _v__b_copy0__u2.z;
+        float _b_copy3__u2 = _v__b_copy0__u2.w;
+        float4 _vs__b_copy0__u2_9a90fe5d = make_float4(_b_copy0__u2, _b_copy1__u2, _b_copy2__u2, _b_copy3__u2);
+        *reinterpret_cast<float4*>(&_b_smem[(a0_u * 32 + a1_u + 512) * 4]) = _vs__b_copy0__u2_9a90fe5d;
+        float4 _v__b_copy0__u3 = *reinterpret_cast<const float4*>(&wg[(a0_u * 32 + a1_u + 768) / 32 * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u + 768) % 32))]);
+        float _b_copy0__u3 = _v__b_copy0__u3.x;
+        float _b_copy1__u3 = _v__b_copy0__u3.y;
+        float _b_copy2__u3 = _v__b_copy0__u3.z;
+        float _b_copy3__u3 = _v__b_copy0__u3.w;
+        float4 _vs__b_copy0__u3_77b02f5b = make_float4(_b_copy0__u3, _b_copy1__u3, _b_copy2__u3, _b_copy3__u3);
+        *reinterpret_cast<float4*>(&_b_smem[(a0_u * 32 + a1_u + 768) * 4]) = _vs__b_copy0__u3_77b02f5b;
+        float4 _v__b_x1_copy0__u0 = *reinterpret_cast<const float4*>(&wu[(a0_u * 32 + a1_u) / 32 * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u) % 32))]);
+        float _b_x1_copy0__u0 = _v__b_x1_copy0__u0.x;
+        float _b_x1_copy1__u0 = _v__b_x1_copy0__u0.y;
+        float _b_x1_copy2__u0 = _v__b_x1_copy0__u0.z;
+        float _b_x1_copy3__u0 = _v__b_x1_copy0__u0.w;
+        float4 _vs__b_x1_copy0__u0_17a88353 = make_float4(_b_x1_copy0__u0, _b_x1_copy1__u0, _b_x1_copy2__u0, _b_x1_copy3__u0);
+        *reinterpret_cast<float4*>(&_b_x1_smem[(a0_u * 32 + a1_u) * 4]) = _vs__b_x1_copy0__u0_17a88353;
+        float4 _v__b_x1_copy0__u1 = *reinterpret_cast<const float4*>(&wu[(a0_u * 32 + a1_u + 256) / 32 * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u + 256) % 32))]);
+        float _b_x1_copy0__u1 = _v__b_x1_copy0__u1.x;
+        float _b_x1_copy1__u1 = _v__b_x1_copy0__u1.y;
+        float _b_x1_copy2__u1 = _v__b_x1_copy0__u1.z;
+        float _b_x1_copy3__u1 = _v__b_x1_copy0__u1.w;
+        float4 _vs__b_x1_copy0__u1_d9bc8179 = make_float4(_b_x1_copy0__u1, _b_x1_copy1__u1, _b_x1_copy2__u1, _b_x1_copy3__u1);
+        *reinterpret_cast<float4*>(&_b_x1_smem[(a0_u * 32 + a1_u + 256) * 4]) = _vs__b_x1_copy0__u1_d9bc8179;
+        float4 _v__b_x1_copy0__u2 = *reinterpret_cast<const float4*>(&wu[(a0_u * 32 + a1_u + 512) / 32 * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u + 512) % 32))]);
+        float _b_x1_copy0__u2 = _v__b_x1_copy0__u2.x;
+        float _b_x1_copy1__u2 = _v__b_x1_copy0__u2.y;
+        float _b_x1_copy2__u2 = _v__b_x1_copy0__u2.z;
+        float _b_x1_copy3__u2 = _v__b_x1_copy0__u2.w;
+        float4 _vs__b_x1_copy0__u2_ec8f8d06 = make_float4(_b_x1_copy0__u2, _b_x1_copy1__u2, _b_x1_copy2__u2, _b_x1_copy3__u2);
+        *reinterpret_cast<float4*>(&_b_x1_smem[(a0_u * 32 + a1_u + 512) * 4]) = _vs__b_x1_copy0__u2_ec8f8d06;
+        float4 _v__b_x1_copy0__u3 = *reinterpret_cast<const float4*>(&wu[(a0_u * 32 + a1_u + 768) / 32 * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u + 768) % 32))]);
+        float _b_x1_copy0__u3 = _v__b_x1_copy0__u3.x;
+        float _b_x1_copy1__u3 = _v__b_x1_copy0__u3.y;
+        float _b_x1_copy2__u3 = _v__b_x1_copy0__u3.z;
+        float _b_x1_copy3__u3 = _v__b_x1_copy0__u3.w;
+        float4 _vs__b_x1_copy0__u3_fbc98efd = make_float4(_b_x1_copy0__u3, _b_x1_copy1__u3, _b_x1_copy2__u3, _b_x1_copy3__u3);
+        *reinterpret_cast<float4*>(&_b_x1_smem[(a0_u * 32 + a1_u + 768) * 4]) = _vs__b_x1_copy0__u3_fbc98efd;
+        for (int _ks = 0; _ks < 1024; _ks += 32) {
+            for (int _fa = a0_u * 32 + a1_u; _fa < 640; _fa += 256) {
+                float4 _v__a_copy0 = *reinterpret_cast<const float4*>(&x[((a0_b * 80 + _fa / 8 < 512) ? (a0_b * 80 + _fa / 8) : (511)) * 1024 + (((_ks + 32 < 1024) ? (_ks + 32) : (992)) + 4 * (_fa % 8))]);
+                float _a_copy0 = _v__a_copy0.x;
+                float _a_copy1 = _v__a_copy0.y;
+                float _a_copy2 = _v__a_copy0.z;
+                float _a_copy3 = _v__a_copy0.w;
+                float4 _vs__a_copy0_d037ca0f = make_float4(_a_copy0, _a_copy1, _a_copy2, _a_copy3);
+                *reinterpret_cast<float4*>(&_a_smem[((_ks / 32 + 1) % 2 * 80 + _fa / 8) * 36 + 4 * (_fa % 8)]) = _vs__a_copy0_d037ca0f;
+            }
+            float4 _v__b_copy0__u0 = *reinterpret_cast<const float4*>(&wg[(((_ks + 32 < 1024) ? (_ks + 32) : (992)) + (a0_u * 32 + a1_u) / 32) * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u) % 32))]);
+            float _b_copy0__u0 = _v__b_copy0__u0.x;
+            float _b_copy1__u0 = _v__b_copy0__u0.y;
+            float _b_copy2__u0 = _v__b_copy0__u0.z;
+            float _b_copy3__u0 = _v__b_copy0__u0.w;
+            float4 _vs__b_copy0__u0_e7e5f1c3 = make_float4(_b_copy0__u0, _b_copy1__u0, _b_copy2__u0, _b_copy3__u0);
+            *reinterpret_cast<float4*>(&_b_smem[((_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u) / 32) * 128 + 4 * ((a0_u * 32 + a1_u) % 32)]) = _vs__b_copy0__u0_e7e5f1c3;
+            float4 _v__b_copy0__u1 = *reinterpret_cast<const float4*>(&wg[(((_ks + 32 < 1024) ? (_ks + 32) : (992)) + (a0_u * 32 + a1_u + 256) / 32) * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u + 256) % 32))]);
+            float _b_copy0__u1 = _v__b_copy0__u1.x;
+            float _b_copy1__u1 = _v__b_copy0__u1.y;
+            float _b_copy2__u1 = _v__b_copy0__u1.z;
+            float _b_copy3__u1 = _v__b_copy0__u1.w;
+            float4 _vs__b_copy0__u1_fc0d1753 = make_float4(_b_copy0__u1, _b_copy1__u1, _b_copy2__u1, _b_copy3__u1);
+            *reinterpret_cast<float4*>(&_b_smem[((_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 256) / 32) * 128 + 4 * ((a0_u * 32 + a1_u + 256) % 32)]) = _vs__b_copy0__u1_fc0d1753;
+            float4 _v__b_copy0__u2 = *reinterpret_cast<const float4*>(&wg[(((_ks + 32 < 1024) ? (_ks + 32) : (992)) + (a0_u * 32 + a1_u + 512) / 32) * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u + 512) % 32))]);
+            float _b_copy0__u2 = _v__b_copy0__u2.x;
+            float _b_copy1__u2 = _v__b_copy0__u2.y;
+            float _b_copy2__u2 = _v__b_copy0__u2.z;
+            float _b_copy3__u2 = _v__b_copy0__u2.w;
+            float4 _vs__b_copy0__u2_7d11054d = make_float4(_b_copy0__u2, _b_copy1__u2, _b_copy2__u2, _b_copy3__u2);
+            *reinterpret_cast<float4*>(&_b_smem[((_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 512) / 32) * 128 + 4 * ((a0_u * 32 + a1_u + 512) % 32)]) = _vs__b_copy0__u2_7d11054d;
+            float4 _v__b_copy0__u3 = *reinterpret_cast<const float4*>(&wg[(((_ks + 32 < 1024) ? (_ks + 32) : (992)) + (a0_u * 32 + a1_u + 768) / 32) * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u + 768) % 32))]);
+            float _b_copy0__u3 = _v__b_copy0__u3.x;
+            float _b_copy1__u3 = _v__b_copy0__u3.y;
+            float _b_copy2__u3 = _v__b_copy0__u3.z;
+            float _b_copy3__u3 = _v__b_copy0__u3.w;
+            float4 _vs__b_copy0__u3_123a2857 = make_float4(_b_copy0__u3, _b_copy1__u3, _b_copy2__u3, _b_copy3__u3);
+            *reinterpret_cast<float4*>(&_b_smem[((_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 768) / 32) * 128 + 4 * ((a0_u * 32 + a1_u + 768) % 32)]) = _vs__b_copy0__u3_123a2857;
+            float4 _v__b_x1_copy0__u0 = *reinterpret_cast<const float4*>(&wu[(((_ks + 32 < 1024) ? (_ks + 32) : (992)) + (a0_u * 32 + a1_u) / 32) * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u) % 32))]);
+            float _b_x1_copy0__u0 = _v__b_x1_copy0__u0.x;
+            float _b_x1_copy1__u0 = _v__b_x1_copy0__u0.y;
+            float _b_x1_copy2__u0 = _v__b_x1_copy0__u0.z;
+            float _b_x1_copy3__u0 = _v__b_x1_copy0__u0.w;
+            float4 _vs__b_x1_copy0__u0_3e0b3283 = make_float4(_b_x1_copy0__u0, _b_x1_copy1__u0, _b_x1_copy2__u0, _b_x1_copy3__u0);
+            *reinterpret_cast<float4*>(&_b_x1_smem[((_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u) / 32) * 128 + 4 * ((a0_u * 32 + a1_u) % 32)]) = _vs__b_x1_copy0__u0_3e0b3283;
+            float4 _v__b_x1_copy0__u1 = *reinterpret_cast<const float4*>(&wu[(((_ks + 32 < 1024) ? (_ks + 32) : (992)) + (a0_u * 32 + a1_u + 256) / 32) * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u + 256) % 32))]);
+            float _b_x1_copy0__u1 = _v__b_x1_copy0__u1.x;
+            float _b_x1_copy1__u1 = _v__b_x1_copy0__u1.y;
+            float _b_x1_copy2__u1 = _v__b_x1_copy0__u1.z;
+            float _b_x1_copy3__u1 = _v__b_x1_copy0__u1.w;
+            float4 _vs__b_x1_copy0__u1_e731aeb0 = make_float4(_b_x1_copy0__u1, _b_x1_copy1__u1, _b_x1_copy2__u1, _b_x1_copy3__u1);
+            *reinterpret_cast<float4*>(&_b_x1_smem[((_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 256) / 32) * 128 + 4 * ((a0_u * 32 + a1_u + 256) % 32)]) = _vs__b_x1_copy0__u1_e731aeb0;
+            float4 _v__b_x1_copy0__u2 = *reinterpret_cast<const float4*>(&wu[(((_ks + 32 < 1024) ? (_ks + 32) : (992)) + (a0_u * 32 + a1_u + 512) / 32) * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u + 512) % 32))]);
+            float _b_x1_copy0__u2 = _v__b_x1_copy0__u2.x;
+            float _b_x1_copy1__u2 = _v__b_x1_copy0__u2.y;
+            float _b_x1_copy2__u2 = _v__b_x1_copy0__u2.z;
+            float _b_x1_copy3__u2 = _v__b_x1_copy0__u2.w;
+            float4 _vs__b_x1_copy0__u2_eb4a578c = make_float4(_b_x1_copy0__u2, _b_x1_copy1__u2, _b_x1_copy2__u2, _b_x1_copy3__u2);
+            *reinterpret_cast<float4*>(&_b_x1_smem[((_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 512) / 32) * 128 + 4 * ((a0_u * 32 + a1_u + 512) % 32)]) = _vs__b_x1_copy0__u2_eb4a578c;
+            float4 _v__b_x1_copy0__u3 = *reinterpret_cast<const float4*>(&wu[(((_ks + 32 < 1024) ? (_ks + 32) : (992)) + (a0_u * 32 + a1_u + 768) / 32) * 3072 + (a1_b * 128 + 4 * ((a0_u * 32 + a1_u + 768) % 32))]);
+            float _b_x1_copy0__u3 = _v__b_x1_copy0__u3.x;
+            float _b_x1_copy1__u3 = _v__b_x1_copy0__u3.y;
+            float _b_x1_copy2__u3 = _v__b_x1_copy0__u3.z;
+            float _b_x1_copy3__u3 = _v__b_x1_copy0__u3.w;
+            float4 _vs__b_x1_copy0__u3_17ee29b3 = make_float4(_b_x1_copy0__u3, _b_x1_copy1__u3, _b_x1_copy2__u3, _b_x1_copy3__u3);
+            *reinterpret_cast<float4*>(&_b_x1_smem[((_ks / 32 + 1) % 2 * 32 + (a0_u * 32 + a1_u + 768) / 32) * 128 + 4 * ((a0_u * 32 + a1_u + 768) % 32)]) = _vs__b_x1_copy0__u3_17ee29b3;
+            __syncthreads();
+            #pragma unroll
+            for (int _ki = 0; _ki < 32; _ki++) {
+                float in0__c0_0 = _a_smem[(_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 - a0_b * 80)) * 36 + _ki];
+                float in1__c0_0 = _b_smem[(_ks / 32 % 2 * 32 + _ki) * 128 + (a1_b * 128 + a1_u * 4 - a1_b * 128)];
+                float acc0__v__c0_0 = in1__c0_0 * in0__c0_0;
+                acc0__c0_0 += acc0__v__c0_0;
+                float in2__c0_0 = _b_x1_smem[(_ks / 32 % 2 * 32 + _ki) * 128 + (a1_b * 128 + a1_u * 4 - a1_b * 128)];
+                float acc1__v__c0_0 = in2__c0_0 * in0__c0_0;
+                acc1__c0_0 += acc1__v__c0_0;
+                float in1__c0_1 = _b_smem[(_ks / 32 % 2 * 32 + _ki) * 128 + (a1_b * 128 + a1_u * 4 + 1 - a1_b * 128)];
+                float acc0__v__c0_1 = in1__c0_1 * in0__c0_0;
+                acc0__c0_1 += acc0__v__c0_1;
+                float in2__c0_1 = _b_x1_smem[(_ks / 32 % 2 * 32 + _ki) * 128 + (a1_b * 128 + a1_u * 4 + 1 - a1_b * 128)];
+                float acc1__v__c0_1 = in2__c0_1 * in0__c0_0;
+                acc1__c0_1 += acc1__v__c0_1;
+                float in1__c0_2 = _b_smem[(_ks / 32 % 2 * 32 + _ki) * 128 + (a1_b * 128 + a1_u * 4 + 2 - a1_b * 128)];
+                float acc0__v__c0_2 = in1__c0_2 * in0__c0_0;
+                acc0__c0_2 += acc0__v__c0_2;
+                float in2__c0_2 = _b_x1_smem[(_ks / 32 % 2 * 32 + _ki) * 128 + (a1_b * 128 + a1_u * 4 + 2 - a1_b * 128)];
+                float acc1__v__c0_2 = in2__c0_2 * in0__c0_0;
+                acc1__c0_2 += acc1__v__c0_2;
+                float in1__c0_3 = _b_smem[(_ks / 32 % 2 * 32 + _ki) * 128 + (a1_b * 128 + a1_u * 4 + 3 - a1_b * 128)];
+                float acc0__v__c0_3 = in1__c0_3 * in0__c0_0;
+                acc0__c0_3 += acc0__v__c0_3;
+                float in2__c0_3 = _b_x1_smem[(_ks / 32 % 2 * 32 + _ki) * 128 + (a1_b * 128 + a1_u * 4 + 3 - a1_b * 128)];
+                float acc1__v__c0_3 = in2__c0_3 * in0__c0_0;
+                acc1__c0_3 += acc1__v__c0_3;
+                float in0__c1_0 = _a_smem[(_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 1 - a0_b * 80)) * 36 + _ki];
+                float acc0__v__c1_0 = in1__c0_0 * in0__c1_0;
+                acc0__c1_0 += acc0__v__c1_0;
+                float acc1__v__c1_0 = in2__c0_0 * in0__c1_0;
+                acc1__c1_0 += acc1__v__c1_0;
+                float acc0__v__c1_1 = in1__c0_1 * in0__c1_0;
+                acc0__c1_1 += acc0__v__c1_1;
+                float acc1__v__c1_1 = in2__c0_1 * in0__c1_0;
+                acc1__c1_1 += acc1__v__c1_1;
+                float acc0__v__c1_2 = in1__c0_2 * in0__c1_0;
+                acc0__c1_2 += acc0__v__c1_2;
+                float acc1__v__c1_2 = in2__c0_2 * in0__c1_0;
+                acc1__c1_2 += acc1__v__c1_2;
+                float acc0__v__c1_3 = in1__c0_3 * in0__c1_0;
+                acc0__c1_3 += acc0__v__c1_3;
+                float acc1__v__c1_3 = in2__c0_3 * in0__c1_0;
+                acc1__c1_3 += acc1__v__c1_3;
+                float in0__c2_0 = _a_smem[(_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 2 - a0_b * 80)) * 36 + _ki];
+                float acc0__v__c2_0 = in1__c0_0 * in0__c2_0;
+                acc0__c2_0 += acc0__v__c2_0;
+                float acc1__v__c2_0 = in2__c0_0 * in0__c2_0;
+                acc1__c2_0 += acc1__v__c2_0;
+                float acc0__v__c2_1 = in1__c0_1 * in0__c2_0;
+                acc0__c2_1 += acc0__v__c2_1;
+                float acc1__v__c2_1 = in2__c0_1 * in0__c2_0;
+                acc1__c2_1 += acc1__v__c2_1;
+                float acc0__v__c2_2 = in1__c0_2 * in0__c2_0;
+                acc0__c2_2 += acc0__v__c2_2;
+                float acc1__v__c2_2 = in2__c0_2 * in0__c2_0;
+                acc1__c2_2 += acc1__v__c2_2;
+                float acc0__v__c2_3 = in1__c0_3 * in0__c2_0;
+                acc0__c2_3 += acc0__v__c2_3;
+                float acc1__v__c2_3 = in2__c0_3 * in0__c2_0;
+                acc1__c2_3 += acc1__v__c2_3;
+                float in0__c3_0 = _a_smem[(_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 3 - a0_b * 80)) * 36 + _ki];
+                float acc0__v__c3_0 = in1__c0_0 * in0__c3_0;
+                acc0__c3_0 += acc0__v__c3_0;
+                float acc1__v__c3_0 = in2__c0_0 * in0__c3_0;
+                acc1__c3_0 += acc1__v__c3_0;
+                float acc0__v__c3_1 = in1__c0_1 * in0__c3_0;
+                acc0__c3_1 += acc0__v__c3_1;
+                float acc1__v__c3_1 = in2__c0_1 * in0__c3_0;
+                acc1__c3_1 += acc1__v__c3_1;
+                float acc0__v__c3_2 = in1__c0_2 * in0__c3_0;
+                acc0__c3_2 += acc0__v__c3_2;
+                float acc1__v__c3_2 = in2__c0_2 * in0__c3_0;
+                acc1__c3_2 += acc1__v__c3_2;
+                float acc0__v__c3_3 = in1__c0_3 * in0__c3_0;
+                acc0__c3_3 += acc0__v__c3_3;
+                float acc1__v__c3_3 = in2__c0_3 * in0__c3_0;
+                acc1__c3_3 += acc1__v__c3_3;
+                float in0__c4_0 = _a_smem[(_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 4 - a0_b * 80)) * 36 + _ki];
+                float acc0__v__c4_0 = in1__c0_0 * in0__c4_0;
+                acc0__c4_0 += acc0__v__c4_0;
+                float acc1__v__c4_0 = in2__c0_0 * in0__c4_0;
+                acc1__c4_0 += acc1__v__c4_0;
+                float acc0__v__c4_1 = in1__c0_1 * in0__c4_0;
+                acc0__c4_1 += acc0__v__c4_1;
+                float acc1__v__c4_1 = in2__c0_1 * in0__c4_0;
+                acc1__c4_1 += acc1__v__c4_1;
+                float acc0__v__c4_2 = in1__c0_2 * in0__c4_0;
+                acc0__c4_2 += acc0__v__c4_2;
+                float acc1__v__c4_2 = in2__c0_2 * in0__c4_0;
+                acc1__c4_2 += acc1__v__c4_2;
+                float acc0__v__c4_3 = in1__c0_3 * in0__c4_0;
+                acc0__c4_3 += acc0__v__c4_3;
+                float acc1__v__c4_3 = in2__c0_3 * in0__c4_0;
+                acc1__c4_3 += acc1__v__c4_3;
+                float in0__c5_0 = _a_smem[(_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 5 - a0_b * 80)) * 36 + _ki];
+                float acc0__v__c5_0 = in1__c0_0 * in0__c5_0;
+                acc0__c5_0 += acc0__v__c5_0;
+                float acc1__v__c5_0 = in2__c0_0 * in0__c5_0;
+                acc1__c5_0 += acc1__v__c5_0;
+                float acc0__v__c5_1 = in1__c0_1 * in0__c5_0;
+                acc0__c5_1 += acc0__v__c5_1;
+                float acc1__v__c5_1 = in2__c0_1 * in0__c5_0;
+                acc1__c5_1 += acc1__v__c5_1;
+                float acc0__v__c5_2 = in1__c0_2 * in0__c5_0;
+                acc0__c5_2 += acc0__v__c5_2;
+                float acc1__v__c5_2 = in2__c0_2 * in0__c5_0;
+                acc1__c5_2 += acc1__v__c5_2;
+                float acc0__v__c5_3 = in1__c0_3 * in0__c5_0;
+                acc0__c5_3 += acc0__v__c5_3;
+                float acc1__v__c5_3 = in2__c0_3 * in0__c5_0;
+                acc1__c5_3 += acc1__v__c5_3;
+                float in0__c6_0 = _a_smem[(_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 6 - a0_b * 80)) * 36 + _ki];
+                float acc0__v__c6_0 = in1__c0_0 * in0__c6_0;
+                acc0__c6_0 += acc0__v__c6_0;
+                float acc1__v__c6_0 = in2__c0_0 * in0__c6_0;
+                acc1__c6_0 += acc1__v__c6_0;
+                float acc0__v__c6_1 = in1__c0_1 * in0__c6_0;
+                acc0__c6_1 += acc0__v__c6_1;
+                float acc1__v__c6_1 = in2__c0_1 * in0__c6_0;
+                acc1__c6_1 += acc1__v__c6_1;
+                float acc0__v__c6_2 = in1__c0_2 * in0__c6_0;
+                acc0__c6_2 += acc0__v__c6_2;
+                float acc1__v__c6_2 = in2__c0_2 * in0__c6_0;
+                acc1__c6_2 += acc1__v__c6_2;
+                float acc0__v__c6_3 = in1__c0_3 * in0__c6_0;
+                acc0__c6_3 += acc0__v__c6_3;
+                float acc1__v__c6_3 = in2__c0_3 * in0__c6_0;
+                acc1__c6_3 += acc1__v__c6_3;
+                float in0__c7_0 = _a_smem[(_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 7 - a0_b * 80)) * 36 + _ki];
+                float acc0__v__c7_0 = in1__c0_0 * in0__c7_0;
+                acc0__c7_0 += acc0__v__c7_0;
+                float acc1__v__c7_0 = in2__c0_0 * in0__c7_0;
+                acc1__c7_0 += acc1__v__c7_0;
+                float acc0__v__c7_1 = in1__c0_1 * in0__c7_0;
+                acc0__c7_1 += acc0__v__c7_1;
+                float acc1__v__c7_1 = in2__c0_1 * in0__c7_0;
+                acc1__c7_1 += acc1__v__c7_1;
+                float acc0__v__c7_2 = in1__c0_2 * in0__c7_0;
+                acc0__c7_2 += acc0__v__c7_2;
+                float acc1__v__c7_2 = in2__c0_2 * in0__c7_0;
+                acc1__c7_2 += acc1__v__c7_2;
+                float acc0__v__c7_3 = in1__c0_3 * in0__c7_0;
+                acc0__c7_3 += acc0__v__c7_3;
+                float acc1__v__c7_3 = in2__c0_3 * in0__c7_0;
+                acc1__c7_3 += acc1__v__c7_3;
+                float in0__c8_0 = _a_smem[(_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 8 - a0_b * 80)) * 36 + _ki];
+                float acc0__v__c8_0 = in1__c0_0 * in0__c8_0;
+                acc0__c8_0 += acc0__v__c8_0;
+                float acc1__v__c8_0 = in2__c0_0 * in0__c8_0;
+                acc1__c8_0 += acc1__v__c8_0;
+                float acc0__v__c8_1 = in1__c0_1 * in0__c8_0;
+                acc0__c8_1 += acc0__v__c8_1;
+                float acc1__v__c8_1 = in2__c0_1 * in0__c8_0;
+                acc1__c8_1 += acc1__v__c8_1;
+                float acc0__v__c8_2 = in1__c0_2 * in0__c8_0;
+                acc0__c8_2 += acc0__v__c8_2;
+                float acc1__v__c8_2 = in2__c0_2 * in0__c8_0;
+                acc1__c8_2 += acc1__v__c8_2;
+                float acc0__v__c8_3 = in1__c0_3 * in0__c8_0;
+                acc0__c8_3 += acc0__v__c8_3;
+                float acc1__v__c8_3 = in2__c0_3 * in0__c8_0;
+                acc1__c8_3 += acc1__v__c8_3;
+                float in0__c9_0 = _a_smem[(_ks / 32 % 2 * 80 + (a0_b * 80 + a0_u * 10 + 9 - a0_b * 80)) * 36 + _ki];
+                float acc0__v__c9_0 = in1__c0_0 * in0__c9_0;
+                acc0__c9_0 += acc0__v__c9_0;
+                float acc1__v__c9_0 = in2__c0_0 * in0__c9_0;
+                acc1__c9_0 += acc1__v__c9_0;
+                float acc0__v__c9_1 = in1__c0_1 * in0__c9_0;
+                acc0__c9_1 += acc0__v__c9_1;
+                float acc1__v__c9_1 = in2__c0_1 * in0__c9_0;
+                acc1__c9_1 += acc1__v__c9_1;
+                float acc0__v__c9_2 = in1__c0_2 * in0__c9_0;
+                acc0__c9_2 += acc0__v__c9_2;
+                float acc1__v__c9_2 = in2__c0_2 * in0__c9_0;
+                acc1__c9_2 += acc1__v__c9_2;
+                float acc0__v__c9_3 = in1__c0_3 * in0__c9_0;
+                acc0__c9_3 += acc0__v__c9_3;
+                float acc1__v__c9_3 = in2__c0_3 * in0__c9_0;
+                acc1__c9_3 += acc1__v__c9_3;
+            }
+            __syncthreads();
+        }
+        float v2__c0_0 = 0.0f - acc0__c0_0;
+        float v3__c0_0 = __expf(v2__c0_0);
+        float v4__c0_0__t0 = 1.0f;
+        float v4__c0_0 = v3__c0_0 + v4__c0_0__t0;
+        float v5__c0_0 = acc0__c0_0 / v4__c0_0;
+        float v6__c0_0 = acc1__c0_0 * v5__c0_0;
+        if (a0_b * 80 + a0_u * 10 + 0 < 512) {
+            o[(a0_b * 80 + a0_u * 10) % 512 * 3072 + (a1_b * 128 + a1_u * 4)] = v6__c0_0;
+        }
+        float v2__c0_1 = 0.0f - acc0__c0_1;
+        float v3__c0_1 = __expf(v2__c0_1);
+        float v4__c0_1__t0 = 1.0f;
+        float v4__c0_1 = v3__c0_1 + v4__c0_1__t0;
+        float v5__c0_1 = acc0__c0_1 / v4__c0_1;
+        float v6__c0_1 = acc1__c0_1 * v5__c0_1;
+        if (a0_b * 80 + a0_u * 10 + 0 < 512) {
+            o[(a0_b * 80 + a0_u * 10) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 1)] = v6__c0_1;
+        }
+        float v2__c0_2 = 0.0f - acc0__c0_2;
+        float v3__c0_2 = __expf(v2__c0_2);
+        float v4__c0_2__t0 = 1.0f;
+        float v4__c0_2 = v3__c0_2 + v4__c0_2__t0;
+        float v5__c0_2 = acc0__c0_2 / v4__c0_2;
+        float v6__c0_2 = acc1__c0_2 * v5__c0_2;
+        if (a0_b * 80 + a0_u * 10 + 0 < 512) {
+            o[(a0_b * 80 + a0_u * 10) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 2)] = v6__c0_2;
+        }
+        float v2__c0_3 = 0.0f - acc0__c0_3;
+        float v3__c0_3 = __expf(v2__c0_3);
+        float v4__c0_3__t0 = 1.0f;
+        float v4__c0_3 = v3__c0_3 + v4__c0_3__t0;
+        float v5__c0_3 = acc0__c0_3 / v4__c0_3;
+        float v6__c0_3 = acc1__c0_3 * v5__c0_3;
+        if (a0_b * 80 + a0_u * 10 + 0 < 512) {
+            o[(a0_b * 80 + a0_u * 10) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 3)] = v6__c0_3;
+        }
+        float v2__c1_0 = 0.0f - acc0__c1_0;
+        float v3__c1_0 = __expf(v2__c1_0);
+        float v4__c1_0__t0 = 1.0f;
+        float v4__c1_0 = v3__c1_0 + v4__c1_0__t0;
+        float v5__c1_0 = acc0__c1_0 / v4__c1_0;
+        float v6__c1_0 = acc1__c1_0 * v5__c1_0;
+        if (a0_b * 80 + a0_u * 10 + 1 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 1) % 512 * 3072 + (a1_b * 128 + a1_u * 4)] = v6__c1_0;
+        }
+        float v2__c1_1 = 0.0f - acc0__c1_1;
+        float v3__c1_1 = __expf(v2__c1_1);
+        float v4__c1_1__t0 = 1.0f;
+        float v4__c1_1 = v3__c1_1 + v4__c1_1__t0;
+        float v5__c1_1 = acc0__c1_1 / v4__c1_1;
+        float v6__c1_1 = acc1__c1_1 * v5__c1_1;
+        if (a0_b * 80 + a0_u * 10 + 1 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 1) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 1)] = v6__c1_1;
+        }
+        float v2__c1_2 = 0.0f - acc0__c1_2;
+        float v3__c1_2 = __expf(v2__c1_2);
+        float v4__c1_2__t0 = 1.0f;
+        float v4__c1_2 = v3__c1_2 + v4__c1_2__t0;
+        float v5__c1_2 = acc0__c1_2 / v4__c1_2;
+        float v6__c1_2 = acc1__c1_2 * v5__c1_2;
+        if (a0_b * 80 + a0_u * 10 + 1 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 1) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 2)] = v6__c1_2;
+        }
+        float v2__c1_3 = 0.0f - acc0__c1_3;
+        float v3__c1_3 = __expf(v2__c1_3);
+        float v4__c1_3__t0 = 1.0f;
+        float v4__c1_3 = v3__c1_3 + v4__c1_3__t0;
+        float v5__c1_3 = acc0__c1_3 / v4__c1_3;
+        float v6__c1_3 = acc1__c1_3 * v5__c1_3;
+        if (a0_b * 80 + a0_u * 10 + 1 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 1) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 3)] = v6__c1_3;
+        }
+        float v2__c2_0 = 0.0f - acc0__c2_0;
+        float v3__c2_0 = __expf(v2__c2_0);
+        float v4__c2_0__t0 = 1.0f;
+        float v4__c2_0 = v3__c2_0 + v4__c2_0__t0;
+        float v5__c2_0 = acc0__c2_0 / v4__c2_0;
+        float v6__c2_0 = acc1__c2_0 * v5__c2_0;
+        if (a0_b * 80 + a0_u * 10 + 2 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 2) % 512 * 3072 + (a1_b * 128 + a1_u * 4)] = v6__c2_0;
+        }
+        float v2__c2_1 = 0.0f - acc0__c2_1;
+        float v3__c2_1 = __expf(v2__c2_1);
+        float v4__c2_1__t0 = 1.0f;
+        float v4__c2_1 = v3__c2_1 + v4__c2_1__t0;
+        float v5__c2_1 = acc0__c2_1 / v4__c2_1;
+        float v6__c2_1 = acc1__c2_1 * v5__c2_1;
+        if (a0_b * 80 + a0_u * 10 + 2 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 2) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 1)] = v6__c2_1;
+        }
+        float v2__c2_2 = 0.0f - acc0__c2_2;
+        float v3__c2_2 = __expf(v2__c2_2);
+        float v4__c2_2__t0 = 1.0f;
+        float v4__c2_2 = v3__c2_2 + v4__c2_2__t0;
+        float v5__c2_2 = acc0__c2_2 / v4__c2_2;
+        float v6__c2_2 = acc1__c2_2 * v5__c2_2;
+        if (a0_b * 80 + a0_u * 10 + 2 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 2) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 2)] = v6__c2_2;
+        }
+        float v2__c2_3 = 0.0f - acc0__c2_3;
+        float v3__c2_3 = __expf(v2__c2_3);
+        float v4__c2_3__t0 = 1.0f;
+        float v4__c2_3 = v3__c2_3 + v4__c2_3__t0;
+        float v5__c2_3 = acc0__c2_3 / v4__c2_3;
+        float v6__c2_3 = acc1__c2_3 * v5__c2_3;
+        if (a0_b * 80 + a0_u * 10 + 2 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 2) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 3)] = v6__c2_3;
+        }
+        float v2__c3_0 = 0.0f - acc0__c3_0;
+        float v3__c3_0 = __expf(v2__c3_0);
+        float v4__c3_0__t0 = 1.0f;
+        float v4__c3_0 = v3__c3_0 + v4__c3_0__t0;
+        float v5__c3_0 = acc0__c3_0 / v4__c3_0;
+        float v6__c3_0 = acc1__c3_0 * v5__c3_0;
+        if (a0_b * 80 + a0_u * 10 + 3 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 3) % 512 * 3072 + (a1_b * 128 + a1_u * 4)] = v6__c3_0;
+        }
+        float v2__c3_1 = 0.0f - acc0__c3_1;
+        float v3__c3_1 = __expf(v2__c3_1);
+        float v4__c3_1__t0 = 1.0f;
+        float v4__c3_1 = v3__c3_1 + v4__c3_1__t0;
+        float v5__c3_1 = acc0__c3_1 / v4__c3_1;
+        float v6__c3_1 = acc1__c3_1 * v5__c3_1;
+        if (a0_b * 80 + a0_u * 10 + 3 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 3) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 1)] = v6__c3_1;
+        }
+        float v2__c3_2 = 0.0f - acc0__c3_2;
+        float v3__c3_2 = __expf(v2__c3_2);
+        float v4__c3_2__t0 = 1.0f;
+        float v4__c3_2 = v3__c3_2 + v4__c3_2__t0;
+        float v5__c3_2 = acc0__c3_2 / v4__c3_2;
+        float v6__c3_2 = acc1__c3_2 * v5__c3_2;
+        if (a0_b * 80 + a0_u * 10 + 3 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 3) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 2)] = v6__c3_2;
+        }
+        float v2__c3_3 = 0.0f - acc0__c3_3;
+        float v3__c3_3 = __expf(v2__c3_3);
+        float v4__c3_3__t0 = 1.0f;
+        float v4__c3_3 = v3__c3_3 + v4__c3_3__t0;
+        float v5__c3_3 = acc0__c3_3 / v4__c3_3;
+        float v6__c3_3 = acc1__c3_3 * v5__c3_3;
+        if (a0_b * 80 + a0_u * 10 + 3 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 3) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 3)] = v6__c3_3;
+        }
+        float v2__c4_0 = 0.0f - acc0__c4_0;
+        float v3__c4_0 = __expf(v2__c4_0);
+        float v4__c4_0__t0 = 1.0f;
+        float v4__c4_0 = v3__c4_0 + v4__c4_0__t0;
+        float v5__c4_0 = acc0__c4_0 / v4__c4_0;
+        float v6__c4_0 = acc1__c4_0 * v5__c4_0;
+        if (a0_b * 80 + a0_u * 10 + 4 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 4) % 512 * 3072 + (a1_b * 128 + a1_u * 4)] = v6__c4_0;
+        }
+        float v2__c4_1 = 0.0f - acc0__c4_1;
+        float v3__c4_1 = __expf(v2__c4_1);
+        float v4__c4_1__t0 = 1.0f;
+        float v4__c4_1 = v3__c4_1 + v4__c4_1__t0;
+        float v5__c4_1 = acc0__c4_1 / v4__c4_1;
+        float v6__c4_1 = acc1__c4_1 * v5__c4_1;
+        if (a0_b * 80 + a0_u * 10 + 4 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 4) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 1)] = v6__c4_1;
+        }
+        float v2__c4_2 = 0.0f - acc0__c4_2;
+        float v3__c4_2 = __expf(v2__c4_2);
+        float v4__c4_2__t0 = 1.0f;
+        float v4__c4_2 = v3__c4_2 + v4__c4_2__t0;
+        float v5__c4_2 = acc0__c4_2 / v4__c4_2;
+        float v6__c4_2 = acc1__c4_2 * v5__c4_2;
+        if (a0_b * 80 + a0_u * 10 + 4 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 4) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 2)] = v6__c4_2;
+        }
+        float v2__c4_3 = 0.0f - acc0__c4_3;
+        float v3__c4_3 = __expf(v2__c4_3);
+        float v4__c4_3__t0 = 1.0f;
+        float v4__c4_3 = v3__c4_3 + v4__c4_3__t0;
+        float v5__c4_3 = acc0__c4_3 / v4__c4_3;
+        float v6__c4_3 = acc1__c4_3 * v5__c4_3;
+        if (a0_b * 80 + a0_u * 10 + 4 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 4) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 3)] = v6__c4_3;
+        }
+        float v2__c5_0 = 0.0f - acc0__c5_0;
+        float v3__c5_0 = __expf(v2__c5_0);
+        float v4__c5_0__t0 = 1.0f;
+        float v4__c5_0 = v3__c5_0 + v4__c5_0__t0;
+        float v5__c5_0 = acc0__c5_0 / v4__c5_0;
+        float v6__c5_0 = acc1__c5_0 * v5__c5_0;
+        if (a0_b * 80 + a0_u * 10 + 5 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 5) % 512 * 3072 + (a1_b * 128 + a1_u * 4)] = v6__c5_0;
+        }
+        float v2__c5_1 = 0.0f - acc0__c5_1;
+        float v3__c5_1 = __expf(v2__c5_1);
+        float v4__c5_1__t0 = 1.0f;
+        float v4__c5_1 = v3__c5_1 + v4__c5_1__t0;
+        float v5__c5_1 = acc0__c5_1 / v4__c5_1;
+        float v6__c5_1 = acc1__c5_1 * v5__c5_1;
+        if (a0_b * 80 + a0_u * 10 + 5 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 5) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 1)] = v6__c5_1;
+        }
+        float v2__c5_2 = 0.0f - acc0__c5_2;
+        float v3__c5_2 = __expf(v2__c5_2);
+        float v4__c5_2__t0 = 1.0f;
+        float v4__c5_2 = v3__c5_2 + v4__c5_2__t0;
+        float v5__c5_2 = acc0__c5_2 / v4__c5_2;
+        float v6__c5_2 = acc1__c5_2 * v5__c5_2;
+        if (a0_b * 80 + a0_u * 10 + 5 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 5) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 2)] = v6__c5_2;
+        }
+        float v2__c5_3 = 0.0f - acc0__c5_3;
+        float v3__c5_3 = __expf(v2__c5_3);
+        float v4__c5_3__t0 = 1.0f;
+        float v4__c5_3 = v3__c5_3 + v4__c5_3__t0;
+        float v5__c5_3 = acc0__c5_3 / v4__c5_3;
+        float v6__c5_3 = acc1__c5_3 * v5__c5_3;
+        if (a0_b * 80 + a0_u * 10 + 5 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 5) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 3)] = v6__c5_3;
+        }
+        float v2__c6_0 = 0.0f - acc0__c6_0;
+        float v3__c6_0 = __expf(v2__c6_0);
+        float v4__c6_0__t0 = 1.0f;
+        float v4__c6_0 = v3__c6_0 + v4__c6_0__t0;
+        float v5__c6_0 = acc0__c6_0 / v4__c6_0;
+        float v6__c6_0 = acc1__c6_0 * v5__c6_0;
+        if (a0_b * 80 + a0_u * 10 + 6 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 6) % 512 * 3072 + (a1_b * 128 + a1_u * 4)] = v6__c6_0;
+        }
+        float v2__c6_1 = 0.0f - acc0__c6_1;
+        float v3__c6_1 = __expf(v2__c6_1);
+        float v4__c6_1__t0 = 1.0f;
+        float v4__c6_1 = v3__c6_1 + v4__c6_1__t0;
+        float v5__c6_1 = acc0__c6_1 / v4__c6_1;
+        float v6__c6_1 = acc1__c6_1 * v5__c6_1;
+        if (a0_b * 80 + a0_u * 10 + 6 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 6) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 1)] = v6__c6_1;
+        }
+        float v2__c6_2 = 0.0f - acc0__c6_2;
+        float v3__c6_2 = __expf(v2__c6_2);
+        float v4__c6_2__t0 = 1.0f;
+        float v4__c6_2 = v3__c6_2 + v4__c6_2__t0;
+        float v5__c6_2 = acc0__c6_2 / v4__c6_2;
+        float v6__c6_2 = acc1__c6_2 * v5__c6_2;
+        if (a0_b * 80 + a0_u * 10 + 6 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 6) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 2)] = v6__c6_2;
+        }
+        float v2__c6_3 = 0.0f - acc0__c6_3;
+        float v3__c6_3 = __expf(v2__c6_3);
+        float v4__c6_3__t0 = 1.0f;
+        float v4__c6_3 = v3__c6_3 + v4__c6_3__t0;
+        float v5__c6_3 = acc0__c6_3 / v4__c6_3;
+        float v6__c6_3 = acc1__c6_3 * v5__c6_3;
+        if (a0_b * 80 + a0_u * 10 + 6 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 6) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 3)] = v6__c6_3;
+        }
+        float v2__c7_0 = 0.0f - acc0__c7_0;
+        float v3__c7_0 = __expf(v2__c7_0);
+        float v4__c7_0__t0 = 1.0f;
+        float v4__c7_0 = v3__c7_0 + v4__c7_0__t0;
+        float v5__c7_0 = acc0__c7_0 / v4__c7_0;
+        float v6__c7_0 = acc1__c7_0 * v5__c7_0;
+        if (a0_b * 80 + a0_u * 10 + 7 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 7) % 512 * 3072 + (a1_b * 128 + a1_u * 4)] = v6__c7_0;
+        }
+        float v2__c7_1 = 0.0f - acc0__c7_1;
+        float v3__c7_1 = __expf(v2__c7_1);
+        float v4__c7_1__t0 = 1.0f;
+        float v4__c7_1 = v3__c7_1 + v4__c7_1__t0;
+        float v5__c7_1 = acc0__c7_1 / v4__c7_1;
+        float v6__c7_1 = acc1__c7_1 * v5__c7_1;
+        if (a0_b * 80 + a0_u * 10 + 7 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 7) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 1)] = v6__c7_1;
+        }
+        float v2__c7_2 = 0.0f - acc0__c7_2;
+        float v3__c7_2 = __expf(v2__c7_2);
+        float v4__c7_2__t0 = 1.0f;
+        float v4__c7_2 = v3__c7_2 + v4__c7_2__t0;
+        float v5__c7_2 = acc0__c7_2 / v4__c7_2;
+        float v6__c7_2 = acc1__c7_2 * v5__c7_2;
+        if (a0_b * 80 + a0_u * 10 + 7 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 7) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 2)] = v6__c7_2;
+        }
+        float v2__c7_3 = 0.0f - acc0__c7_3;
+        float v3__c7_3 = __expf(v2__c7_3);
+        float v4__c7_3__t0 = 1.0f;
+        float v4__c7_3 = v3__c7_3 + v4__c7_3__t0;
+        float v5__c7_3 = acc0__c7_3 / v4__c7_3;
+        float v6__c7_3 = acc1__c7_3 * v5__c7_3;
+        if (a0_b * 80 + a0_u * 10 + 7 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 7) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 3)] = v6__c7_3;
+        }
+        float v2__c8_0 = 0.0f - acc0__c8_0;
+        float v3__c8_0 = __expf(v2__c8_0);
+        float v4__c8_0__t0 = 1.0f;
+        float v4__c8_0 = v3__c8_0 + v4__c8_0__t0;
+        float v5__c8_0 = acc0__c8_0 / v4__c8_0;
+        float v6__c8_0 = acc1__c8_0 * v5__c8_0;
+        if (a0_b * 80 + a0_u * 10 + 8 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 8) % 512 * 3072 + (a1_b * 128 + a1_u * 4)] = v6__c8_0;
+        }
+        float v2__c8_1 = 0.0f - acc0__c8_1;
+        float v3__c8_1 = __expf(v2__c8_1);
+        float v4__c8_1__t0 = 1.0f;
+        float v4__c8_1 = v3__c8_1 + v4__c8_1__t0;
+        float v5__c8_1 = acc0__c8_1 / v4__c8_1;
+        float v6__c8_1 = acc1__c8_1 * v5__c8_1;
+        if (a0_b * 80 + a0_u * 10 + 8 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 8) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 1)] = v6__c8_1;
+        }
+        float v2__c8_2 = 0.0f - acc0__c8_2;
+        float v3__c8_2 = __expf(v2__c8_2);
+        float v4__c8_2__t0 = 1.0f;
+        float v4__c8_2 = v3__c8_2 + v4__c8_2__t0;
+        float v5__c8_2 = acc0__c8_2 / v4__c8_2;
+        float v6__c8_2 = acc1__c8_2 * v5__c8_2;
+        if (a0_b * 80 + a0_u * 10 + 8 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 8) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 2)] = v6__c8_2;
+        }
+        float v2__c8_3 = 0.0f - acc0__c8_3;
+        float v3__c8_3 = __expf(v2__c8_3);
+        float v4__c8_3__t0 = 1.0f;
+        float v4__c8_3 = v3__c8_3 + v4__c8_3__t0;
+        float v5__c8_3 = acc0__c8_3 / v4__c8_3;
+        float v6__c8_3 = acc1__c8_3 * v5__c8_3;
+        if (a0_b * 80 + a0_u * 10 + 8 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 8) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 3)] = v6__c8_3;
+        }
+        float v2__c9_0 = 0.0f - acc0__c9_0;
+        float v3__c9_0 = __expf(v2__c9_0);
+        float v4__c9_0__t0 = 1.0f;
+        float v4__c9_0 = v3__c9_0 + v4__c9_0__t0;
+        float v5__c9_0 = acc0__c9_0 / v4__c9_0;
+        float v6__c9_0 = acc1__c9_0 * v5__c9_0;
+        if (a0_b * 80 + a0_u * 10 + 9 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 9) % 512 * 3072 + (a1_b * 128 + a1_u * 4)] = v6__c9_0;
+        }
+        float v2__c9_1 = 0.0f - acc0__c9_1;
+        float v3__c9_1 = __expf(v2__c9_1);
+        float v4__c9_1__t0 = 1.0f;
+        float v4__c9_1 = v3__c9_1 + v4__c9_1__t0;
+        float v5__c9_1 = acc0__c9_1 / v4__c9_1;
+        float v6__c9_1 = acc1__c9_1 * v5__c9_1;
+        if (a0_b * 80 + a0_u * 10 + 9 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 9) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 1)] = v6__c9_1;
+        }
+        float v2__c9_2 = 0.0f - acc0__c9_2;
+        float v3__c9_2 = __expf(v2__c9_2);
+        float v4__c9_2__t0 = 1.0f;
+        float v4__c9_2 = v3__c9_2 + v4__c9_2__t0;
+        float v5__c9_2 = acc0__c9_2 / v4__c9_2;
+        float v6__c9_2 = acc1__c9_2 * v5__c9_2;
+        if (a0_b * 80 + a0_u * 10 + 9 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 9) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 2)] = v6__c9_2;
+        }
+        float v2__c9_3 = 0.0f - acc0__c9_3;
+        float v3__c9_3 = __expf(v2__c9_3);
+        float v4__c9_3__t0 = 1.0f;
+        float v4__c9_3 = v3__c9_3 + v4__c9_3__t0;
+        float v5__c9_3 = acc0__c9_3 / v4__c9_3;
+        float v6__c9_3 = acc1__c9_3 * v5__c9_3;
+        if (a0_b * 80 + a0_u * 10 + 9 < 512) {
+            o[(a0_b * 80 + a0_u * 10 + 9) % 512 * 3072 + (a1_b * 128 + a1_u * 4 + 3)] = v6__c9_3;
+        }
+}

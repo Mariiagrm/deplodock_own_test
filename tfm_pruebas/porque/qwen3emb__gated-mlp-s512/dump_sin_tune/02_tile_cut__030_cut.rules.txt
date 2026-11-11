@@ -1,0 +1,7 @@
+>>> p:030_cut
+@@ matched at o @@
+<<< p:030_cut
+
+>>> p:030_cut
+@@ matched at o @@
+<<< p:030_cut
