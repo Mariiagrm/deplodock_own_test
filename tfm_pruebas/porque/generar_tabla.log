@@ -1,0 +1,45 @@
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k132-f32-masked-k/golden_stdout.txt:Backend        Latency (us)  vs Eager
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k132-f32-masked-k/golden_stdout.txt:Eager PyTorch             5     1.00x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k132-f32-masked-k/golden_stdout.txt:torch.compile             4     1.28x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k132-f32-masked-k/golden_stdout.txt:Emmy                      2     3.29x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k132-f32-masked-k/golden_stdout.txt:k_matmul_757586               1.5  100.0%   128     32  0.0K    80        0  50%  w1x1  mma_m16n8k16
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k132-f32-masked-k/emmy_stdout.txt:Emmy                1
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k132-f32-masked-k/emmy_stdout.txt:k_matmul_757586  1.4  100.0%   128     32  0.0K    80        0  50%  w1x1  mma_m16n8k16_f16_f32/f1x1/k
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k132-f32-masked-k/inductor/cache/ue/cueoqqwtg6wh372lucvu6fr4y6tobiywf57tjy4snrbopt4ikbnv.debug/output_code.py
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-m128n128k132-f32-masked-k/inductor/torch_compile_debug/run_2026_11_11_12_05_46_996963-pid_188/torchinductor/model__0_inference_0.0/output_code.py
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-epilogue-residual/golden_stdout.txt:Backend        Latency (us)  vs Eager
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-epilogue-residual/golden_stdout.txt:Eager PyTorch             6     1.00x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-epilogue-residual/golden_stdout.txt:torch.compile             4     1.59x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-epilogue-residual/golden_stdout.txt:Emmy                      1     4.98x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-epilogue-residual/golden_stdout.txt:k_matmul_a574e5               1.1  100.0%    64     64   8.0K    40        0  50%  w1x2  mma_m16n8k16_f16_f3
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-epilogue-residual/emmy_stdout.txt:Emmy                1
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-epilogue-residual/emmy_stdout.txt:k_matmul_a574e5  1.0  100.0%    64     64  8.0K    40        0  50%  w1x2  mma_m16n8k16_f16_f32/f1x1/k8       
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-epilogue-residual/inductor/cache/hd/chdkc44paic5rs6phxo4h7vouck7q4yzm5htqlazewimd3usoveb.debug/output_code.py
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-epilogue-residual/inductor/torch_compile_debug/run_2026_11_11_12_07_58_998560-pid_601/torchinductor/model__0_inference_0.0/output_code.py
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-pv-b1h4kv128/golden_stdout.txt:Backend        Latency (us)  vs Eager
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-pv-b1h4kv128/golden_stdout.txt:Eager PyTorch             5     1.00x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-pv-b1h4kv128/golden_stdout.txt:torch.compile             5     0.96x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-pv-b1h4kv128/golden_stdout.txt:Emmy                      1     3.95x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-pv-b1h4kv128/golden_stdout.txt:k_matmul_3c8d0f               1.2  100.0%   128    128  12.0K    30        0  67%  w1x4  mma_m16n8k16_f16
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-pv-b1h4kv128/emmy_stdout.txt:Emmy                1
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-pv-b1h4kv128/emmy_stdout.txt:k_matmul_3c8d0f  1.1  100.0%   128    128  12.0K    30        0  67%  w1x4  mma_m16n8k16_f16_f32/f1x1/k8   
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-pv-b1h4kv128/inductor/cache/fq/cfqwh3ssykghh2ct6b6hopzw75osu2gtc5ooz5gxebkm7donun3c.debug/output_code.py
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-pv-b1h4kv128/inductor/torch_compile_debug/run_2026_11_11_12_10_30_617070-pid_1015/torchinductor/model__0_inference_0.0/output_code.py
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-qk-b1h4d64/golden_stdout.txt:Backend        Latency (us)  vs Eager
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-qk-b1h4d64/golden_stdout.txt:Eager PyTorch             3     1.00x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-qk-b1h4d64/golden_stdout.txt:torch.compile             3     1.02x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-qk-b1h4d64/golden_stdout.txt:Emmy                      1     3.09x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-qk-b1h4d64/golden_stdout.txt:k_matmul_1775af               1.0  100.0%   128    128   6.0K    29        0  100%  w1x4  mma_m16n8k16_f16_
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-qk-b1h4d64/emmy_stdout.txt:Emmy                1
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-qk-b1h4d64/emmy_stdout.txt:k_matmul_1775af  1.0  100.0%   128    128  6.0K    29        0  100%  w1x4  mma_m16n8k16_f16_f32/f1x1/k4     
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-qk-b1h4d64/inductor/cache/q5/cq5wollnyehcomtx5afa56hz4qaxcaokutvvpqiuufkioykqeo32.debug/output_code.py
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-qk-b1h4d64/inductor/torch_compile_debug/run_2026_11_11_12_12_59_600973-pid_1464/torchinductor/model__0_inference_0.0/output_code.py
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-splitk-atomic/golden_stdout.txt:Backend        Latency (us)  vs Eager
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-splitk-atomic/golden_stdout.txt:Eager PyTorch             5     1.00x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-splitk-atomic/golden_stdout.txt:torch.compile             5     1.01x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-splitk-atomic/golden_stdout.txt:Emmy                      2     3.08x
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-splitk-atomic/golden_stdout.txt:k_matmul_d73561                            1.6  100.0%    64     64  16.0K    58        0  25%  w1x2  mma_m16n8k
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-splitk-atomic/emmy_stdout.txt:Emmy                2
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-splitk-atomic/emmy_stdout.txt:k_matmul_d73561  1.6  100.0%    64     64  16.0K    58        0  25%  w1x2  mma_m16n8k16_f16_f32/f1x1/k8          
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-splitk-atomic/inductor/cache/rb/crbwdmonlwucnjskv5pqf6qlmkxfywobm5ixyqwvshi3sqpqvy3q.debug/output_code.py
+/workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-splitk-atomic/inductor/torch_compile_debug/run_2026_11_11_12_15_26_609112-pid_1923/torchinductor/model__0_inference_0.0/output_code.py

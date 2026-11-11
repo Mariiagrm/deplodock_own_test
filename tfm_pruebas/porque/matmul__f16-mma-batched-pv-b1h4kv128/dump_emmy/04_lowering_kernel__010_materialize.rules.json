@@ -1,0 +1,66 @@
+[
+  {
+    "root": "c",
+    "matched_pattern_nodes": {
+      "root": "c"
+    },
+    "before": [
+      {
+        "id": "c",
+        "op_class": "TileOp",
+        "inputs": [
+          "v",
+          "p"
+        ],
+        "output_shape": [
+          "1",
+          "4",
+          "128",
+          "128"
+        ],
+        "output_dtype": "f32"
+      }
+    ],
+    "after": [
+      {
+        "id": "p",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "1",
+          "4",
+          "128",
+          "128"
+        ],
+        "output_dtype": "f16"
+      },
+      {
+        "id": "v",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "1",
+          "4",
+          "128",
+          "128"
+        ],
+        "output_dtype": "f16"
+      },
+      {
+        "id": "c",
+        "op_class": "KernelOp",
+        "inputs": [
+          "v",
+          "p"
+        ],
+        "output_shape": [
+          "1",
+          "4",
+          "128",
+          "128"
+        ],
+        "output_dtype": "f32"
+      }
+    ]
+  }
+]

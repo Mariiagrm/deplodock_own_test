@@ -1,0 +1,9 @@
+    Tile(axes=(a0_b in 0..8 window(parent=a0 in 0..128), a1_b in 0..16 window(parent=a1 in 0..128), a0_u in 0..1, a1_u in 0..1, _lane in 0..32), block_threads=32, raster_axes=(a0_b, a1_b)):
+        RegFragment(name=_a0, role=a, shape=(16, 8, 16), dtype=f16)
+        RegFragment(name=_b0, role=b, shape=(16, 8, 16), dtype=f16)
+        RegFragment(name=_c0_0, role=c, shape=(16, 8, 16), dtype=f32)
+        for a2 in 0..132 step 16 unroll=true:
+            LdmatrixLoad(frag=_a0, src_buffer=a, src_index=(a0_b * 16 + a0_u * 16 + 0, a2), role=a, ldm=132, staged=false, k_zero=(a2, 132))
+            LdmatrixLoad(frag=_b0, src_buffer=b, src_index=(a2, a1_b * 8 + a1_u * 8 + 0), role=b, ldm=128, staged=false, k_zero=(a2, 132))
+            MmaSyncPtx(c_frag=_c0_0, a_frag=_a0, b_frag=_b0, shape=(16, 8, 16))
+        RegStore(dst_buffer=o, dst_index=(a0_b * 16 + a0_u * 16 + 0, a1_b * 8 + a1_u * 8 + 0), frag=_c0_0, shape=(16, 8, 16), ldm=128, ldn=1, row_dim=0, col_dim=1)

@@ -1,0 +1,12 @@
+digraph G {
+  rankdir=TB;
+  node [style="rounded,filled", fontname="Helvetica", fontsize=10];
+  edge [arrowsize=0.7, color="#555555"];
+
+  "p" [label="p\ninput\n(1,4,128,128) f16", shape=ellipse, fillcolor="#d0f0c0"];
+  "v" [label="v\ninput\n(1,4,128,128) f16", shape=ellipse, fillcolor="#d0f0c0"];
+  "c" [label="c\nloop\n(1,4,128,128) f32", shape=box, fillcolor="#c0d8f0"];
+
+  "v" -> "c";
+  "p" -> "c";
+}

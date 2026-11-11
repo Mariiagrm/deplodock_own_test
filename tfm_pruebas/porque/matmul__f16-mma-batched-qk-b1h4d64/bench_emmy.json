@@ -1,0 +1,54 @@
+{
+  "cold_cache": false,
+  "input": "tfm_pruebas/runs/20261111_102641/casos/matmul__f16-mma-batched-qk-b1h4d64/dump/00_input.json",
+  "golden": null,
+  "dynamic": [],
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "warmup": 10,
+  "iters": 100,
+  "backends": {
+    "Emmy": {
+      "latency_us": 0.9789295727387071,
+      "captured": true,
+      "timing_semantics": "captured_whole_forward",
+      "correctness": {
+        "status": "unchecked"
+      }
+    }
+  },
+  "greedy": {
+    "status": "ok",
+    "lane": "fm",
+    "total_us": 0.9729577577672899,
+    "timing_semantics": "single_launch",
+    "captured": true,
+    "num_launches": 1,
+    "kernels": [
+      {
+        "kernel": "k_matmul_1775af",
+        "us": 0.9729577577672899,
+        "smem_bytes": 6144,
+        "knobs": {
+          "WORK": "w1x4",
+          "TILE": "mma_m16n8k16_f16_f32/f1x1/k4",
+          "REDUCE": "",
+          "STAGE": "d1/smem-async",
+          "LOOPIFY": "0",
+          "RASTER": "",
+          "SHARED_CARRY": "0"
+        },
+        "record_knobs": {
+          "WORK": "w1x4",
+          "TILE": "mma_m16n8k16_f16_f32/f1x1/k4",
+          "REDUCE": "",
+          "STAGE": "d1/smem-async",
+          "LOOPIFY": "0",
+          "RASTER": "",
+          "SHARED_CARRY": "0"
+        },
+        "source_sha256": "107b6b677b1c59a8bd6adfa5cf68b4ccf8a29f81c78b60a0d617c2261bb1b8b3"
+      }
+    ]
+  },
+  "pinned": []
+}

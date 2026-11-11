@@ -1,0 +1,10 @@
+
+Backend  Latency (us)
+---------------------
+Emmy                1
+
+knobs (greedy pick); golden / ab rows are red where they differ from the greedy pick:
+Kernel            us       %  grid  block   smem  regs  local B  occ  WORK                          TILE  REDUCE          STAGE  LOOPIFY  RASTER  SHARED_CARRY
+k_matmul_3c8d0f  1.1  100.0%   128    128  12.0K    30        0  67%  w1x4  mma_m16n8k16_f16_f32/f1x1/k8          d4/smem-async        0                     0
+TOTAL            1.1
+A/B record → /workspace/deplodock/tfm_pruebas/porque/matmul__f16-mma-batched-pv-b1h4kv128/bench_emmy.json

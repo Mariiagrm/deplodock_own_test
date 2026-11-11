@@ -1,0 +1,3 @@
+>>> k:100_loopify
+@@ matched at c @@
+<<< k:100_loopify

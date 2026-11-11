@@ -1,0 +1,3 @@
+>>> k:080_vectorize_stores
+@@ matched at c @@
+<<< k:080_vectorize_stores

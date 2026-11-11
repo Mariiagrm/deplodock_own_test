@@ -1,0 +1,138 @@
+[
+  {
+    "root": "c",
+    "matched_pattern_nodes": {
+      "root": "c"
+    },
+    "before": [
+      {
+        "id": "c",
+        "op_class": "TileOp",
+        "inputs": [
+          "b",
+          "a",
+          "r"
+        ],
+        "output_shape": [
+          "128",
+          "128"
+        ],
+        "output_dtype": "f32"
+      }
+    ],
+    "after": [
+      {
+        "id": "a",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "128",
+          "128"
+        ],
+        "output_dtype": "f16"
+      },
+      {
+        "id": "b",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "128",
+          "128"
+        ],
+        "output_dtype": "f16"
+      },
+      {
+        "id": "r",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "128",
+          "128"
+        ],
+        "output_dtype": "f32"
+      },
+      {
+        "id": "c",
+        "op_class": "TileOp",
+        "inputs": [
+          "b",
+          "a",
+          "r"
+        ],
+        "output_shape": [
+          "128",
+          "128"
+        ],
+        "output_dtype": "f32"
+      }
+    ]
+  },
+  {
+    "root": "c",
+    "matched_pattern_nodes": {
+      "root": "c"
+    },
+    "before": [
+      {
+        "id": "c",
+        "op_class": "TileOp",
+        "inputs": [
+          "b",
+          "a",
+          "r"
+        ],
+        "output_shape": [
+          "128",
+          "128"
+        ],
+        "output_dtype": "f32"
+      }
+    ],
+    "after": [
+      {
+        "id": "a",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "128",
+          "128"
+        ],
+        "output_dtype": "f16"
+      },
+      {
+        "id": "b",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "128",
+          "128"
+        ],
+        "output_dtype": "f16"
+      },
+      {
+        "id": "r",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "128",
+          "128"
+        ],
+        "output_dtype": "f32"
+      },
+      {
+        "id": "c",
+        "op_class": "TileOp",
+        "inputs": [
+          "b",
+          "a",
+          "r"
+        ],
+        "output_shape": [
+          "128",
+          "128"
+        ],
+        "output_dtype": "f32"
+      }
+    ]
+  }
+]

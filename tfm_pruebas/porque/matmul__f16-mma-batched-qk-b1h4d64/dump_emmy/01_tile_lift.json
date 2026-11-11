@@ -1,0 +1,94 @@
+{
+  "inputs": [
+    "k",
+    "q"
+  ],
+  "outputs": [
+    "c"
+  ],
+  "nodes": {
+    "k": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "k",
+          "shape": [
+            1,
+            4,
+            128,
+            64
+          ],
+          "dtype": "f16"
+        }
+      ]
+    },
+    "q": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "q",
+          "shape": [
+            1,
+            4,
+            128,
+            64
+          ],
+          "dtype": "f16"
+        }
+      ]
+    },
+    "c": {
+      "op": "TileOp",
+      "op_fields": {
+        "op": "Fold(operands=(Fold(operands=(), lift=Lambda(params=('a0', 'a1', 'a3'), body=(Load(names=('in1',), input='q', index=(Literal(value=0, dtype='int'), Var(name='a0'), Var(name='a1'), Var(name='a3')), dtype=None, carried=''),), results=('in1',)), init=(), cells=(), base=None, twist=None, observe=None), Fold(operands=(), lift=Lambda(params=('a0', 'a2', 'a3'), body=(Load(names=('in0',), input='k', index=(Literal(value=0, dtype='int'), Var(name='a0'), Var(name='a2'), Var(name='a3')), dtype=None, carried=''),), results=('in0',)), init=(), cells=(), base=None, twist=None, observe=None)), lift=Lambda(params=('a3', 'in1', 'in0'), body=(Assign(name='v0', op=ElementwiseImpl('multiply'), args=('in0', 'in1'), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)),), results=('v0',)), init=(0.0,), cells=(), base=Lambda(params=('acc0', 'acc0__o'), body=(Assign(name='acc0', op=ElementwiseImpl('add'), args=('acc0', 'acc0__o'), dtype=None),), results=('acc0',)), twist=None, observe=None)",
+        "name": "k_matmul_1775af",
+        "place": "Placement(free=(Axis(name='a0', extent=Dim(4), window=None), Axis(name='a1', extent=Dim(128), window=None), Axis(name='a2', extent=Dim(128), window=None)), grid=(), serial=(), mapped=False)",
+        "axes": [
+          "Axis(name='a0', extent=Dim(4), window=None)",
+          "Axis(name='a1', extent=Dim(128), window=None)",
+          "Axis(name='a2', extent=Dim(128), window=None)",
+          "Axis(name='a3', extent=Dim(64), window=None)"
+        ],
+        "workers": null,
+        "output_specs": [
+          "OutputSpec(write=Write(output='c', index=(Literal(value=0, dtype='int'), Var(name='a0'), Var(name='a1'), Var(name='a2')), values=('acc0',), value_dtype=None, atomic=False, swizzle='NONE'), sweep=(), when=None)"
+        ],
+        "placement_decided": false,
+        "placement_consumed": "frozenset()",
+        "placement_step": 0,
+        "layout_decided": [],
+        "split_consumed": false
+      },
+      "inputs": [
+        "k",
+        "q"
+      ],
+      "outputs": [
+        {
+          "name": "c",
+          "shape": [
+            1,
+            4,
+            128,
+            128
+          ],
+          "dtype": "f32"
+        }
+      ],
+      "hints": {
+        "prov": {
+          "c": {
+            "kind": "LoopOp",
+            "pieces": [
+              "c"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

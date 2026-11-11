@@ -7,7 +7,7 @@
 set -euo pipefail
 ID=$1; KNOBS=$2
 C=${ID/\//__}
-RUN=tfm_pruebas/runs/20261109_005347/casos/$C
+RUN=tfm_pruebas/runs/20261111_102641/casos/$C
 CASE=tests/compiler/realization/cases/$ID.json
 OUT=$PWD/tfm_pruebas/porque/$C
 rm -rf "$OUT"; mkdir -p "$OUT/inductor"

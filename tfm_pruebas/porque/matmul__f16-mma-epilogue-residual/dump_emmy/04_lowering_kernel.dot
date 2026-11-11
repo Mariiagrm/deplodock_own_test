@@ -1,0 +1,14 @@
+digraph G {
+  rankdir=TB;
+  node [style="rounded,filled", fontname="Helvetica", fontsize=10];
+  edge [arrowsize=0.7, color="#555555"];
+
+  "a" [label="a\ninput\n(128,128) f16", shape=ellipse, fillcolor="#d0f0c0"];
+  "b" [label="b\ninput\n(128,128) f16", shape=ellipse, fillcolor="#d0f0c0"];
+  "r" [label="r\ninput\n(128,128) f32", shape=ellipse, fillcolor="#d0f0c0"];
+  "c" [label="c\nkernel\n(128,128) f32", shape=box, fillcolor="#c0d8f0"];
+
+  "b" -> "c";
+  "a" -> "c";
+  "r" -> "c";
+}

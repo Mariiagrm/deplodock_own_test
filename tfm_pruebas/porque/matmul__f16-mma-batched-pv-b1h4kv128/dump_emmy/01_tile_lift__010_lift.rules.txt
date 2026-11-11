@@ -1,0 +1,26 @@
+>>> t:010_lift
+@@ matched at c @@
+@@ -1,10 +1,12 @@
+-c = LoopOp(v, p)
+-      for a0 in 0..4:
+-          for a1 in 0..128:
+-              for a2 in 0..128:
+-                  for a3 in 0..128:
+-                      in0 = load p[0, a0, a1, a3]
+-                      in1 = load v[0, a0, a3, a2]
+-                      f32 v0 = multiply(in0, in1)
+-                      acc0 <- add(acc0, v0) over a3
+-                  c[0, a0, a1, a2] = acc0
++c = TileOp(v, p)
++      place  free=(a0, a1, a2)  unmapped
++      Fold[a3 in 0..128] contraction
++      ├─ operand[in0]: load p[0, a0, a1, a3]   ‹materialized›
++      ├─ operand[in1]: load v[0, a0, a3, a2]   ‹materialized›
++      ├─ init: (0)
++      ├─ lift: λ(a3, in0, in1) -> (v0)
++      │    f32 v0 = multiply(in0, in1)
++      └─ combine: λ(acc0, acc0__o) -> (acc0)
++           acc0 = add(acc0, acc0__o)
++      outputs
++      └─ c[0, a0, a1, a2] = acc0
+<<< t:010_lift

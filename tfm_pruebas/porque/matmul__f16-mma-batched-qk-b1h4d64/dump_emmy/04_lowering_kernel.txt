@@ -1,0 +1,39 @@
+// 3 nodes, 2 inputs, 1 outputs
+
+struct Dynamic {}
+
+struct Inputs<dynamic: Dynamic> {
+    k: f16[1,4,128,64],
+    q: f16[1,4,128,64],
+}
+
+struct Outputs<dynamic: Dynamic> {
+    c: f32[1,4,128,128],
+}
+
+fn main(dynamic: Dynamic, inputs: Inputs<dynamic>) -> Outputs<dynamic> {
+  let c: f32[1,4,128,128]
+      = kernel(inputs.k, inputs.q) {
+        Tile(axes=(a0 in 0..4, a1_b in 0..8 window(parent=a1 in 0..128), a2_b in 0..4 window(parent=a2 in 0..128), a1_u in 0..1, a2_u in 0..4, _lane in 0..32), block_threads=128, raster_axes=(a1_b, a2_b)):
+            RegFragment(name=_a0, role=a, shape=(16, 8, 16), dtype=f16)
+            RegFragment(name=_b0, role=b, shape=(16, 8, 16), dtype=f16)
+            RegFragment(name=_c0_0, role=c, shape=(16, 8, 16), dtype=f32)
+            Smem(name=_a_smem, extents=(16, 64), dtype=__half, align=1024)
+            Smem(name=_b_smem, extents=(32, 64), dtype=__half, align=1024)
+            for _ks in 0..64 step 64:
+                CpAsyncCopy(smem=_a_smem, smem_index=(0, 0), src=q, src_index=(0, a0, a1_b * 16 + (((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 64 + 0), _ks + ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 64), nbytes=16, swizzle=B128, lane_index=(((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 64, ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 64), lane_rows=16)
+                CpAsyncCopy(smem=_b_smem, smem_index=(0, 0), src=k, src_index=(0, a0, a2_b * 32 + (((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 64 + 0), _ks + ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 64), nbytes=16, swizzle=B128, lane_index=(((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 64, ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 64), lane_rows=16)
+                CpAsyncCopy(smem=_b_smem, smem_index=(16, 0), src=k, src_index=(0, a0, a2_b * 32 + (((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 64 + 16), _ks + ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 64), nbytes=16, swizzle=B128, lane_index=(((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 64, ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 64), lane_rows=16)
+                CpAsyncCommit
+                CpAsyncWait
+                Sync
+                for _ki in 0..64 step 16 unroll=true:
+                    LdmatrixLoad(frag=_a0, src_buffer=_a_smem, src_index=(a1_u * 16 + 0, _ki), role=a, ldm=64, swizzle=B128)
+                    LdmatrixLoad(frag=_b0, src_buffer=_b_smem, src_index=(a2_u * 8 + 0, _ki), role=b, ldm=64, swizzle=B128, b_trans=true)
+                    MmaSyncPtx(c_frag=_c0_0, a_frag=_a0, b_frag=_b0, shape=(16, 8, 16))
+                Sync
+            RegStore(dst_buffer=c, dst_index=(0, a0, a1_b * 16 + a1_u * 16 + 0, a2_b * 32 + a2_u * 8 + 0), frag=_c0_0, shape=(16, 8, 16), ldm=128, ldn=1, row_dim=2, col_dim=3)
+  };
+
+  Outputs { c }
+}

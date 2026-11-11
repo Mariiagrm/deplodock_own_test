@@ -1,0 +1,9 @@
+=== 0: k_matmul_d73561 ===
+    for a0 in 0..128:
+        for a1 in 0..128:
+            for a2 in 0..512:
+                in0 = load a[a0, a2]
+                in1 = load b[a2, a1]
+                f32 v0 = multiply(in0, in1)
+                acc0 <- add(acc0, v0) over a2
+            o[a0, a1] = acc0

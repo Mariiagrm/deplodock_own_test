@@ -1,0 +1,75 @@
+op0: SchedulerNode(ComputedBuffer)
+op0.writes = [MemoryDep('buf0', c0, {c0: 16896})]
+op0.unmet_dependencies = []
+op0.met_dependencies = [MemoryDep('arg0_1', c0, {c0: 16896})]
+op0.min_input_distance = 0
+op0.max_input_distance = 0
+op0.outputs = [
+    buf0: ComputedBuffer
+    buf0.layout = FixedLayout('cuda:0', torch.float32, size=[128, 132], stride=[132, 1])
+    buf0.users = [NodeUser(node=SchedulerNode(name='op2'), can_inplace=False, is_weak=False)]
+]
+op0.group.device = cuda:0
+op0.group.iteration = (16896, 1)
+op0.sizes = ([16896], [])
+arg0_1_layout = FixedLayout('cuda:0', torch.float16, size=[128, 132], stride=[132, 1])
+buf0_layout = FixedLayout('cuda:0', torch.float32, size=[128, 132], stride=[132, 1])
+class op0_loop_body:
+    var_ranges = {p0: 16896}
+    index0 = p0
+    def body(self, ops):
+        get_index = self.get_index('index0')
+        load = ops.load('arg0_1', get_index)
+        to_dtype = ops.to_dtype(load, torch.float32, src_dtype = torch.float16, use_compute_types = True)
+        get_index_1 = self.get_index('index0')
+        store = ops.store('buf0', get_index_1, to_dtype, None)
+        return store
+
+
+op1: SchedulerNode(ComputedBuffer)
+op1.writes = [MemoryDep('buf1', c0, {c0: 16896})]
+op1.unmet_dependencies = []
+op1.met_dependencies = [MemoryDep('arg1_1', c0, {c0: 16896})]
+op1.min_input_distance = 0
+op1.max_input_distance = 0
+op1.outputs = [
+    buf1: ComputedBuffer
+    buf1.layout = FixedLayout('cuda:0', torch.float32, size=[132, 128], stride=[128, 1])
+    buf1.users = [NodeUser(node=SchedulerNode(name='op2'), can_inplace=False, is_weak=False)]
+]
+op1.group.device = cuda:0
+op1.group.iteration = (16896, 1)
+op1.sizes = ([16896], [])
+arg1_1_layout = FixedLayout('cuda:0', torch.float16, size=[132, 128], stride=[128, 1])
+buf1_layout = FixedLayout('cuda:0', torch.float32, size=[132, 128], stride=[128, 1])
+class op1_loop_body:
+    var_ranges = {p0: 16896}
+    index0 = p0
+    def body(self, ops):
+        get_index = self.get_index('index0')
+        load = ops.load('arg1_1', get_index)
+        to_dtype = ops.to_dtype(load, torch.float32, src_dtype = torch.float16, use_compute_types = True)
+        get_index_1 = self.get_index('index0')
+        store = ops.store('buf1', get_index_1, to_dtype, None)
+        return store
+
+
+op2: SchedulerNode(MultiTemplateBuffer)
+op2.writes = [MemoryDep('buf2', c0, {c0: 16384})]
+op2.unmet_dependencies = [MemoryDep('buf0', c0, {c0: 16896}), MemoryDep('buf1', c0, {c0: 16896})]
+op2.met_dependencies = []
+op2.min_input_distance = 1
+op2.max_input_distance = 1
+op2.outputs = [
+    buf2: MultiTemplateBuffer
+    buf2.layout = FixedLayout('cuda:0', torch.float32, size=[128, 128], stride=[128, 1])
+    buf2.users = [NodeUser(node=OUTPUT, can_inplace=False, is_weak=False)]
+]
+op2.group.device = cuda:0
+op2.group.iteration = (16384, 1)
+op2.sizes = ([128, 128], [])
+buf0_layout = FixedLayout('cuda:0', torch.float32, size=[128, 132], stride=[132, 1])
+buf1_layout = FixedLayout('cuda:0', torch.float32, size=[132, 128], stride=[128, 1])
+buf2_layout = FixedLayout('cuda:0', torch.float32, size=[128, 128], stride=[128, 1])
+
+

@@ -1,0 +1,62 @@
+{
+  "inputs": [
+    "a",
+    "b"
+  ],
+  "outputs": [
+    "o"
+  ],
+  "nodes": {
+    "a": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "a",
+          "shape": [
+            128,
+            512
+          ],
+          "dtype": "f16"
+        }
+      ]
+    },
+    "b": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "b",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "f16"
+        }
+      ]
+    },
+    "o": {
+      "op": "LoopOp",
+      "op_fields": {
+        "body": "for a0 in 0..128:\n    for a1 in 0..128:\n        for a2 in 0..512:\n            in0 = load a[a0, a2]\n            in1 = load b[a2, a1]\n            f32 v0 = multiply(in0, in1)\n            acc0 <- add(acc0, v0) over a2\n        o[a0, a1] = acc0",
+        "name": "k_matmul_d73561"
+      },
+      "inputs": [
+        "b",
+        "a"
+      ],
+      "outputs": [
+        {
+          "name": "o",
+          "shape": [
+            128,
+            128
+          ],
+          "dtype": "f32"
+        }
+      ]
+    }
+  }
+}

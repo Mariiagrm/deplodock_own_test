@@ -1,0 +1,68 @@
+{
+  "inputs": [
+    "k",
+    "q"
+  ],
+  "outputs": [
+    "c"
+  ],
+  "nodes": {
+    "k": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "k",
+          "shape": [
+            1,
+            4,
+            128,
+            64
+          ],
+          "dtype": "f16"
+        }
+      ]
+    },
+    "q": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "q",
+          "shape": [
+            1,
+            4,
+            128,
+            64
+          ],
+          "dtype": "f16"
+        }
+      ]
+    },
+    "c": {
+      "op": "LoopOp",
+      "op_fields": {
+        "body": "for a0 in 0..4:\n    for a1 in 0..128:\n        for a2 in 0..128:\n            for a3 in 0..64:\n                in0 = load k[0, a0, a2, a3]\n                in1 = load q[0, a0, a1, a3]\n                f32 v0 = multiply(in1, in0)\n                acc0 <- add(acc0, v0) over a3\n            c[0, a0, a1, a2] = acc0",
+        "name": "k_matmul_1775af"
+      },
+      "inputs": [
+        "k",
+        "q"
+      ],
+      "outputs": [
+        {
+          "name": "c",
+          "shape": [
+            1,
+            4,
+            128,
+            128
+          ],
+          "dtype": "f32"
+        }
+      ]
+    }
+  }
+}

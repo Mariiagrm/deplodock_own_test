@@ -1,0 +1,163 @@
+{
+  "cold_cache": false,
+  "input": null,
+  "golden": "k_matmul_757586",
+  "dynamic": [],
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "warmup": 10,
+  "iters": 100,
+  "backends": {
+    "Eager PyTorch": {
+      "latency_us": 5.054315976929247,
+      "captured": true,
+      "timing_semantics": "captured_whole_forward",
+      "speedup_vs_eager": 1.0
+    },
+    "torch.compile": {
+      "latency_us": 3.9468070394114445,
+      "captured": true,
+      "timing_semantics": "captured_whole_forward",
+      "correctness": {
+        "status": "pass",
+        "reference": "eager",
+        "tolerance": "scaled",
+        "fullgraph": true
+      },
+      "speedup_vs_eager": 1.280608838095859
+    },
+    "Emmy": {
+      "latency_us": 1.534456037916243,
+      "captured": true,
+      "timing_semantics": "captured_whole_forward",
+      "correctness": {
+        "status": "pass",
+        "reference": "eager",
+        "tolerance": "scaled"
+      },
+      "speedup_vs_eager": 3.2938812530549226
+    }
+  },
+  "greedy": {
+    "status": "ok",
+    "lane": "std",
+    "total_us": 1.534456037916243,
+    "timing_semantics": "single_launch",
+    "captured": true,
+    "num_launches": 1,
+    "kernels": [
+      {
+        "kernel": "k_matmul_757586",
+        "us": 1.534456037916243,
+        "smem_bytes": 0,
+        "knobs": {
+          "WORK": "w1x1",
+          "TILE": "mma_m16n8k16_f16_f32/f1x1/k8",
+          "REDUCE": "",
+          "STAGE": "",
+          "LOOPIFY": "0",
+          "RASTER": "",
+          "SHARED_CARRY": "0"
+        },
+        "record_knobs": {
+          "WORK": "w1x1",
+          "TILE": "mma_m16n8k16_f16_f32/f1x1/k8",
+          "REDUCE": "",
+          "STAGE": "",
+          "LOOPIFY": "0",
+          "RASTER": "",
+          "SHARED_CARRY": "0"
+        },
+        "source_sha256": "5e83025643fa77dea58e2a1971c7cad361f11a17083e208ac40cd36536101ae4"
+      }
+    ],
+    "reference_run_us": 15.135999768972397,
+    "isolated": {
+      "status": "ok",
+      "total_us": 1.4676789287477732,
+      "timing_semantics": "single_launch",
+      "captured": true,
+      "num_launches": 1,
+      "e2e_us": null,
+      "kernels": [
+        {
+          "kernel": "k_matmul_757586",
+          "us": 1.4676789287477732,
+          "smem_bytes": 0,
+          "knobs": {
+            "WORK": "w1x1",
+            "TILE": "mma_m16n8k16_f16_f32/f1x1/k8",
+            "REDUCE": "",
+            "STAGE": "",
+            "LOOPIFY": "0",
+            "RASTER": "",
+            "SHARED_CARRY": "0"
+          },
+          "record_knobs": {
+            "WORK": "w1x1",
+            "TILE": "mma_m16n8k16_f16_f32/f1x1/k8",
+            "REDUCE": "",
+            "STAGE": "",
+            "LOOPIFY": "0",
+            "RASTER": "",
+            "SHARED_CARRY": "0"
+          },
+          "source_sha256": "5e83025643fa77dea58e2a1971c7cad361f11a17083e208ac40cd36536101ae4"
+        }
+      ],
+      "flags": []
+    }
+  },
+  "pinned": [
+    {
+      "name": "k_matmul_757586",
+      "kind": "golden",
+      "lane": "std",
+      "status": "ok",
+      "pinned_knobs": {
+        "FAST_MATH": "False",
+        "FAST_EXP": "False",
+        "F16_MMA_F32_ACC": "False",
+        "FP8_MMA": "False",
+        "PLACE": "fuse",
+        "WORK": "w2x2",
+        "TILE": "mma_m16n8k16_f16_f32/f4x8/k2",
+        "REDUCE": ""
+      },
+      "total_us": 6.563136819750071,
+      "timing_semantics": "single_launch",
+      "captured": true,
+      "num_launches": 1,
+      "e2e_us": null,
+      "kernels": [
+        {
+          "kernel": "k_matmul_757586",
+          "us": 6.563136819750071,
+          "smem_bytes": 0,
+          "knobs": {
+            "WORK": "w2x2",
+            "TILE": "mma_m16n8k16_f16_f32/f4x8/k2",
+            "REDUCE": "",
+            "STAGE": "",
+            "LOOPIFY": "0",
+            "RASTER": "",
+            "SHARED_CARRY": "0"
+          },
+          "record_knobs": {
+            "WORK": "w2x2",
+            "TILE": "mma_m16n8k16_f16_f32/f4x8/k2",
+            "REDUCE": "",
+            "STAGE": "",
+            "LOOPIFY": "0",
+            "RASTER": "",
+            "SHARED_CARRY": "0"
+          },
+          "source_sha256": "a1ea2e54e86b4c02a08ee022a882d02a580d9a625bddae253840908d1037b486"
+        }
+      ],
+      "flags": [],
+      "correctness": null,
+      "recorded_emmy_us": null,
+      "recorded_ref_us": null
+    }
+  ]
+}

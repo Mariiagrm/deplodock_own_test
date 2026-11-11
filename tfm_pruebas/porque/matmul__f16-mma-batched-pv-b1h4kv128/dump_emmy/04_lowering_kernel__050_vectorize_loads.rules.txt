@@ -1,0 +1,3 @@
+>>> k:050_vectorize_loads
+@@ matched at c @@
+<<< k:050_vectorize_loads

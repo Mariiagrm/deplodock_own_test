@@ -1,0 +1,22 @@
+    Tile(axes=(a0 in 0..4, a1_b in 0..8 window(parent=a1 in 0..128), a2_b in 0..4 window(parent=a2 in 0..128), a1_u in 0..1, a2_u in 0..4, _lane in 0..32), block_threads=128, raster_axes=(a1_b, a2_b)):
+        RegFragment(name=_a0, role=a, shape=(16, 8, 16), dtype=f16)
+        RegFragment(name=_b0, role=b, shape=(16, 8, 16), dtype=f16)
+        RegFragment(name=_c0_0, role=c, shape=(16, 8, 16), dtype=f32)
+        Smem(name=_a_smem, extents=(16, 128), dtype=__half, align=1024)
+        Smem(name=_b_smem, extents=(128, 32), dtype=__half, align=512)
+        for _ks in 0..128 step 128:
+            CpAsyncCopy(smem=_a_smem, smem_index=(0, 0), src=p, src_index=(0, a0, a1_b * 16 + (((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 128 + 0), _ks + ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 128), nbytes=16, swizzle=`B128@7`, lane_index=(((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 128, ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 128), lane_rows=8)
+            CpAsyncCopy(smem=_a_smem, smem_index=(8, 0), src=p, src_index=(0, a0, a1_b * 16 + (((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 128 + 8), _ks + ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 128), nbytes=16, swizzle=`B128@7`, lane_index=(((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 128, ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 128), lane_rows=8)
+            CpAsyncCopy(smem=_b_smem, smem_index=(0, 0), src=v, src_index=(0, a0, _ks + (((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 32 + 0), a2_b * 32 + ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 32), nbytes=16, swizzle=B64, lane_index=(((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 32, ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 32), lane_rows=32)
+            CpAsyncCopy(smem=_b_smem, smem_index=(32, 0), src=v, src_index=(0, a0, _ks + (((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 32 + 32), a2_b * 32 + ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 32), nbytes=16, swizzle=B64, lane_index=(((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 32, ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 32), lane_rows=32)
+            CpAsyncCopy(smem=_b_smem, smem_index=(64, 0), src=v, src_index=(0, a0, _ks + (((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 32 + 64), a2_b * 32 + ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 32), nbytes=16, swizzle=B64, lane_index=(((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 32, ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 32), lane_rows=32)
+            CpAsyncCopy(smem=_b_smem, smem_index=(96, 0), src=v, src_index=(0, a0, _ks + (((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 32 + 96), a2_b * 32 + ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 32), nbytes=16, swizzle=B64, lane_index=(((a1_u * 4 + a2_u) * 32 + _lane) * 8 / 32, ((a1_u * 4 + a2_u) * 32 + _lane) * 8 % 32), lane_rows=32)
+            CpAsyncCommit
+            CpAsyncWait
+            Sync
+            for _ki in 0..128 step 16 unroll=true:
+                LdmatrixLoad(frag=_a0, src_buffer=_a_smem, src_index=(a1_u * 16 + 0, _ki), role=a, ldm=128, swizzle=`B128@7`)
+                LdmatrixLoad(frag=_b0, src_buffer=_b_smem, src_index=(_ki, a2_u * 8 + 0), role=b, ldm=32, swizzle=B64)
+                MmaSyncPtx(c_frag=_c0_0, a_frag=_a0, b_frag=_b0, shape=(16, 8, 16))
+            Sync
+        RegStore(dst_buffer=c, dst_index=(0, a0, a1_b * 16 + a1_u * 16 + 0, a2_b * 32 + a2_u * 8 + 0), frag=_c0_0, shape=(16, 8, 16), ldm=128, ldn=1, row_dim=2, col_dim=3)

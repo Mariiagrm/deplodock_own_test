@@ -1,0 +1,13 @@
+{
+  "time_ms": 0.000978929572738707,
+  "min_ms": 0.0009729577577672899,
+  "max_ms": null,
+  "num_launches": 1,
+  "per_launch": [
+    {
+      "idx": 0,
+      "kernel_name": "k_matmul_1775af",
+      "time_ms": 0.000978929572738707
+    }
+  ]
+}

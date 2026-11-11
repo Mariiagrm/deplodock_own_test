@@ -1,0 +1,68 @@
+{
+  "inputs": [
+    "v",
+    "p"
+  ],
+  "outputs": [
+    "c"
+  ],
+  "nodes": {
+    "p": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "p",
+          "shape": [
+            1,
+            4,
+            128,
+            128
+          ],
+          "dtype": "f16"
+        }
+      ]
+    },
+    "v": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "v",
+          "shape": [
+            1,
+            4,
+            128,
+            128
+          ],
+          "dtype": "f16"
+        }
+      ]
+    },
+    "c": {
+      "op": "LoopOp",
+      "op_fields": {
+        "body": "for a0 in 0..4:\n    for a1 in 0..128:\n        for a2 in 0..128:\n            for a3 in 0..128:\n                in0 = load p[0, a0, a1, a3]\n                in1 = load v[0, a0, a3, a2]\n                f32 v0 = multiply(in0, in1)\n                acc0 <- add(acc0, v0) over a3\n            c[0, a0, a1, a2] = acc0",
+        "name": "k_matmul_3c8d0f"
+      },
+      "inputs": [
+        "v",
+        "p"
+      ],
+      "outputs": [
+        {
+          "name": "c",
+          "shape": [
+            1,
+            4,
+            128,
+            128
+          ],
+          "dtype": "f32"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "cold_cache": false,
+  "input": "tfm_pruebas/runs/20261111_102641/casos/matmul__f16-mma-m128n128k132-f32-masked-k/dump/00_input.json",
+  "golden": null,
+  "dynamic": [],
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "warmup": 10,
+  "iters": 100,
+  "backends": {
+    "Emmy": {
+      "latency_us": 1.3796756975352764,
+      "captured": true,
+      "timing_semantics": "captured_whole_forward",
+      "correctness": {
+        "status": "unchecked"
+      }
+    }
+  },
+  "greedy": {
+    "status": "ok",
+    "lane": "fm",
+    "total_us": 1.372828846797347,
+    "timing_semantics": "single_launch",
+    "captured": true,
+    "num_launches": 1,
+    "kernels": [
+      {
+        "kernel": "k_matmul_757586",
+        "us": 1.372828846797347,
+        "smem_bytes": 0,
+        "knobs": {
+          "WORK": "w1x1",
+          "TILE": "mma_m16n8k16_f16_f32/f1x1/k8",
+          "REDUCE": "",
+          "STAGE": "",
+          "LOOPIFY": "0",
+          "RASTER": "",
+          "SHARED_CARRY": "0"
+        },
+        "record_knobs": {
+          "WORK": "w1x1",
+          "TILE": "mma_m16n8k16_f16_f32/f1x1/k8",
+          "REDUCE": "",
+          "STAGE": "",
+          "LOOPIFY": "0",
+          "RASTER": "",
+          "SHARED_CARRY": "0"
+        },
+        "source_sha256": "5e83025643fa77dea58e2a1971c7cad361f11a17083e208ac40cd36536101ae4"
+      }
+    ]
+  },
+  "pinned": []
+}

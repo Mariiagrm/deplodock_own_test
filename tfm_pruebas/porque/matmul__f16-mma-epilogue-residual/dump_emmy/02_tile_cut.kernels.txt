@@ -1,0 +1,16 @@
+=== 0: k_matmul_a574e5 ===
+    place  free=(a0, a1)  unmapped
+    Fold  free
+    ├─ operand[acc0]: Fold[a2 in 0..128] contraction   ‹computed›
+    │  ├─ operand[in0]: load a[a0, a2]   ‹materialized›
+    │  ├─ operand[in1]: load b[a2, a1]   ‹materialized›
+    │  ├─ init: (0)
+    │  ├─ lift: λ(a2, in0, in1) -> (v0)
+    │  │    f32 v0 = multiply(in0, in1)
+    │  └─ combine: λ(acc0, acc0__o) -> (acc0)
+    │       acc0 = add(acc0, acc0__o)
+    └─ lift: λ(acc0, a0, a1) -> (v1)
+         in2 = load r[a0, a1]
+         v1 = acc0 + in2
+    outputs
+    └─ c[a0, a1] = v1

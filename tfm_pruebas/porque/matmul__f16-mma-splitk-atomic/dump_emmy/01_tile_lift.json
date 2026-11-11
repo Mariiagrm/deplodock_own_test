@@ -1,0 +1,87 @@
+{
+  "inputs": [
+    "b",
+    "a"
+  ],
+  "outputs": [
+    "o"
+  ],
+  "nodes": {
+    "a": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "a",
+          "shape": [
+            128,
+            512
+          ],
+          "dtype": "f16"
+        }
+      ]
+    },
+    "b": {
+      "op": "InputOp",
+      "op_fields": {},
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "b",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "f16"
+        }
+      ]
+    },
+    "o": {
+      "op": "TileOp",
+      "op_fields": {
+        "op": "Fold(operands=(Fold(operands=(), lift=Lambda(params=('a0', 'a2'), body=(Load(names=('in0',), input='a', index=(Var(name='a0'), Var(name='a2')), dtype=None, carried=''),), results=('in0',)), init=(), cells=(), base=None, twist=None, observe=None), Fold(operands=(), lift=Lambda(params=('a1', 'a2'), body=(Load(names=('in1',), input='b', index=(Var(name='a2'), Var(name='a1')), dtype=None, carried=''),), results=('in1',)), init=(), cells=(), base=None, twist=None, observe=None)), lift=Lambda(params=('a2', 'in0', 'in1'), body=(Assign(name='v0', op=ElementwiseImpl('multiply'), args=('in0', 'in1'), dtype=DataType(name='f32', np=dtype('float32'), nbytes=4)),), results=('v0',)), init=(0.0,), cells=(), base=Lambda(params=('acc0', 'acc0__o'), body=(Assign(name='acc0', op=ElementwiseImpl('add'), args=('acc0', 'acc0__o'), dtype=None),), results=('acc0',)), twist=None, observe=None)",
+        "name": "k_matmul_d73561",
+        "place": "Placement(free=(Axis(name='a0', extent=Dim(128), window=None), Axis(name='a1', extent=Dim(128), window=None)), grid=(), serial=(), mapped=False)",
+        "axes": [
+          "Axis(name='a0', extent=Dim(128), window=None)",
+          "Axis(name='a1', extent=Dim(128), window=None)",
+          "Axis(name='a2', extent=Dim(512), window=None)"
+        ],
+        "workers": null,
+        "output_specs": [
+          "OutputSpec(write=Write(output='o', index=(Var(name='a0'), Var(name='a1')), values=('acc0',), value_dtype=None, atomic=False, swizzle='NONE'), sweep=(), when=None)"
+        ],
+        "placement_decided": false,
+        "placement_consumed": "frozenset()",
+        "placement_step": 0,
+        "layout_decided": [],
+        "split_consumed": false
+      },
+      "inputs": [
+        "b",
+        "a"
+      ],
+      "outputs": [
+        {
+          "name": "o",
+          "shape": [
+            128,
+            128
+          ],
+          "dtype": "f32"
+        }
+      ],
+      "hints": {
+        "prov": {
+          "o": {
+            "kind": "LoopOp",
+            "pieces": [
+              "o"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
