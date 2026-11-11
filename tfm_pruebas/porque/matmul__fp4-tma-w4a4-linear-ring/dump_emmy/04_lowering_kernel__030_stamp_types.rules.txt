@@ -1,0 +1,16 @@
+>>> k:030_stamp_types
+@@ matched at linear @@
+@@ -58,8 +58,8 @@
+                   MmaSyncPtx(c_frag=_c0_1, a_frag=_a0, b_frag=_b1, shape=(16, 8, 64), ab_dtype=e2m1, sfa_frag=_sfa0, sfb_frag=_sfb1)
+               Sync
+-          _bs_alpha_l0 = load x_static_fp4_scale_2[0, 0, 0]
+-          _bs_alpha0 = copy(_bs_alpha_l0)
+-          _bs_alpha_l1 = load p_b_weight_scale_2[0, 0]
+-          _bs_alpha1 = multiply(_bs_alpha0, _bs_alpha_l1)
++          f32 _bs_alpha_l0 = load x_static_fp4_scale_2[0, 0, 0]
++          f32 _bs_alpha0 = copy(_bs_alpha_l0)
++          f32 _bs_alpha_l1 = load p_b_weight_scale_2[0, 0]
++          f32 _bs_alpha1 = multiply(_bs_alpha0, _bs_alpha_l1)
+           FragmentApply(out=_c0_0, op=multiply, args=(FragmentArg(kind=frag, names=(_c0_0)), FragmentArg(kind=uniform, names=(_bs_alpha1))), in_place=true)
+           FragmentApply(out=_c0_1, op=multiply, args=(FragmentArg(kind=frag, names=(_c0_1)), FragmentArg(kind=uniform, names=(_bs_alpha1))), in_place=true)
+<<< k:030_stamp_types

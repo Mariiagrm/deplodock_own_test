@@ -1,0 +1,132 @@
+[
+  {
+    "root": "linear",
+    "matched_pattern_nodes": {
+      "root": "linear"
+    },
+    "before": [
+      {
+        "id": "linear",
+        "op_class": "KernelOp",
+        "inputs": [
+          "p_b_weight_scale_2",
+          "x_static_fp4_scale_2",
+          "p_b_weight_scale_bits",
+          "x_static_fp4_scale_bits",
+          "p_b_weight_bits",
+          "x_static_fp4_bits",
+          "p_b_weight_f4_pairs",
+          "x_static_fp4_f16_f4_pairs"
+        ],
+        "output_shape": [
+          "24",
+          "256"
+        ],
+        "output_dtype": "f16"
+      }
+    ],
+    "after": [
+      {
+        "id": "p_b_weight_bits",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "256",
+          "1024"
+        ],
+        "output_dtype": "f4e2m1x2"
+      },
+      {
+        "id": "p_b_weight_f4_pairs",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "256",
+          "2"
+        ],
+        "output_dtype": "f16"
+      },
+      {
+        "id": "p_b_weight_scale_2",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "1",
+          "1"
+        ],
+        "output_dtype": "f32"
+      },
+      {
+        "id": "p_b_weight_scale_bits",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "256",
+          "128"
+        ],
+        "output_dtype": "f8e4m3"
+      },
+      {
+        "id": "x_static_fp4_bits",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "24",
+          "1024"
+        ],
+        "output_dtype": "f4e2m1x2"
+      },
+      {
+        "id": "x_static_fp4_f16_f4_pairs",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "256",
+          "2"
+        ],
+        "output_dtype": "f16"
+      },
+      {
+        "id": "x_static_fp4_scale_2",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "1",
+          "1",
+          "1"
+        ],
+        "output_dtype": "f32"
+      },
+      {
+        "id": "x_static_fp4_scale_bits",
+        "op_class": "InputOp",
+        "inputs": [],
+        "output_shape": [
+          "24",
+          "128",
+          "1"
+        ],
+        "output_dtype": "f8e4m3"
+      },
+      {
+        "id": "linear",
+        "op_class": "CudaOp",
+        "inputs": [
+          "p_b_weight_scale_2",
+          "x_static_fp4_scale_2",
+          "p_b_weight_scale_bits",
+          "x_static_fp4_scale_bits",
+          "p_b_weight_bits",
+          "x_static_fp4_bits",
+          "p_b_weight_f4_pairs",
+          "x_static_fp4_f16_f4_pairs"
+        ],
+        "output_shape": [
+          "24",
+          "256"
+        ],
+        "output_dtype": "f16"
+      }
+    ]
+  }
+]

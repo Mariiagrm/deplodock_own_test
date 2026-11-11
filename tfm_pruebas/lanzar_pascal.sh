@@ -15,8 +15,12 @@ for a in "$@"; do
   [ "$a" = "--ncu" ] && RUN_AS="0:0"
 done
 # HOME nuevo por ejecución: base de datos de autotune vacía, como el "stock lane" de make bench-kernels.
+# Caché de Inductor también nueva por ejecución: por defecto vive en /tmp/torchinductor_<usuario> del
+# contenedor y guarda las configuraciones que eligió al autotunear, así que una ejecución reutilizaba
+# las de la anterior (p. ej. una RMSNorm con XBLOCK=1 a 4,29 µs en vez de 2,46) sin volver a medir.
 set +e
-docker exec -u "$RUN_AS" -e HOME=/tmp/emmy_tfm_$STAMP -e PYTHONPATH=/workspace/deplodock \
+docker exec -u "$RUN_AS" -e HOME=/tmp/emmy_tfm_$STAMP -e TORCHINDUCTOR_CACHE_DIR=/tmp/emmy_tfm_$STAMP/inductor \
+  -e PYTHONPATH=/workspace/deplodock \
   -w /workspace/deplodock cutlass-gemm \
   bash -c 'mkdir -p "$HOME" && ./venv/bin/python -u tfm_pruebas/correr_suite_tfm.py '"$OUT"' "$@"' _ "$@"
 rc=$?

@@ -102,3 +102,24 @@ Siempre mirando el **cuerpo del `__global__`** (el preámbulo trae todas las fun
 Casos hechos: `matmul/f16-mma-m128n128k128-f32` (Inductor convierte a fp32 y multiplica sin Tensor Cores con 8
 bloques; emmy usa `mma.m16n8k16` fp16→fp32 con 64 bloques) y `qwen3emb/rmsnorm-qnorm-s512` (estructuras casi
 iguales: empate). Ojo: `torch.compile` medido con `--workers > 1` sale ruidoso; para compararlo, `--workers 1`.
+
+## Ejecuciones completas (runs/)
+
+| run | qué es |
+|---|---|
+| `20261108_210652` | base: sin autotuning, 4 casos en paralelo |
+| `20261109_005347` | `--tune 24`, 4 en paralelo |
+| `20261109_012335` | `--ncu` (como root), 1 a 1 |
+| `20261111_090638` | `--tune 24`, 1 a 1, **pero reutilizando la caché de Inductor** de las anteriores |
+| `20261111_102641` | **la de referencia**: `--tune 24`, 1 a 1 y caché de Inductor vacía |
+
+Los tiempos de `torch.compile` dependen de la caché de Inductor (`/tmp/torchinductor_<usuario>` del contenedor), que
+guarda la configuración elegida en su autotuning y se reutilizaba entre ejecuciones. Desde `20261111_102641`
+`lanzar_pascal.sh` pone `TORCHINDUCTOR_CACHE_DIR` nuevo por ejecución. Con caché vacía cambian 8 de 128 casos.
+
+En los kernels con entradas fp32, "Tensor Cores" sale `N/A`: no existen para fp32 (solo TF32, que pierde precisión,
+PyTorch lo tiene desactivado por defecto y en la RTX 5090 rinde lo mismo que fp32).
+
+`porque/matmul__fp4-tma-w4a4-linear-ring`: NVFP4. `torch.compile` lanza 3 kernels (descuantiza x y los pesos a fp16
+con dos kernels Triton y multiplica con `extern_kernels.mm` de cuBLAS); emmy, uno solo con
+`mma.sync…kind::mxf4nvf4.block_scale` (fp4 + escalas fp8 directamente en el Tensor Core).

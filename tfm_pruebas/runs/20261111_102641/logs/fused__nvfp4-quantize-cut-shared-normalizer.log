@@ -1,0 +1,125 @@
+====================================================================================================
+CASO fused/nvfp4-quantize-cut-shared-normalizer
+  Categorías : nvfp4
+  Qué es     : elementwise+index_map+mean+reduce+reshape · dtype f32 · entradas (32,128)
+  Fichero    : tests/compiler/realization/cases/fused/nvfp4-quantize-cut-shared-normalizer.json  (fila fijada: k_mean_e934a3.5ab3d806c685)
+====================================================================================================
+
+TIEMPOS (µs; 100 iteraciones tras 10 de calentamiento, captura en CUDA graph)
+  PyTorch eager ............................    127.04
+  torch.compile ............................      2.88   (44.12x vs eager)
+  emmy, schedule fijado (CloudRift) ........     38.45   (3.30x vs eager)  ← lo que mide la suite
+  emmy, greedy (emmy elige sin ayuda) ......     36.84   (3.45x vs eager)
+    ! --tune no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2  (el greedy es el de siempre, sin autotuning)
+  Referencia CloudRift RTX 5090 ............ (el caso no tiene latencia guardada para esta GPU)
+  Corrección frente a eager: Emmy=pass, torch.compile=unchecked
+
+SCHEDULE (parámetros que deciden las optimizaciones; ver tfm_pruebas/README.md)
+  fijado  [k_mean_d12855__place_421d87410f] WORK=  REDUCE=  RASTER=
+  fijado  [k_mean_d12855] WORK=  RASTER=
+  greedy  [k_mean_d12855__place_421d87410f] WORK=t128  REDUCE=coop  RASTER=
+  greedy  [k_mean_d12855] WORK=  RASTER=
+  interruptores: FAST_MATH=False, FAST_EXP=False, F16_MMA_F32_ACC=False, FP8_MMA=False
+  corte de grafo (regla 030_cut): corte de colocación → la operación se reparte en 2 kernels (lo contrario de fusionar)
+
+----------------------------------------------------------------------------------------------------
+KERNEL k_mean_d12855__place_421d87410f  ·  2.55 µs  ·  smem 0.0 KB  ·  __launch_bounds__(256)
+
+  1. INTENSIDAD ARITMÉTICA Y CÓMPUTO
+    [N/A] Factorización de bucles
+          Qué se ha hecho : Sin baldosas: un hilo por celda de salida, sin factorizar el bucle (contracción por celda o elementwise).
+          Evidencia       : WORK='' | TILE vacío
+    [N/A] Register tiling
+          Qué se ha hecho : Sin contracción: no hay producto exterior que reutilizar en registros.
+    [SI ] Cargas vectorizadas e intercalado
+          Qué se ha hecho : regla interleave_loads: cargas recolocadas junto a su primer uso.
+          Evidencia       : regla disparada: 050_vectorize_loads | regla disparada: 080_vectorize_stores | regla disparada: 095_interleave_loads
+          Qué supone      : Una transacción de 64/128 bits (LDG.64/LDG.128) sustituye 2-4 cargas escalares: menos instrucciones de memoria y mejor uso de cada sector de 32 B. Colocar cada carga junto a su primer uso acorta la vida de los registros y mejora la planificación.
+    [N/A] Tensor Cores (mma.sync + ldmatrix)
+          Qué se ha hecho : Entradas fp32: los Tensor Cores no tienen modo fp32 (solo fp16/bf16/TF32/FP8/FP4), así que se calcula con FMA en núcleos CUDA, igual que PyTorch con su opción por defecto. La alternativa sería TF32 (mantisa de 10 bits, pierde precisión), que emmy no ofrece y que en la RTX 5090 rinde lo mismo que fp32 (~87 TFLOP/s a 2 GHz).
+          Evidencia       : dtype de entrada f32 | TILE=''
+
+  2. FLUJO DE DATOS Y SOLAPAMIENTO ASÍNCRONO
+    [NO ] Almacenamiento por fases en smem
+          Qué se ha hecho : Sin staging en memoria compartida: operandos directos de global a registros.
+          Evidencia       : STAGE=''
+    [N/A] Transferencias asíncronas (cp.async / TMA)
+          Qué se ha hecho : Sin copias asíncronas (no hay staging en smem).
+          Evidencia       : STAGE=''
+    [N/A] Software pipelining / doble búfer
+          Qué se ha hecho : Sin staging en smem: no hay baldosas en vuelo que solapar.
+          Evidencia       : STAGE=''
+    [N/A] Especialización de warps
+          Qué se ha hecho : Camino escalar: no aplica.
+
+  3. ELIMINACIÓN DE CONFLICTOS DE BANCO
+    [N/A] Padding y swizzling
+          Qué se ha hecho : Sin memoria compartida de operandos: no hay bancos que proteger.
+
+  4. PLANIFICACIÓN DE LA REJILLA
+    [N/A] CTA swizzle (rasterizado agrupado)
+          Qué se ha hecho : Rejilla 1-D sin baldosas 2-D: el orden de los bloques no cambia la reutilización.
+    [N/A] Split-K
+          Qué se ha hecho : Sin contracción en baldosas.
+
+  5. EXTRA (EN LA SUITE, FUERA DE LA LISTA)
+    [N/A] Reducción cooperativa (shuffle / árbol)
+          Qué se ha hecho : Sin reducción cooperativa entre hilos.
+    [SI ] Programmatic Dependent Launch
+          Qué se ha hecho : Programmatic Dependent Launch (griddepcontrol.wait): el kernel puede lanzarse mientras termina el anterior y solo espera justo antes de leer sus datos, lo que oculta latencia de lanzamiento.
+          Evidencia       : 1 griddepcontrol en el cuerpo
+          Qué supone      : griddepcontrol permite solapar el arranque de un kernel con el final del anterior: importa en kernels de pocos µs, donde el lanzamiento pesa.
+
+----------------------------------------------------------------------------------------------------
+KERNEL k_mean_d12855  ·  36.20 µs  ·  smem 0.0 KB  ·  __launch_bounds__(256)
+
+  1. INTENSIDAD ARITMÉTICA Y CÓMPUTO
+    [N/A] Factorización de bucles
+          Qué se ha hecho : Sin baldosas: un hilo por celda de salida, sin factorizar el bucle (contracción por celda o elementwise).
+          Evidencia       : WORK='' | TILE vacío
+    [N/A] Register tiling
+          Qué se ha hecho : Sin contracción: no hay producto exterior que reutilizar en registros.
+    [SI ] Cargas vectorizadas e intercalado
+          Qué se ha hecho : 0 accesos de 128 bits (float4/uint4, LDG/STG.128) y 2 de 64 bits (float2/uint2) en el cuerpo; regla interleave_loads: cargas recolocadas junto a su primer uso.
+          Evidencia       : regla disparada: 050_vectorize_loads | regla disparada: 080_vectorize_stores | regla disparada: 095_interleave_loads
+          Qué supone      : Una transacción de 64/128 bits (LDG.64/LDG.128) sustituye 2-4 cargas escalares: menos instrucciones de memoria y mejor uso de cada sector de 32 B. Colocar cada carga junto a su primer uso acorta la vida de los registros y mejora la planificación.
+    [N/A] Tensor Cores (mma.sync + ldmatrix)
+          Qué se ha hecho : Entradas fp32: los Tensor Cores no tienen modo fp32 (solo fp16/bf16/TF32/FP8/FP4), así que se calcula con FMA en núcleos CUDA, igual que PyTorch con su opción por defecto. La alternativa sería TF32 (mantisa de 10 bits, pierde precisión), que emmy no ofrece y que en la RTX 5090 rinde lo mismo que fp32 (~87 TFLOP/s a 2 GHz).
+          Evidencia       : dtype de entrada f32 | TILE=''
+
+  2. FLUJO DE DATOS Y SOLAPAMIENTO ASÍNCRONO
+    [NO ] Almacenamiento por fases en smem
+          Qué se ha hecho : Sin staging en memoria compartida: operandos directos de global a registros.
+          Evidencia       : STAGE=''
+    [N/A] Transferencias asíncronas (cp.async / TMA)
+          Qué se ha hecho : Sin copias asíncronas (no hay staging en smem).
+          Evidencia       : STAGE=''
+    [N/A] Software pipelining / doble búfer
+          Qué se ha hecho : Sin staging en smem: no hay baldosas en vuelo que solapar.
+          Evidencia       : STAGE=''
+    [N/A] Especialización de warps
+          Qué se ha hecho : Camino escalar: no aplica.
+
+  3. ELIMINACIÓN DE CONFLICTOS DE BANCO
+    [N/A] Padding y swizzling
+          Qué se ha hecho : Sin memoria compartida de operandos: no hay bancos que proteger.
+
+  4. PLANIFICACIÓN DE LA REJILLA
+    [N/A] CTA swizzle (rasterizado agrupado)
+          Qué se ha hecho : Rejilla 1-D sin baldosas 2-D: el orden de los bloques no cambia la reutilización.
+    [N/A] Split-K
+          Qué se ha hecho : Sin contracción en baldosas.
+
+  5. EXTRA (EN LA SUITE, FUERA DE LA LISTA)
+    [N/A] Reducción cooperativa (shuffle / árbol)
+          Qué se ha hecho : Sin reducción cooperativa entre hilos.
+    [SI ] Programmatic Dependent Launch
+          Qué se ha hecho : Programmatic Dependent Launch (griddepcontrol.wait): el kernel puede lanzarse mientras termina el anterior y solo espera justo antes de leer sus datos, lo que oculta latencia de lanzamiento.
+          Evidencia       : 1 griddepcontrol en el cuerpo
+          Qué supone      : griddepcontrol permite solapar el arranque de un kernel con el final del anterior: importa en kernels de pocos µs, donde el lanzamiento pesa.
+
+----------------------------------------------------------------------------------------------------
+REGLAS DE LA BAJADA A KERNEL (pasada 09_lowering_kernel del compilador)
+  cambiaron el kernel : 010_materialize, 030_stamp_types, 050_vectorize_loads, 080_vectorize_stores, 085_fast_exp, 090_guard_reductions, 095_interleave_loads, 096_pair_ldmatrix_loads, 100_loopify
+  sin efecto          : —
+  Volcado completo (IR de cada pasada + CUDA): casos/fused__nvfp4-quantize-cut-shared-normalizer/dump/

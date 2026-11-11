@@ -1,0 +1,104 @@
+>>> k:010_materialize
+@@ matched at linear @@
+@@ -1,33 +1,67 @@
+-linear = TileOp(p_b_weight_scale_2, x_static_fp4_scale_2, p_b_weight_scale_bits, x_static_fp4_scale_bits, p_b_weight_bits, x_static_fp4_bits, p_b_weight_f4_pairs, x_static_fp4_f16_f4_pairs)
+-      place  free=(a0, a1)  grid=(a0, a1)
+-      work   w1x2
+-      Fold[a2 in 0..2048] contraction   ⟨TILE=mma_m16n8k64_e2m1_f32/f1x2/k8 STAGE=d2/smem-async⟩
+-      ├─ operand[v9]: Fold  free   ‹computed›
+-      │  ├─ operand[in4]: load x_static_fp4_bits[a0, a2 / 16 * 8 + a2 % 16 / 2]   ‹materialized›
+-      │  ├─ operand[in7]: load x_static_fp4_scale_bits[a0, a2 / 16, 0]   ‹materialized›
+-      │  └─ lift: λ(in4, in7, a2) -> (v9)
+-      │       in1 = load x_static_fp4_scale_2[0, 0, 0]
+-      │       i32 v1 = copy(in4)
+-      │       v6 = from_f8e4m3(in7)
+-      │       v7 = multiply(in1, v6)
+-      │       f16 v8 = copy(v7)
+-      │       in5 = load x_static_fp4_f16_f4_pairs[(int)v1 < 0 ? (int)v1 + 256 : (int)v1, a2 % 16 % 2]
+-      │       v9 = multiply(in5, v8)
+-      ├─ operand[v5]: Fold  free   ‹computed›
+-      │  ├─ operand[in2]: load p_b_weight_bits[a1, a2 / 16 * 8 + a2 % 16 / 2]   ‹materialized›
+-      │  ├─ operand[in6]: load p_b_weight_scale_bits[a1, a2 / 16]   ‹materialized›
+-      │  └─ lift: λ(in2, in6, a2) -> (v5)
+-      │       in0 = load p_b_weight_scale_2[0, 0]
+-      │       i32 v0 = copy(in2)
+-      │       v2 = from_f8e4m3(in6)
+-      │       v3 = multiply(in0, v2)
+-      │       f16 v4 = copy(v3)
+-      │       in3 = load p_b_weight_f4_pairs[(int)v0 < 0 ? (int)v0 + 256 : (int)v0, a2 % 16 % 2]
+-      │       v5 = multiply(in3, v4)
+-      ├─ init: (0)
+-      ├─ lift: λ(a2, v9, v5) -> (v10)
+-      │    f32 v10 = multiply(v5, v9)
+-      └─ combine: λ(acc0, acc0__o) -> (acc0)
+-           acc0 = add(acc0, acc0__o)
+-      outputs
+-      └─ linear[a0, a1] = acc0
++linear = KernelOp(p_b_weight_scale_2, x_static_fp4_scale_2, p_b_weight_scale_bits, x_static_fp4_scale_bits, p_b_weight_bits, x_static_fp4_bits, p_b_weight_f4_pairs, x_static_fp4_f16_f4_pairs)
++      Tile(axes=(a0_b in 0..2 window(parent=a0 in 0..24), a1_b in 0..8 window(parent=a1 in 0..256), a0_u in 0..1, a1_u in 0..2, _lane in 0..32), block_threads=64, raster_axes=(a0_b, a1_b)):
++          RegFragment(name=_a0, role=a, shape=(16, 8, 64), dtype=f4e2m1x2, nregs=4)
++          RegFragment(name=_b0, role=b, shape=(16, 8, 64), dtype=f4e2m1x2, nregs=2)
++          RegFragment(name=_b1, role=b, shape=(16, 8, 64), dtype=f4e2m1x2, nregs=2)
++          RegFragment(name=_sfa0, role=a, shape=(16, 8, 64), dtype=f4e2m1x2, nregs=0)
++          RegFragment(name=_sfb0, role=a, shape=(16, 8, 64), dtype=f4e2m1x2, nregs=0)
++          RegFragment(name=_sfb1, role=a, shape=(16, 8, 64), dtype=f4e2m1x2, nregs=0)
++          RegFragment(name=_c0_0, role=c, shape=(16, 8, 64), dtype=f32, nregs=4)
++          RegFragment(name=_c0_1, role=c, shape=(16, 8, 64), dtype=f32, nregs=4)
++          Smem(name=_a_smem, extents=(32, 272), dtype=`unsigned char`, align=16)
++          Smem(name=_b_smem, extents=(64, 272), dtype=`unsigned char`, align=16)
++          Smem(name=_as_smem, extents=(32, 32), dtype=__nv_fp8_e4m3, align=16)
++          Smem(name=_bs_smem, extents=(64, 32), dtype=__nv_fp8_e4m3, align=16)
++          CpAsyncCopy(smem=_a_smem, smem_index=(0, 0), src=x_static_fp4_bits, src_index=(a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 0) < 24 ? a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 0) : 24 - 1, (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++          CpAsyncCopy(smem=_a_smem, smem_index=(4, 0), src=x_static_fp4_bits, src_index=(a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 4) < 24 ? a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 4) : 24 - 1, (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++          CpAsyncCopy(smem=_a_smem, smem_index=(8, 0), src=x_static_fp4_bits, src_index=(a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 8) < 24 ? a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 8) : 24 - 1, (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++          CpAsyncCopy(smem=_a_smem, smem_index=(12, 0), src=x_static_fp4_bits, src_index=(a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 12) < 24 ? a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 12) : 24 - 1, (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++          CpAsyncCopy(smem=_b_smem, smem_index=(0, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 0), (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++          CpAsyncCopy(smem=_b_smem, smem_index=(4, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 4), (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++          CpAsyncCopy(smem=_b_smem, smem_index=(8, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 8), (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++          CpAsyncCopy(smem=_b_smem, smem_index=(12, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 12), (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++          CpAsyncCopy(smem=_b_smem, smem_index=(16, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 16), (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++          CpAsyncCopy(smem=_b_smem, smem_index=(20, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 20), (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++          CpAsyncCopy(smem=_b_smem, smem_index=(24, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 24), (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++          CpAsyncCopy(smem=_b_smem, smem_index=(28, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 28), (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++          for _fas in (a0_u * 2 + a1_u) * 32 + _lane..32 step 64:
++              CpAsyncCopy(smem=_as_smem, smem_index=(_fas * 16 / 32, _fas * 16 % 32), src=x_static_fp4_scale_bits, src_index=(a0_b * 16 + _fas * 16 / 32 < 24 ? a0_b * 16 + _fas * 16 / 32 : 24 - 1, (0 + _fas * 16 % 32 * 16) / 16, 0), nbytes=16)
++          CpAsyncCopy(smem=_bs_smem, smem_index=(0, 0), src=p_b_weight_scale_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 32 + 0), (0 + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 32 * 16) / 16), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 32, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 32), lane_rows=32)
++          CpAsyncCommit
++          for _ks in 0..2048 step 512:
++              CpAsyncCopy(smem=_a_smem, smem_index=((_ks / 512 + 1) % 2 * 16 + 0, 0), src=x_static_fp4_bits, src_index=(a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 0) < 24 ? a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 0) : 24 - 1, ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++              CpAsyncCopy(smem=_a_smem, smem_index=((_ks / 512 + 1) % 2 * 16 + 4, 0), src=x_static_fp4_bits, src_index=(a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 4) < 24 ? a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 4) : 24 - 1, ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++              CpAsyncCopy(smem=_a_smem, smem_index=((_ks / 512 + 1) % 2 * 16 + 8, 0), src=x_static_fp4_bits, src_index=(a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 8) < 24 ? a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 8) : 24 - 1, ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++              CpAsyncCopy(smem=_a_smem, smem_index=((_ks / 512 + 1) % 2 * 16 + 12, 0), src=x_static_fp4_bits, src_index=(a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 12) < 24 ? a0_b * 16 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 12) : 24 - 1, ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++              CpAsyncCopy(smem=_b_smem, smem_index=((_ks / 512 + 1) % 2 * 32 + 0, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 0), ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++              CpAsyncCopy(smem=_b_smem, smem_index=((_ks / 512 + 1) % 2 * 32 + 4, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 4), ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++              CpAsyncCopy(smem=_b_smem, smem_index=((_ks / 512 + 1) % 2 * 32 + 8, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 8), ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++              CpAsyncCopy(smem=_b_smem, smem_index=((_ks / 512 + 1) % 2 * 32 + 12, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 12), ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++              CpAsyncCopy(smem=_b_smem, smem_index=((_ks / 512 + 1) % 2 * 32 + 16, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 16), ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++              CpAsyncCopy(smem=_b_smem, smem_index=((_ks / 512 + 1) % 2 * 32 + 20, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 20), ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++              CpAsyncCopy(smem=_b_smem, smem_index=((_ks / 512 + 1) % 2 * 32 + 24, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 24), ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++              CpAsyncCopy(smem=_b_smem, smem_index=((_ks / 512 + 1) % 2 * 32 + 28, 0), src=p_b_weight_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256 + 28), ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) / 16 * 8 + ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256 * 2) % 16 / 2), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 256, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 256), lane_rows=4)
++              for _fas in (a0_u * 2 + a1_u) * 32 + _lane..32 step 64:
++                  CpAsyncCopy(smem=_as_smem, smem_index=((_ks / 512 + 1) % 2 * 16 + _fas * 16 / 32, _fas * 16 % 32), src=x_static_fp4_scale_bits, src_index=(a0_b * 16 + _fas * 16 / 32 < 24 ? a0_b * 16 + _fas * 16 / 32 : 24 - 1, ((_ks + 512 < 2048 ? _ks + 512 : 1536) + _fas * 16 % 32 * 16) / 16, 0), nbytes=16)
++              CpAsyncCopy(smem=_bs_smem, smem_index=((_ks / 512 + 1) % 2 * 32 + 0, 0), src=p_b_weight_scale_bits, src_index=(a1_b * 32 + (((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 32 + 0), ((_ks + 512 < 2048 ? _ks + 512 : 1536) + ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 32 * 16) / 16), nbytes=16, lane_index=(((a0_u * 2 + a1_u) * 32 + _lane) * 16 / 32, ((a0_u * 2 + a1_u) * 32 + _lane) * 16 % 32), lane_rows=32)
++              CpAsyncCommit
++              CpAsyncWait(group=1)
++              Sync
++              for _ki in 0..512 step 64 unroll=true:
++                  BlockScaleLoad(frag=_sfa0, src_buffer=_as_smem, src_index=(_ks / 512 % 2 * 16 + (a0_u * 16 + 0), _ki / 16), role=a, ldm=32)
++                  LdmatrixLoad(frag=_a0, src_buffer=_a_smem, src_index=(_ks / 512 % 2 * 16 + (a0_u * 16 + 0), _ki / 2), role=a, ldm=272, byte_slab=true)
++                  BlockScaleLoad(frag=_sfb0, src_buffer=_bs_smem, src_index=(_ks / 512 % 2 * 32 + (a1_u * 16 + 0), _ki / 16), role=b, ldm=32)
++                  LdmatrixLoad(frag=_b0, src_buffer=_b_smem, src_index=(_ks / 512 % 2 * 32 + (a1_u * 16 + 0), _ki / 2), role=b, ldm=272, b_trans=true, byte_slab=true)
++                  BlockScaleLoad(frag=_sfb1, src_buffer=_bs_smem, src_index=(_ks / 512 % 2 * 32 + (a1_u * 16 + 8), _ki / 16), role=b, ldm=32)
++                  LdmatrixLoad(frag=_b1, src_buffer=_b_smem, src_index=(_ks / 512 % 2 * 32 + (a1_u * 16 + 8), _ki / 2), role=b, ldm=272, b_trans=true, byte_slab=true, fragment_index=1)
++                  MmaSyncPtx(c_frag=_c0_0, a_frag=_a0, b_frag=_b0, shape=(16, 8, 64), ab_dtype=e2m1, sfa_frag=_sfa0, sfb_frag=_sfb0)
++                  MmaSyncPtx(c_frag=_c0_1, a_frag=_a0, b_frag=_b1, shape=(16, 8, 64), ab_dtype=e2m1, sfa_frag=_sfa0, sfb_frag=_sfb1)
++              Sync
++          _bs_alpha_l0 = load x_static_fp4_scale_2[0, 0, 0]
++          _bs_alpha0 = copy(_bs_alpha_l0)
++          _bs_alpha_l1 = load p_b_weight_scale_2[0, 0]
++          _bs_alpha1 = multiply(_bs_alpha0, _bs_alpha_l1)
++          FragmentApply(out=_c0_0, op=multiply, args=(FragmentArg(kind=frag, names=(_c0_0)), FragmentArg(kind=uniform, names=(_bs_alpha1))), in_place=true)
++          FragmentApply(out=_c0_1, op=multiply, args=(FragmentArg(kind=frag, names=(_c0_1)), FragmentArg(kind=uniform, names=(_bs_alpha1))), in_place=true)
++          RegStore(dst_buffer=linear, dst_index=(a0_b * 16 + a0_u * 16 + 0, a1_b * 32 + a1_u * 16 + 0), frag=_c0_0, shape=(16, 8, 64), ldm=256, ldn=1, m_guard=(a0_b * 16 + a0_u * 16 + 0, 24), row_dim=0, col_dim=1)
++          RegStore(dst_buffer=linear, dst_index=(a0_b * 16 + a0_u * 16 + 0, a1_b * 32 + a1_u * 16 + 8), frag=_c0_1, shape=(16, 8, 64), ldm=256, ldn=1, m_guard=(a0_b * 16 + a0_u * 16 + 0, 24), fragment_index=(0, 1), row_dim=0, col_dim=1)
+<<< k:010_materialize

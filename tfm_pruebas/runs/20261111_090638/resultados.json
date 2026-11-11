@@ -1,0 +1,5232 @@
+{
+ "meta": {
+  "fecha": "2026-11-11T09:25:22",
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "sm": "sm_120",
+  "driver": "610.43.02",
+  "git": "bf784a76 2026-11-11",
+  "torch": "2.15.0+cu132",
+  "host": "1531eaebfeed",
+  "cats": [
+   "matmul",
+   "rmsnorm/fused",
+   "nvfp4",
+   "qwen3emb"
+  ],
+  "ncu": false,
+  "tune": 0,
+  "reanalizado": "2026-11-11T09:25:22"
+ },
+ "casos": [
+  {
+   "caso": "matmul/bf16-mma-sm120",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,256) x (256,128)",
+    "dtype": "bf16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.1574564469166293,
+   "tcompile_us": 2.2386871851407566,
+   "emmy_us": 1.7759442562237382,
+   "emmy_muestras": [
+    1.7759442562237382
+   ],
+   "greedy_us": 1.3630359899252653,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.39 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/bf16-mma-trans-b-masked-n-async",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(128,128) x (72,128)",
+    "dtype": "bf16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.6668493004694378,
+   "tcompile_us": 1.6988493400077298,
+   "emmy_us": 3.864140249788761,
+   "emmy_muestras": [
+    3.864140249788761
+   ],
+   "greedy_us": 1.057643792591989,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.06 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/bf16-mma-trans-b-masked-n-tma",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(128,128) x (72,128)",
+    "dtype": "bf16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.6684027126171446,
+   "tcompile_us": 1.6988993891133557,
+   "emmy_us": 4.238476511090994,
+   "emmy_muestras": [
+    4.238476511090994
+   ],
+   "greedy_us": 1.0638389503583312,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.07 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/bf16-rowless-grouped-pair",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(256) x (4,256,16) x (4,256,16)",
+    "dtype": "bf16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.851941901128649,
+   "tcompile_us": 2.405874395140127,
+   "emmy_us": 1.6552135348320007,
+   "emmy_muestras": [
+    1.6552135348320007
+   ],
+   "greedy_us": 1.0666666785255075,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.07 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/bf16-scalar-sync-d2-sm120",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(32,384) x (64,384)",
+    "dtype": "bf16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.729348252328594,
+   "tcompile_us": 1.8310111560178606,
+   "emmy_us": 4.456975497305393,
+   "emmy_muestras": [
+    4.456975497305393
+   ],
+   "greedy_us": 1.38984271325171,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "NO",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.39 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-matvec-reshaped-output-tma",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear+reshape+index_map",
+    "shape": "(1,1,1024) x (2048,1024)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.648109413173101,
+   "tcompile_us": 1.9934246801350215,
+   "emmy_us": 6.322626955807209,
+   "emmy_muestras": [
+    6.322626955807209
+   ],
+   "greedy_us": 2.255780855193734,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 2.24 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-batched-pv-b1h4kv128",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,4,128,128) x (1,4,128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.574552852304737,
+   "tcompile_us": 4.622793976385989,
+   "emmy_us": 5.410206504166126,
+   "emmy_muestras": [
+    5.410206504166126
+   ],
+   "greedy_us": 1.1608442291617393,
+   "ref_cloudrift_us": 5.800558037536089,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.18 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-batched-pv-b2h3kv256",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(2,3,128,256) x (2,3,256,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 6.477124989032745,
+   "tcompile_us": 6.150249857455492,
+   "emmy_us": 8.605057373642921,
+   "emmy_muestras": [
+    8.605057373642921,
+    8.609116077423096,
+    8.605333045125008
+   ],
+   "greedy_us": 1.6863750061020255,
+   "ref_cloudrift_us": 6.024727315613718,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.67 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-batched-qk-b1h4d64",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+transpose",
+    "shape": "(1,4,128,64) x (1,4,128,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.026958810140009,
+   "tcompile_us": 3.0244382685177946,
+   "emmy_us": 3.8335598073899746,
+   "emmy_muestras": [
+    3.8335598073899746
+   ],
+   "greedy_us": 0.966356135904789,
+   "ref_cloudrift_us": 5.915266169598822,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 0.97 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-batched-qk-b2h3d32",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+transpose",
+    "shape": "(2,3,128,32) x (2,3,128,32)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.9082665840784707,
+   "tcompile_us": 2.6502400636672974,
+   "emmy_us": 2.836584812030196,
+   "emmy_muestras": [
+    2.836584812030196
+   ],
+   "greedy_us": 0.9884799364954233,
+   "ref_cloudrift_us": 2.872253529276559,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 0.97 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-epilogue-residual",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(128,128) x (128,128) x (128,128)",
+    "dtype": "f16/f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.697492490778315,
+   "tcompile_us": 2.2512745363107,
+   "emmy_us": 6.594240199774504,
+   "emmy_muestras": [
+    6.594240199774504
+   ],
+   "greedy_us": 1.1546527966856956,
+   "ref_cloudrift_us": 11.326909065246582,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.15 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-f16acc-cp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.5336470861060947,
+   "tcompile_us": 1.6682352505478204,
+   "emmy_us": 3.6592185497283936,
+   "emmy_muestras": [
+    3.6592185497283936
+   ],
+   "greedy_us": 1.1327058309689164,
+   "ref_cloudrift_us": 4.909399107759222,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.02 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-f16acc-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.534846854639483,
+   "tcompile_us": 1.6710630676767848,
+   "emmy_us": 7.352076470851898,
+   "emmy_muestras": [
+    7.352076470851898
+   ],
+   "greedy_us": 1.1329730041325092,
+   "ref_cloudrift_us": 8.680626102115797,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.01 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-f16acc-symbolic-k",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,{'sym': 'seq_len', 'hint': 512}) x ({'sym': 'seq_len', 'hint': 512},128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": false,
+   "error": "emmy run falló: el schedule fijado por el caso ya no se realiza con este compilador (unreproducible pin; emmy no lo mide): k_matmul_2778f0: unreproducible pin: WORK=w1x1 realized (off); TILE=mma_m16n8k16_f16_f16/f1x1 realized (unset) — row NOT benched",
+   "eager_us": null,
+   "tcompile_us": null,
+   "emmy_us": null,
+   "emmy_muestras": [],
+   "greedy_us": null,
+   "ref_cloudrift_us": 8.047741747671557,
+   "segundos": 0.0,
+   "tecnicas": {},
+   "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-f16acc-tma",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.5360000430506406,
+   "tcompile_us": 1.6664359396304227,
+   "emmy_us": 3.862400073558092,
+   "emmy_muestras": [
+    3.862400073558092
+   ],
+   "greedy_us": 1.1464636772871017,
+   "ref_cloudrift_us": 4.535272717475891,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.02 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-m128n128k128-f16",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.5366183962798925,
+   "tcompile_us": 1.665545834435357,
+   "emmy_us": 4.72674984484911,
+   "emmy_muestras": [
+    4.72674984484911
+   ],
+   "greedy_us": 1.1557101970538497,
+   "ref_cloudrift_us": 6.211776170671356,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.14 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-m128n128k128-f32",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.754989029286982,
+   "tcompile_us": 3.4563515212509657,
+   "emmy_us": 4.813858307898045,
+   "emmy_muestras": [
+    4.813858307898045
+   ],
+   "greedy_us": 1.1456703068688512,
+   "ref_cloudrift_us": 6.073599873167096,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.13 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-m128n128k128-f32-trans",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.3989630518136202,
+   "tcompile_us": 1.7838518100756187,
+   "emmy_us": 4.729931242763996,
+   "emmy_muestras": [
+    4.729931242763996
+   ],
+   "greedy_us": 1.0884443763643503,
+   "ref_cloudrift_us": 4.792782012373209,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.10 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-m128n128k132-f32-masked-k",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,132) x (132,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.03471919468471,
+   "tcompile_us": 3.835270851116462,
+   "emmy_us": 6.480141542851925,
+   "emmy_muestras": [
+    6.480141542851925
+   ],
+   "greedy_us": 1.50652218144387,
+   "ref_cloudrift_us": 7.228753704955612,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.52 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-m128n128k132-f32-trans-masked-k",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(128,132) x (128,132)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.9117731337851667,
+   "tcompile_us": 1.8031206114072327,
+   "emmy_us": 6.428178865462542,
+   "emmy_muestras": [
+    6.428178865462542
+   ],
+   "greedy_us": 1.347858109511435,
+   "ref_cloudrift_us": 6.544296164065599,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.35 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-m128n128k136-f32-masked-k",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,136) x (136,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.918557372900958,
+   "tcompile_us": 3.830557312470316,
+   "emmy_us": 6.213646847754717,
+   "emmy_muestras": [
+    6.213646847754717
+   ],
+   "greedy_us": 1.5199126210063696,
+   "ref_cloudrift_us": 7.089599967002869,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.51 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-parity-m256-cp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(256,512) x (512,1024)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.595199823379517,
+   "tcompile_us": 3.621973196665446,
+   "emmy_us": 3.8660464342683554,
+   "emmy_muestras": [
+    3.8660464342683554
+   ],
+   "greedy_us": 3.369600046426058,
+   "ref_cloudrift_us": 5.581740268879691,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 3.36 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-parity-m256-tma",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(256,512) x (512,1024)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.57884426470156,
+   "tcompile_us": 3.628562997888636,
+   "emmy_us": 3.983058501034975,
+   "emmy_muestras": [
+    3.983058501034975
+   ],
+   "greedy_us": 3.364740638062358,
+   "ref_cloudrift_us": 4.512146183344871,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 3.34 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-raster-gm8",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1280,256) x (256,512)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.9391046139731336,
+   "tcompile_us": 3.7640595614020502,
+   "emmy_us": 3.3902889117598534,
+   "emmy_muestras": [
+    3.3902889117598534
+   ],
+   "greedy_us": 3.420656779780984,
+   "ref_cloudrift_us": 4.975598062103118,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "SI",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 3.98 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-splitk-atomic",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,512) x (512,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.915232309187301,
+   "tcompile_us": 4.956121095503219,
+   "emmy_us": 8.60249437391758,
+   "emmy_muestras": [
+    8.60249437391758
+   ],
+   "greedy_us": 1.5857778489589691,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "SI",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.58 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-splitk-atomic-f16acc-tma-rolled",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(32,1024) x (1024,256)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.615288681454128,
+   "tcompile_us": 5.463644531038073,
+   "emmy_us": 4.822641611099243,
+   "emmy_muestras": [
+    4.822641611099243
+   ],
+   "greedy_us": 2.324800007045269,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "SI",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 2.31 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-splitk-deferred",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,512) x (512,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.7592041729632473,
+   "tcompile_us": 3.240376866924825,
+   "emmy_us": 26.37491747736931,
+   "emmy_muestras": [
+    26.37491747736931
+   ],
+   "greedy_us": 1.6919791232794523,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "SI",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.68 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-trans-b-staged-cp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.4920000124860693,
+   "tcompile_us": 1.6991111139456432,
+   "emmy_us": 4.1704000905156136,
+   "emmy_muestras": [
+    4.1704000905156136
+   ],
+   "greedy_us": 1.1074073845520616,
+   "ref_cloudrift_us": 6.074926838642213,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.09 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-mma-trans-b-staged-tma",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.494784804084633,
+   "tcompile_us": 1.6987342623215687,
+   "emmy_us": 4.642504267394543,
+   "emmy_muestras": [
+    4.642504267394543
+   ],
+   "greedy_us": 1.0875948937609792,
+   "ref_cloudrift_us": 5.791441992271778,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.09 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-scalar-register-tile",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(512,512) x (512,512)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.601295221419561,
+   "tcompile_us": 3.4992762974330356,
+   "emmy_us": 108.02488774061203,
+   "emmy_muestras": [
+    108.06754976511002,
+    108.02488774061203,
+    108.07111114263535
+   ],
+   "greedy_us": 3.447771305218339,
+   "ref_cloudrift_us": 97.23520278930664,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 3.42 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-batched-mk-greedy",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(16,{'sym': 'seq_len', 'hint': 512},{'sym': 'seq_len', 'hint': 512}) x (16,{'sym': 'seq_len', 'hint': 512},128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 12.286475726536342,
+   "tcompile_us": 8.295619062014989,
+   "emmy_us": 34.623999148607254,
+   "emmy_muestras": [
+    34.623999148607254
+   ],
+   "greedy_us": 352.82135009765625,
+   "ref_cloudrift_us": 38.30522986558768,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-computed-a-k-warp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+softmax",
+    "shape": "(16,{'sym': 'seq_len', 'hint': 512},{'sym': 'seq_len', 'hint': 512}) x (16,{'sym': 'seq_len', 'hint': 512},128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 21.824000403285027,
+   "tcompile_us": 14.368000440299511,
+   "emmy_us": 31.402666121721268,
+   "emmy_muestras": [
+    31.402666121721268
+   ],
+   "greedy_us": 4675.4560470581055,
+   "ref_cloudrift_us": 33.37813218434651,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-demoted-n-greedy",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear+elementwise",
+    "shape": "({'sym': 'seq_len', 'hint': 512},128) x ({'sym': 'seq_len', 'hint': 512},128) x ({'sym': 'seq_len', 'hint': 512},128) x ({'sym': 'seq_len', 'hint': 512},128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.6284876305882525,
+   "tcompile_us": 3.353756011986151,
+   "emmy_us": 19.365688785910606,
+   "emmy_muestras": [
+    19.365688785910606
+   ],
+   "greedy_us": 19.172683358192444,
+   "ref_cloudrift_us": 22.593454881147903,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "NO",
+    "pipelining": "NO",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 116.92 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-demoted-pv-greedy",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+softmax",
+    "shape": "(16,{'sym': 'seq_len', 'hint': 512},{'sym': 'seq_len', 'hint': 512}) x (16,{'sym': 'seq_len', 'hint': 512},128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": false,
+   "error": "emmy run falló: el schedule fijado por el caso ya no se realiza con este compilador (unreproducible pin; emmy no lo mide): k_matmul_softmax_reduce_60ce07: unreproducible pin: WORK=w2x2 realized t128; TILE=mma_m16n8k16_f16_f32/f4x8/k8 realized (unset) (refused: atom mma_m16n8k16_f16_f32 is not offered here (offered: none)) — row NOT benched",
+   "eager_us": null,
+   "tcompile_us": null,
+   "emmy_us": null,
+   "emmy_muestras": [],
+   "greedy_us": null,
+   "ref_cloudrift_us": 84.25333102544148,
+   "segundos": 0.0,
+   "tecnicas": {},
+   "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-k-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(64,{'sym': 'seq_len', 'hint': 512}) x ({'sym': 'seq_len', 'hint': 512},128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.7453124057501554,
+   "tcompile_us": 3.1566875986754894,
+   "emmy_us": 10.676906444132328,
+   "emmy_muestras": [
+    10.676906444132328
+   ],
+   "greedy_us": 3.5137743689119816,
+   "ref_cloudrift_us": 12.74379476522788,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-k-trans",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "linear",
+    "shape": "(64,{'sym': 'seq_len', 'hint': 512}) x (32,{'sym': 'seq_len', 'hint': 512})",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.7299047935576666,
+   "tcompile_us": 2.050285715432394,
+   "emmy_us": 16.113778576254845,
+   "emmy_muestras": [
+    16.271429136395454,
+    16.177184879779816,
+    16.113778576254845
+   ],
+   "greedy_us": 7.772571407258511,
+   "ref_cloudrift_us": 13.858222299151949,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 7.75 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-m-residual-cp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "({'sym': 'seq_len', 'hint': 512},512) x (512,1024) x ({'sym': 'seq_len', 'hint': 512},1024)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.917116865381464,
+   "tcompile_us": 5.613549335582836,
+   "emmy_us": 6.457401905208826,
+   "emmy_muestras": [
+    6.457401905208826
+   ],
+   "greedy_us": 5.587315186858177,
+   "ref_cloudrift_us": 7.623816719491973,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 5.58 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-m-tma",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "({'sym': 'seq_len', 'hint': 512},512) x (512,1024)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.7166316132796435,
+   "tcompile_us": 4.693052747793365,
+   "emmy_us": 5.3155552595853806,
+   "emmy_muestras": [
+    5.3155552595853806
+   ],
+   "greedy_us": 4.88280737772584,
+   "ref_cloudrift_us": 6.2784809100476995,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 4.86 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-symbolic-mn-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "({'sym': 'seq_len', 'hint': 512},128) x (128,{'sym': 'seq_len', 'hint': 512})",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.219972764553667,
+   "tcompile_us": 1.9117279523083952,
+   "emmy_us": 4.2847502045333385,
+   "emmy_muestras": [
+    4.2847502045333385
+   ],
+   "greedy_us": 4.288217518478632,
+   "ref_cloudrift_us": 5.161948154627351,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 9.99 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-warp-band-p1-tma-d1-m128",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,256) x (256,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.02687374017771,
+   "tcompile_us": 2.338019389550663,
+   "emmy_us": 4.028935916721821,
+   "emmy_muestras": [
+    4.028935916721821
+   ],
+   "greedy_us": 1.3798834988847375,
+   "ref_cloudrift_us": 4.473399153739348,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "SI",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.37 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-warp-band-p1-tma-d2-m100",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(100,256) x (256,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.0001758258421343,
+   "tcompile_us": 1.8836043693207123,
+   "emmy_us": 2.591828815639019,
+   "emmy_muestras": [
+    2.591828815639019
+   ],
+   "greedy_us": 1.3819780433550477,
+   "ref_cloudrift_us": 2.9079765952818577,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "SI",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.33 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-warp-band-p1-tma-d2-m128",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,256) x (256,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.02528132504715,
+   "tcompile_us": 2.334476291359245,
+   "emmy_us": 2.6524444110691547,
+   "emmy_muestras": [
+    2.6524444110691547
+   ],
+   "greedy_us": 1.3989957515150309,
+   "ref_cloudrift_us": 2.946366925211348,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "SI",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.36 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-warp-band-p2-tma-d2-m128",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,256) x (256,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.0245105979290416,
+   "tcompile_us": 2.334297812999563,
+   "emmy_us": 2.6565133593976498,
+   "emmy_muestras": [
+    2.6565133593976498
+   ],
+   "greedy_us": 1.3811063254252076,
+   "ref_cloudrift_us": 2.9317647218704224,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "SI",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.37 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-warp-gmem-direct",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.5272871397509433,
+   "tcompile_us": 1.6644751966589748,
+   "emmy_us": 2.185860415920615,
+   "emmy_muestras": [
+    2.185860415920615
+   ],
+   "greedy_us": 1.143603934906423,
+   "ref_cloudrift_us": 3.4193655540203225,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.14 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-warp-splitk",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(64,4096) x (4096,512)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.8419778105917946,
+   "tcompile_us": 5.8308317420187965,
+   "emmy_us": 53.094737231731415,
+   "emmy_muestras": [
+    53.094737231731415
+   ],
+   "greedy_us": 7.473618257790804,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "NO",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "SI",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 7.25 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f16-warp-symbolic-m-cp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "({'sym': 'seq_len', 'hint': 512},512) x (512,1024)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.705684226855897,
+   "tcompile_us": 4.691648901554576,
+   "emmy_us": 5.192750133574009,
+   "emmy_muestras": [
+    5.192750133574009
+   ],
+   "greedy_us": 4.883087705820799,
+   "ref_cloudrift_us": 6.195521954470461,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 4.88 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-epilogue-bias",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,64,64) x (64,64) x (64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.276164182244915,
+   "tcompile_us": 2.836821830435975,
+   "emmy_us": 1.7136732349172235,
+   "emmy_muestras": [
+    1.7136732349172235
+   ],
+   "greedy_us": 1.3014794094488025,
+   "ref_cloudrift_us": 2.098621816194358,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.29 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-epilogue-relu",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.073025630070613,
+   "tcompile_us": 2.049969251339252,
+   "emmy_us": 1.7094399081543088,
+   "emmy_muestras": [
+    1.7094399081543088
+   ],
+   "greedy_us": 1.1323076905682683,
+   "ref_cloudrift_us": 1.9038779134968764,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.12 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-epilogue-residual",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,64,64) x (64,64) x (1,64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.10842721902051,
+   "tcompile_us": 2.846446720141809,
+   "emmy_us": 1.7362759681418538,
+   "emmy_muestras": [
+    1.7362759681418538
+   ],
+   "greedy_us": 1.2688154820352793,
+   "ref_cloudrift_us": 2.2020087893313773,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.26 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-epilogue-scale",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,64,64) x (64,64) x (1)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 4.241688467150357,
+   "tcompile_us": 2.1835577547849723,
+   "emmy_us": 1.728123053908348,
+   "emmy_muestras": [
+    1.728123053908348
+   ],
+   "greedy_us": 1.2639196356758475,
+   "ref_cloudrift_us": 2.0921681107593186,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.26 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-mixed-dtype-slabs",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(64,128) x (128,96)",
+    "dtype": "f16/f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.9068375314985,
+   "tcompile_us": 3.3421871697374166,
+   "emmy_us": 2.172385109588504,
+   "emmy_muestras": [
+    2.172385109588504
+   ],
+   "greedy_us": 1.2289261212572455,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.21 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-reduce-coop",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.1396867492781255,
+   "tcompile_us": 2.049327171343263,
+   "emmy_us": 3.3416091464459896,
+   "emmy_muestras": [
+    3.3416091464459896
+   ],
+   "greedy_us": 1.3099355855956674,
+   "ref_cloudrift_us": 4.576733899772714,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "NO",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.30 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-reduce-coop-ilp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.1389474476638592,
+   "tcompile_us": 2.050526244075675,
+   "emmy_us": 3.318633884191513,
+   "emmy_muestras": [
+    3.318633884191513
+   ],
+   "greedy_us": 1.3176841894164681,
+   "ref_cloudrift_us": 3.65878395981841,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "NO",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.30 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-reduce-ilp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.1467413568830156,
+   "tcompile_us": 2.0495663572858263,
+   "emmy_us": 1.8045956967398524,
+   "emmy_muestras": [
+    1.8045956967398524
+   ],
+   "greedy_us": 1.3146852143108845,
+   "ref_cloudrift_us": 4.06713461389347,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.30 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-bm8-outside-hints",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(2048,2048) x (2048,2048)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 184.688001871109,
+   "tcompile_us": 175.76000094413757,
+   "emmy_us": 1360.7679605484009,
+   "emmy_muestras": [
+    1360.7679605484009
+   ],
+   "greedy_us": 248.74399602413177,
+   "ref_cloudrift_us": 1596.4800119400024,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "NO",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 238.02 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-composite-fm4-fn4",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(2048,2048) x (2048,2048)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 184.82400476932526,
+   "tcompile_us": 175.25599896907806,
+   "emmy_us": 345.8346426486969,
+   "emmy_muestras": [
+    345.8346426486969
+   ],
+   "greedy_us": 248.74399602413177,
+   "ref_cloudrift_us": 530.4960012435913,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 238.46 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-composite-fn4",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(2048,2048) x (2048,2048)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 184.83200669288635,
+   "tcompile_us": 175.79199373722076,
+   "emmy_us": 773.3759880065918,
+   "emmy_muestras": [
+    773.3759880065918
+   ],
+   "greedy_us": 248.74399602413177,
+   "ref_cloudrift_us": 1271.232008934021,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 238.43 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-masked-m-fm26",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(2048,2048) x (2048,2048)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 184.6960037946701,
+   "tcompile_us": 175.25599896907806,
+   "emmy_us": 409.168004989624,
+   "emmy_muestras": [
+    409.168004989624
+   ],
+   "greedy_us": 236.7199957370758,
+   "ref_cloudrift_us": 659.8079800605774,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 238.46 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-masked-n-fn26",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(512,512) x (512,512)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 7.244088914659288,
+   "tcompile_us": 5.398044321272108,
+   "emmy_us": 300.78932642936707,
+   "emmy_muestras": [
+    300.896018743515,
+    300.79999566078186,
+    300.78932642936707
+   ],
+   "greedy_us": 8.096710778772831,
+   "ref_cloudrift_us": 75.39446078813992,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 8.11 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-masked-n-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(64,64) x (64,47)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.637232204184148,
+   "tcompile_us": 1.5743696859097593,
+   "emmy_us": 4.319491796195507,
+   "emmy_muestras": [
+    4.319491796195507,
+    4.3409839272499084,
+    4.343857988715172
+   ],
+   "greedy_us": 1.4829194406047463,
+   "ref_cloudrift_us": 2.838818187063391,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.22 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-staging-d1-128x128x128",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.9892524083455405,
+   "tcompile_us": 3.3449696169959173,
+   "emmy_us": 6.224800366908312,
+   "emmy_muestras": [
+    6.224800366908312,
+    6.226622965186834,
+    6.225015968084335
+   ],
+   "greedy_us": 1.632161671295762,
+   "ref_cloudrift_us": 3.285544540229017,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.61 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-staging-d1-64x64x64",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.1468360512344926,
+   "tcompile_us": 2.050201098124186,
+   "emmy_us": 1.3227936578914523,
+   "emmy_muestras": [
+    1.3227936578914523
+   ],
+   "greedy_us": 1.308952341787517,
+   "ref_cloudrift_us": 1.2648314124277789,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.30 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-staging-d2-128x128x128",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.978949228190057,
+   "tcompile_us": 3.3518894476824643,
+   "emmy_us": 6.336249876767397,
+   "emmy_muestras": [
+    6.374697666615248,
+    6.336249876767397,
+    6.347832269966602
+   ],
+   "greedy_us": 1.6308203339576721,
+   "ref_cloudrift_us": 3.0576687283311155,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.62 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-staging-d2-64x64x64",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.1477278439786422,
+   "tcompile_us": 2.04934031551421,
+   "emmy_us": 1.3255758676677942,
+   "emmy_muestras": [
+    1.3255758676677942
+   ],
+   "greedy_us": 1.3059686170890927,
+   "ref_cloudrift_us": 1.3773683021808492,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.30 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-staging-gmem-128x128x128",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(128,128) x (128,128)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.9791136045713684,
+   "tcompile_us": 3.3461622289709143,
+   "emmy_us": 13.449651189148426,
+   "emmy_muestras": [
+    13.460129499435425,
+    13.449651189148426,
+    13.457000255584717
+   ],
+   "greedy_us": 1.6582919051870704,
+   "ref_cloudrift_us": 3.240519529813296,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.65 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-staging-gmem-64x64x64",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.1470992006697096,
+   "tcompile_us": 2.0495855861955934,
+   "emmy_us": 2.7015237137675285,
+   "emmy_muestras": [
+    2.7016608510166407,
+    2.709392225369811,
+    2.7015237137675285
+   ],
+   "greedy_us": 1.3082523364573717,
+   "ref_cloudrift_us": 2.001378722563535,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.30 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-scalar-tma-staged",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(2048,2048) x (2048,2048)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 184.10399556159973,
+   "tcompile_us": 174.75199699401855,
+   "emmy_us": 345.96267342567444,
+   "emmy_muestras": [
+    345.96267342567444
+   ],
+   "greedy_us": 235.944002866745,
+   "ref_cloudrift_us": 426.1760115623474,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 238.01 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-tile-per-cell",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.152081203944792,
+   "tcompile_us": 2.0497867903733615,
+   "emmy_us": 1.7302324995398521,
+   "emmy_muestras": [
+    1.7302324995398521
+   ],
+   "greedy_us": 1.307776547037065,
+   "ref_cloudrift_us": 1.907786226454582,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "NO",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.30 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-tile-reg-2d",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.1483334799607596,
+   "tcompile_us": 2.049999932448069,
+   "emmy_us": 2.8302427381277084,
+   "emmy_muestras": [
+    2.8302427381277084
+   ],
+   "greedy_us": 1.3100000796839595,
+   "ref_cloudrift_us": 3.105093233333611,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.30 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-tile-reg-fn3",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.155384499293107,
+   "tcompile_us": 2.0513845464357963,
+   "emmy_us": 3.5144430585205555,
+   "emmy_muestras": [
+    3.5144430585205555
+   ],
+   "greedy_us": 1.3150769518688321,
+   "ref_cloudrift_us": 3.945486112074418,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.30 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-tile-reg-inner-fn4",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.1471921892588948,
+   "tcompile_us": 2.0494186525861617,
+   "emmy_us": 2.856520703062415,
+   "emmy_muestras": [
+    2.856520703062415
+   ],
+   "greedy_us": 1.3094778405502439,
+   "ref_cloudrift_us": 3.1378113623685056,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.30 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/f32-tile-single-cta",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,64,64) x (64,64)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.144888828198115,
+   "tcompile_us": 2.0502222081025443,
+   "emmy_us": 2.8559998609125614,
+   "emmy_muestras": [
+    2.8559998609125614
+   ],
+   "greedy_us": 1.3195555657148361,
+   "ref_cloudrift_us": 2.8779711091209217,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.30 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/fp4-tma-w4a4-linear-ring",
+   "categorias": [
+    "matmul",
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "linear+index_map+reshape+elementwise+gather",
+    "shape": "(24,2048)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 32.027926784329644,
+   "tcompile_us": 5.547505639465561,
+   "emmy_us": 4.13404731079936,
+   "emmy_muestras": [
+    4.13404731079936
+   ],
+   "greedy_us": 2.2573783062398434,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 2.29 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/fp4-tma-w4a4-split-k",
+   "categorias": [
+    "matmul",
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "linear+index_map+reshape+elementwise+gather",
+    "shape": "(24,2048)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 32.01042846793985,
+   "tcompile_us": 5.547625295231851,
+   "emmy_us": 2.8132828883826733,
+   "emmy_muestras": [
+    2.8132828883826733
+   ],
+   "greedy_us": 2.2727190516889095,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "SI",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 2.31 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/imap-reshape-a-cp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+reshape",
+    "shape": "(128,256) x (128,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.5702178277591667,
+   "tcompile_us": 1.3398811368658992,
+   "emmy_us": 5.861377809196711,
+   "emmy_muestras": [
+    5.876949988305569,
+    5.894447676837444,
+    5.861377809196711
+   ],
+   "greedy_us": 1.1537425452843308,
+   "ref_cloudrift_us": 1.754263582883275,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.15 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/imap-reshape-a-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+reshape",
+    "shape": "(128,256) x (128,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.5704365551169148,
+   "tcompile_us": 1.343675071212846,
+   "emmy_us": 5.433160346001387,
+   "emmy_muestras": [
+    5.433160346001387
+   ],
+   "greedy_us": 1.1623959289863706,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.16 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/imap-reshape-b-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+reshape",
+    "shape": "(64,128) x (256,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.6816695099291594,
+   "tcompile_us": 1.6582956780558047,
+   "emmy_us": 4.950829315930605,
+   "emmy_muestras": [
+    4.950829315930605
+   ],
+   "greedy_us": 1.1557565303519368,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "NO",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.15 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/imap-slice-a-cp",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+slice",
+    "shape": "(128,256) x (128,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.667000042895476,
+   "tcompile_us": 1.3244999572634697,
+   "emmy_us": 2.7243548538535833,
+   "emmy_muestras": [
+    2.8268899768590927,
+    2.7313416358083487,
+    2.7243548538535833
+   ],
+   "greedy_us": 1.1496666120365262,
+   "ref_cloudrift_us": 1.8456087781054509,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.15 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/imap-slice-a-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+slice",
+    "shape": "(128,256) x (128,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.6693613292035008,
+   "tcompile_us": 1.3227225598240397,
+   "emmy_us": 5.34977437928319,
+   "emmy_muestras": [
+    5.34977437928319,
+    5.353882443159819,
+    5.350260995328426
+   ],
+   "greedy_us": 1.1560209095478058,
+   "ref_cloudrift_us": 2.0573031042040006,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "NO",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.15 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/imap-slice-a-tma",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+slice",
+    "shape": "(128,256) x (128,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.6674392412756092,
+   "tcompile_us": 1.322317764023754,
+   "emmy_us": 1.8327273428440094,
+   "emmy_muestras": [
+    1.8327273428440094
+   ],
+   "greedy_us": 1.1560373241081834,
+   "ref_cloudrift_us": 2.103039967386346,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "NO",
+    "tensor_cores": "NO",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.15 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/imap-transpose-a-gmem",
+   "categorias": [
+    "matmul"
+   ],
+   "facts": {
+    "op": "matmul+transpose",
+    "shape": "(256,128) x (256,64)",
+    "dtype": "f16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.259393984621221,
+   "tcompile_us": 1.9277575792688313,
+   "emmy_us": 3.5009882412850857,
+   "emmy_muestras": [
+    3.5009882412850857
+   ],
+   "greedy_us": 3.674181876704097,
+   "ref_cloudrift_us": 7.784250192344189,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "NO",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 3.69 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/mma-fp4-encode-epilogue",
+   "categorias": [
+    "matmul",
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+matmul",
+    "shape": "(128,256) x (256,128)",
+    "dtype": "bf16",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 41.624690709489116,
+   "tcompile_us": 6.1580223983593205,
+   "emmy_us": 1.792216906324029,
+   "emmy_muestras": [
+    1.792216906324029
+   ],
+   "greedy_us": 1.3943370431661606,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.39 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/mma-fp4-packed-block-scales",
+   "categorias": [
+    "matmul",
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+matmul",
+    "shape": "(16,32) x (32,128) x (16,8)",
+    "dtype": "f16/f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 92.15377064679892,
+   "tcompile_us": 3.0149495360827205,
+   "emmy_us": 2.1134414710104465,
+   "emmy_muestras": [
+    2.1134414710104465
+   ],
+   "greedy_us": 1.42537837382406,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.45 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/nvfp4-runtime-rows",
+   "categorias": [
+    "matmul",
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+gather+reshape+linear",
+    "shape": "({'sym': 'num_tokens', 'hint': 40},512)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 31.29480126198758,
+   "tcompile_us": 5.642906556861678,
+   "emmy_us": 2.2950281854718924,
+   "emmy_muestras": [
+    2.2950281854718924
+   ],
+   "greedy_us": 1.1950262123718858,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.21 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/nvfp4-unit-n",
+   "categorias": [
+    "matmul",
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+gather+reshape+linear",
+    "shape": "(1,512)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 26.77644951066721,
+   "tcompile_us": 3.6677753880675814,
+   "emmy_us": 4.409687127918005,
+   "emmy_muestras": [
+    4.409687127918005
+   ],
+   "greedy_us": 1.2451235670596361,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.25 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "matmul/nvfp4-w4a4-packed-slab-loopify",
+   "categorias": [
+    "matmul",
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+gather+reshape+linear",
+    "shape": "(128,512)",
+    "dtype": "f32",
+    "family": "matmul"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 181.96369039601294,
+   "tcompile_us": 38.20711662029398,
+   "emmy_us": 3.126463619992137,
+   "emmy_muestras": [
+    3.126463619992137
+   ],
+   "greedy_us": 1.687393058091402,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.21 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "attention/rmsnorm-qk-sdpa-composed-cut",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm+sdpa",
+    "shape": "(1,2,8,16) x (1,2,8,16) x (1,2,8,16) x (16) x (16)",
+    "dtype": "f16",
+    "family": "attention"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.964028497114249,
+   "tcompile_us": 4.8517445300487765,
+   "emmy_us": 3.504690248519182,
+   "emmy_muestras": [
+    3.504690248519182
+   ],
+   "greedy_us": 1.5947801293805242,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.58 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "attention/rmsnorm-qk-sdpa-output-axis",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm+sdpa",
+    "shape": "(1,2,8,16) x (1,2,8,16) x (1,2,8,16) x (16) x (16)",
+    "dtype": "f16",
+    "family": "attention"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.976211457025437,
+   "tcompile_us": 4.846899597733109,
+   "emmy_us": 1.9203809788450599,
+   "emmy_muestras": [
+    1.9203809788450599
+   ],
+   "greedy_us": 1.6015238361433148,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.59 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "attention/rmsnorm-qk-sdpa-stat-b-cut",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm+sdpa",
+    "shape": "(1,2,8,16) x (1,2,8,16) x (1,2,8,16) x (16) x (16)",
+    "dtype": "f16",
+    "family": "attention"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.967098642402972,
+   "tcompile_us": 4.850028266369457,
+   "emmy_us": 4.201327450573444,
+   "emmy_muestras": [
+    4.201327450573444
+   ],
+   "greedy_us": 1.6270423075184226,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.64 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "attention/rmsnorm-qk-sdpa-stat-cut",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm+sdpa",
+    "shape": "(1,2,8,16) x (1,2,8,16) x (1,2,8,16) x (16) x (16)",
+    "dtype": "f16",
+    "family": "attention"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.971525348512467,
+   "tcompile_us": 4.8508021117603715,
+   "emmy_us": 3.4131365828216076,
+   "emmy_muestras": [
+    3.4131365828216076
+   ],
+   "greedy_us": 1.5831864438951015,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.60 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/norm-linear-f16-scalar-reduce",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm+linear",
+    "shape": "(1,32,128) x (128) x (512,128)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.9480661476514616,
+   "tcompile_us": 2.6393812664305965,
+   "emmy_us": 106.86933249235153,
+   "emmy_muestras": [
+    106.89422488212585,
+    106.88355565071106,
+    106.86933249235153
+   ],
+   "greedy_us": 2.2042873315513134,
+   "ref_cloudrift_us": 80.04266520341237,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 2.23 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/norm-linear-f16-warp-masked-m",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm+linear",
+    "shape": "(1,32,128) x (128) x (512,128)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.951529315289329,
+   "tcompile_us": 2.6414118268910576,
+   "emmy_us": 6.401969585567713,
+   "emmy_muestras": [
+    6.401969585567713
+   ],
+   "greedy_us": 2.2105881944298744,
+   "ref_cloudrift_us": 11.583255473957506,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 2.24 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/norm-weight-linear-f16-computed-b",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "linear+rms_norm",
+    "shape": "(64,128) x (64,128) x (128)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.0836363633473716,
+   "tcompile_us": 2.180848383542263,
+   "emmy_us": 78.42399924993515,
+   "emmy_muestras": [
+    78.42399924993515
+   ],
+   "greedy_us": 11.103515513241291,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 11.02 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-knorm-s128",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,8,128,128) x (128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.7125817862423984,
+   "tcompile_us": 1.1931636116721414,
+   "emmy_us": 1.3426776276901364,
+   "emmy_muestras": [
+    1.3426776276901364
+   ],
+   "greedy_us": 1.105890842154622,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.08 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-knorm-s32",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,8,32,128) x (128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.6373861150773052,
+   "tcompile_us": 1.0488184765227164,
+   "emmy_us": 1.2296568602323532,
+   "emmy_muestras": [
+    1.2296568602323532
+   ],
+   "greedy_us": 0.9381386335007846,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 0.91 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-knorm-s512",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,8,512,128) x (128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 3.2836400642596857,
+   "tcompile_us": 2.4189628936626293,
+   "emmy_us": 2.7039030101150274,
+   "emmy_muestras": [
+    2.7039030101150274
+   ],
+   "greedy_us": 1.6015238361433148,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.59 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-layer-s128",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,128,1024) x (1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.135136177842046,
+   "tcompile_us": 1.328525828643584,
+   "emmy_us": 1.4632402453571558,
+   "emmy_muestras": [
+    1.4632402453571558
+   ],
+   "greedy_us": 1.4596808468922973,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.44 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-layer-s32",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,32,1024) x (1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.8631110864656943,
+   "tcompile_us": 1.044592578653936,
+   "emmy_us": 1.161225256510079,
+   "emmy_muestras": [
+    1.161225256510079
+   ],
+   "greedy_us": 1.1642962926998734,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.16 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-layer-s512",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,512,1024) x (1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.5758608527805493,
+   "tcompile_us": 1.9611826409464297,
+   "emmy_us": 1.8811754416674376,
+   "emmy_muestras": [
+    1.8811754416674376
+   ],
+   "greedy_us": 1.8949565710499883,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.88 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-qnorm-s128",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,16,128,128) x (128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.384328678862689,
+   "tcompile_us": 1.4318904443962934,
+   "emmy_us": 1.789115951396525,
+   "emmy_muestras": [
+    1.789115951396525
+   ],
+   "greedy_us": 1.2962191831320524,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.28 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-qnorm-s32",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,16,32,128) x (128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 1.648792044164324,
+   "tcompile_us": 1.1449240811980597,
+   "emmy_us": 1.2420465936884284,
+   "emmy_muestras": [
+    1.2420465936884284
+   ],
+   "greedy_us": 0.9991815313696861,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 0.99 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/rmsnorm-qnorm-s512",
+   "categorias": [
+    "rmsnorm/fused",
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(1,16,512,128) x (128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.201052678258796,
+   "tcompile_us": 4.288210680610256,
+   "emmy_us": 4.626806825399399,
+   "emmy_muestras": [
+    4.626806825399399
+   ],
+   "greedy_us": 2.382315695285797,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 2.38 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "reduce/fused-add-rms-norm",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "elementwise+rms_norm",
+    "shape": "(8,256) x (8,256) x (256)",
+    "dtype": "f32",
+    "family": "reduce"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.3282132546106973,
+   "tcompile_us": 0.9160533547401428,
+   "emmy_us": 1.0565288830548525,
+   "emmy_muestras": [
+    1.0565288830548525
+   ],
+   "greedy_us": 0.9202133514918387,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 0.90 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "reduce/fused-add-rms-norm-escaping-residual",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "elementwise+rms_norm",
+    "shape": "(8,256) x (8,256) x (256)",
+    "dtype": "f32",
+    "family": "reduce"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.3309128406720285,
+   "tcompile_us": 0.9801846284132737,
+   "emmy_us": 1.0589950252324343,
+   "emmy_muestras": [
+    1.0589950252324343
+   ],
+   "greedy_us": 0.9329231106676161,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 0.92 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "reduce/rms-norm-cut-sweep-work",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(512,4096)",
+    "dtype": "f32",
+    "family": "reduce"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 5.137931170134709,
+   "tcompile_us": 4.576551503148572,
+   "emmy_us": 357.64265060424805,
+   "emmy_muestras": [
+    357.64265060424805
+   ],
+   "greedy_us": 4.569103475660086,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 4.60 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "reduce/rms-norm-packed-cells",
+   "categorias": [
+    "rmsnorm/fused"
+   ],
+   "facts": {
+    "op": "rms_norm",
+    "shape": "(2048,128)",
+    "dtype": "f16",
+    "family": "reduce"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 2.3373837406570845,
+   "tcompile_us": 1.552086424183201,
+   "emmy_us": 1.4201905578374863,
+   "emmy_muestras": [
+    1.4201905578374863
+   ],
+   "greedy_us": 1.3593946350738406,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1.34 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/fp4-tma-w4a4-two-channel-p2",
+   "categorias": [
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+gather+reshape+linear",
+    "shape": "(24,2048)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 367.1602862221854,
+   "tcompile_us": 62.10942779268537,
+   "emmy_us": 5.153024103492498,
+   "emmy_muestras": [
+    5.153024103492498
+   ],
+   "greedy_us": 2.8454286511987448,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "NO",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 2.61 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/nvfp4-gate-up-requant-full-projection-cut",
+   "categorias": [
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "linear+elementwise+reduce+reshape+index_map+gather",
+    "shape": "(128,512)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 171.97411431206598,
+   "tcompile_us": 11.35593457300155,
+   "emmy_us": 500.2880096435547,
+   "emmy_muestras": [
+    500.2880096435547
+   ],
+   "greedy_us": 60.736000537872314,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "NO",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 3",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/nvfp4-gate-up-requant-place-cut",
+   "categorias": [
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "linear+elementwise+reduce+reshape+index_map+gather",
+    "shape": "(128,512)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 171.9739786783854,
+   "tcompile_us": 11.359400517038639,
+   "emmy_us": 646.9600200653076,
+   "emmy_muestras": [
+    646.9600200653076
+   ],
+   "greedy_us": 60.74199825525284,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "NO",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 3",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/nvfp4-quantize-cut-shared-normalizer",
+   "categorias": [
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+mean+reduce+reshape",
+    "shape": "(32,128)",
+    "dtype": "f32",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 127.01363152778997,
+   "tcompile_us": 2.9622694702013166,
+   "emmy_us": 38.477540016174316,
+   "emmy_muestras": [
+    38.477540016174316
+   ],
+   "greedy_us": 36.818962544202805,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/nvfp4-w4a16-sibling-cut-async",
+   "categorias": [
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+linear+reshape+gather",
+    "shape": "(48,256)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 38.961682403296756,
+   "tcompile_us": 6.235649188359578,
+   "emmy_us": 12.765013612806797,
+   "emmy_muestras": [
+    12.765013612806797
+   ],
+   "greedy_us": 7.09472456946969,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "fused/nvfp4-w4a16-sibling-cut-tma-p2",
+   "categorias": [
+    "nvfp4"
+   ],
+   "facts": {
+    "op": "elementwise+index_map+linear+reshape+gather",
+    "shape": "(48,256)",
+    "dtype": "f16",
+    "family": "fused"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 38.94773821964442,
+   "tcompile_us": 6.236859571153873,
+   "emmy_us": 13.514366000890732,
+   "emmy_muestras": [
+    13.514366000890732
+   ],
+   "greedy_us": 7.104460150003433,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "SI",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "SI",
+    "warp_spec": "NO",
+    "padding_swizzle": "SI",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/gated-mlp-s128",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,128,1024) x (1024,3072) x (1024,3072)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 29.57695960998535,
+   "tcompile_us": 27.947518825531006,
+   "emmy_us": 438.8960003852844,
+   "emmy_muestras": [
+    438.8960003852844
+   ],
+   "greedy_us": 40.29056057333946,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 40.10 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/gated-mlp-s32",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,32,1024) x (1024,3072) x (1024,3072)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 28.007109959920246,
+   "tcompile_us": 20.771554774708218,
+   "emmy_us": 117.12399870157242,
+   "emmy_muestras": [
+    117.12399870157242
+   ],
+   "greedy_us": 113.05245012044907,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 112.18 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/gated-mlp-s512",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,512,1024) x (1024,3072) x (1024,3072)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 103.02399843931198,
+   "tcompile_us": 95.54799646139145,
+   "emmy_us": 1748.1600046157837,
+   "emmy_muestras": [
+    1748.1600046157837
+   ],
+   "greedy_us": 122.45199829339981,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "SI",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 120.04 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-add-downproj-s128",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,128,3072) x (3072,1024) x (1,128,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 13.316550784640842,
+   "tcompile_us": 13.37784873114692,
+   "emmy_us": 37.454668432474136,
+   "emmy_muestras": [
+    37.454668432474136
+   ],
+   "greedy_us": 19.595295190811157,
+   "ref_cloudrift_us": 44.56145384094932,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-add-downproj-s32",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,32,3072) x (3072,1024) x (1,32,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 11.401762396602308,
+   "tcompile_us": 11.217355728149414,
+   "emmy_us": 33.731553703546524,
+   "emmy_muestras": [
+    33.731553703546524
+   ],
+   "greedy_us": 14.83281422406435,
+   "ref_cloudrift_us": 39.57376003265381,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 14.88 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-add-downproj-s512",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,512,3072) x (3072,1024) x (1,512,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 38.12114255768912,
+   "tcompile_us": 37.93142948831831,
+   "emmy_us": 133.05142521858215,
+   "emmy_muestras": [
+    133.05142521858215
+   ],
+   "greedy_us": 68.00000369548798,
+   "ref_cloudrift_us": 153.71732910474142,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 67.97 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-add-oproj-s128",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,128,2048) x (2048,1024) x (1,128,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 10.974967778797218,
+   "tcompile_us": 11.024057224232664,
+   "emmy_us": 25.46577900648117,
+   "emmy_muestras": [
+    25.46577900648117
+   ],
+   "greedy_us": 13.91634251922369,
+   "ref_cloudrift_us": 30.06060556931929,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-add-oproj-s32",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,32,2048) x (2048,1024) x (1,32,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 9.257638310811606,
+   "tcompile_us": 9.062554462846503,
+   "emmy_us": 22.834526374936104,
+   "emmy_muestras": [
+    22.834526374936104
+   ],
+   "greedy_us": 10.358747094869614,
+   "ref_cloudrift_us": 26.935351861489785,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 10.25 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-add-oproj-s512",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul+elementwise",
+    "shape": "(1,512,2048) x (2048,1024) x (1,512,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 26.94552285330636,
+   "tcompile_us": 26.555427483149938,
+   "emmy_us": 88.3723646402359,
+   "emmy_muestras": [
+    88.3723646402359
+   ],
+   "greedy_us": 46.113524585962296,
+   "ref_cloudrift_us": 102.91199684143066,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 46.10 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-kvproj-s128",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,128,1024) x (1024,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 13.14867471719717,
+   "tcompile_us": 10.113247029193037,
+   "emmy_us": 13.862709514796734,
+   "emmy_muestras": [
+    13.862709514796734
+   ],
+   "greedy_us": 11.751065030694008,
+   "ref_cloudrift_us": 15.688126995449975,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 11.62 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-kvproj-s32",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,32,1024) x (1024,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 6.539789731042427,
+   "tcompile_us": 6.528280806123164,
+   "emmy_us": 12.020677328109741,
+   "emmy_muestras": [
+    12.020677328109741
+   ],
+   "greedy_us": 5.978947039693594,
+   "ref_cloudrift_us": 13.773333695199755,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 5.96 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-kvproj-s512",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,512,1024) x (1024,1024)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 13.891200721263885,
+   "tcompile_us": 13.58720064163208,
+   "emmy_us": 46.135999262332916,
+   "emmy_muestras": [
+    46.135999262332916
+   ],
+   "greedy_us": 23.901600390672684,
+   "ref_cloudrift_us": 52.618105160562614,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 23.30 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-qproj-s128",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,128,1024) x (1024,2048)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 13.095164476935544,
+   "tcompile_us": 10.58197021484375,
+   "emmy_us": 27.513999491930008,
+   "emmy_muestras": [
+    27.513999491930008
+   ],
+   "greedy_us": 14.361312612891197,
+   "ref_cloudrift_us": 31.247999519109726,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 14.29 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-qproj-s32",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,32,1024) x (1024,2048)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 8.393739228663238,
+   "tcompile_us": 8.374608729196632,
+   "emmy_us": 12.364698573946953,
+   "emmy_muestras": [
+    12.364698573946953
+   ],
+   "greedy_us": 8.031999692320824,
+   "ref_cloudrift_us": 14.20342837061201,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 8.00 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/matmul-qproj-s512",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "matmul",
+    "shape": "(1,512,1024) x (1024,2048)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 25.623040199279785,
+   "tcompile_us": 25.487360954284668,
+   "emmy_us": 55.655527859926224,
+   "emmy_muestras": [
+    55.655527859926224
+   ],
+   "greedy_us": 40.04352167248726,
+   "ref_cloudrift_us": 62.238000333309174,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "SI",
+    "register_tiling": "SI",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "SI",
+    "cp_async_tma": "SI",
+    "pipelining": "NO",
+    "warp_spec": "N/A",
+    "padding_swizzle": "NO",
+    "cta_swizzle": "NO",
+    "split_k": "NO",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 38.67 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/sdpa-s128",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "sdpa",
+    "shape": "(1,16,128,128) x (1,8,128,128) x (1,8,128,128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 28.031999245285988,
+   "tcompile_us": 24.992000311613083,
+   "emmy_us": 1445.1839923858643,
+   "emmy_muestras": [
+    1445.1839923858643
+   ],
+   "greedy_us": 1399.359941482544,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 1399.84 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/sdpa-s32",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "sdpa",
+    "shape": "(1,16,32,128) x (1,8,32,128) x (1,8,32,128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 18.87753835091224,
+   "tcompile_us": 18.40492280629965,
+   "emmy_us": 95.97759693861008,
+   "emmy_muestras": [
+    95.97759693861008
+   ],
+   "greedy_us": 75.1187726855278,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 74.91 µs",
+   "tune_s": 0.0
+  },
+  {
+   "caso": "qwen3emb/sdpa-s512",
+   "categorias": [
+    "qwen3emb"
+   ],
+   "facts": {
+    "op": "sdpa",
+    "shape": "(1,16,512,128) x (1,8,512,128) x (1,8,512,128)",
+    "dtype": "f32",
+    "family": "qwen3emb"
+   },
+   "ok": true,
+   "error": "",
+   "eager_us": 89.72799777984619,
+   "tcompile_us": 86.7839977145195,
+   "emmy_us": 18516.799926757812,
+   "emmy_muestras": [
+    18516.799926757812
+   ],
+   "greedy_us": 6264.480113983154,
+   "ref_cloudrift_us": null,
+   "segundos": 0.0,
+   "tecnicas": {
+    "factorizacion": "N/A",
+    "register_tiling": "N/A",
+    "vectorizacion": "SI",
+    "tensor_cores": "N/A",
+    "smem_staging": "NO",
+    "cp_async_tma": "N/A",
+    "pipelining": "N/A",
+    "warp_spec": "N/A",
+    "padding_swizzle": "N/A",
+    "cta_swizzle": "N/A",
+    "split_k": "N/A",
+    "reduccion_coop": "N/A",
+    "pdl": "SI"
+   },
+   "tune": "ok: 24/24 variantes medidas, la mejor 6260.42 µs",
+   "tune_s": 0.0
+  }
+ ]
+}

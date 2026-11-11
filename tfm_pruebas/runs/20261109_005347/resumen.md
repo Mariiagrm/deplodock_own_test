@@ -1,9 +1,8 @@
 # Suite emmy · subconjunto TFM · NVIDIA GeForce RTX 5090
 
-- Fecha: 2026-11-08T23:53:48 · deplodock 6764d63a 2026-11-08 · driver 610.43.02 · torch 2.15.0+cu132
+- Fecha: 2026-11-11T09:25:18 · deplodock bf784a76 2026-11-11 · driver 610.43.02 · torch 2.15.0+cu132
 - Casos: 130 (128 medidos, 2 con error) · categorías: matmul, rmsnorm/fused, nvfp4, qwen3emb
 - `emmy` = schedule fijado por el caso (el de CloudRift; es lo que mide `make bench-kernels`). `greedy` = lo que emmy elige solo.
-- **Ejecución con `--tune 24`**: antes de medir, emmy autotunea cada caso (N variantes del schedule, base de datos propia del caso); `greedy` es lo que elige después. Autotuneados 118/130 (el resto tiene varios kernels o falló: ver logs).
 - `vs eager` > 1 significa más rápido que PyTorch eager. `vs ref` = nuestro tiempo / referencia CloudRift (≤ 1.05 = reproduce su número; en **negrita** si es más lento).
 - Ojo: muchos casos del corpus son *de cobertura*: fijan a propósito un schedule para ejercitar un camino del compilador, no el más rápido. Por eso a veces `emmy` es mucho peor que `greedy`. Para comparar rendimiento con PyTorch, la columna justa es `greedy`; para comparar con CloudRift, `emmy`.
 
@@ -26,7 +25,7 @@ _multiplicaciones de matrices del corpus (f16/bf16/f32; Tensor Cores y camino es
 | f16-mma-epilogue-residual | matmul+elementwise | (128,128) x (128,128) x (128,128) | 5.29 | 2.14 | 6.50 | 1.04 | 11.33 | 0.81x | 5.09x | 2.06x | 0.57 |
 | f16-mma-f16acc-cp | matmul | (128,128) x (128,128) | 1.43 | 1.55 | 3.56 | 1.03 | 4.91 | 0.40x | 1.39x | 1.51x | 0.72 |
 | f16-mma-f16acc-gmem | matmul | (128,128) x (128,128) | 1.42 | 1.56 | 7.28 | 1.03 | 8.68 | 0.20x | 1.38x | 1.52x | 0.84 |
-| f16-mma-f16acc-symbolic-k | matmul | (128,{'sym': 'seq_len', 'hint': 512}) x ({'sym': 'seq_len', 'hint': 512},128) | ERROR: emmy run salió con código 1: el schedule fijado por el caso  ||||||||
+| f16-mma-f16acc-symbolic-k | matmul | (128,{'sym': 'seq_len', 'hint': 512}) x ({'sym': 'seq_len', 'hint': 512},128) | ERROR: emmy run falló: el schedule fijado por el caso ya no se real ||||||||
 | f16-mma-f16acc-tma | matmul | (128,128) x (128,128) | 1.43 | 1.55 | 3.75 | 1.03 | 4.54 | 0.38x | 1.38x | 1.50x | 0.83 |
 | f16-mma-m128n128k128-f16 | matmul | (128,128) x (128,128) | 1.53 | 1.67 | 4.57 | 1.15 | 6.21 | 0.34x | 1.34x | 1.46x | 0.73 |
 | f16-mma-m128n128k128-f32 | matmul | (128,128) x (128,128) | 4.78 | 3.44 | 4.66 | 1.13 | 6.07 | 1.03x | 4.22x | 3.04x | 0.77 |
@@ -46,7 +45,7 @@ _multiplicaciones de matrices del corpus (f16/bf16/f32; Tensor Cores y camino es
 | f16-symbolic-batched-mk-greedy | matmul | (16,{'sym': 'seq_len', 'hint': 512},{'sym': 'seq_len', 'hint': 512}) x (16,{'sym': 'seq_len', 'hint': 512},128) | 12.19 | 8.00 | 34.66 | 354.82 | 38.31 | 0.35x | 0.03x | 0.02x | 0.90 |
 | f16-symbolic-computed-a-k-warp | matmul+softmax | (16,{'sym': 'seq_len', 'hint': 512},{'sym': 'seq_len', 'hint': 512}) x (16,{'sym': 'seq_len', 'hint': 512},128) | 21.31 | 13.98 | 31.53 | 4626.66 | 33.38 | 0.68x | 0.00x | 0.00x | 0.94 |
 | f16-symbolic-demoted-n-greedy | linear+elementwise | ({'sym': 'seq_len', 'hint': 512},128) x ({'sym': 'seq_len', 'hint': 512},128) x ({'sym': 'seq_len', 'hint': 512},128) x ({'sym': 'seq_len', 'hint': 512},128) | 3.68 | 3.34 | 19.33 | 20.42 | 22.59 | 0.19x | 0.18x | 0.16x | 0.86 |
-| f16-symbolic-demoted-pv-greedy | matmul+softmax | (16,{'sym': 'seq_len', 'hint': 512},{'sym': 'seq_len', 'hint': 512}) x (16,{'sym': 'seq_len', 'hint': 512},128) | ERROR: emmy run salió con código 1: el schedule fijado por el caso  ||||||||
+| f16-symbolic-demoted-pv-greedy | matmul+softmax | (16,{'sym': 'seq_len', 'hint': 512},{'sym': 'seq_len', 'hint': 512}) x (16,{'sym': 'seq_len', 'hint': 512},128) | ERROR: emmy run falló: el schedule fijado por el caso ya no se real ||||||||
 | f16-symbolic-k-gmem | matmul | (64,{'sym': 'seq_len', 'hint': 512}) x ({'sym': 'seq_len', 'hint': 512},128) | 2.64 | 3.00 | 10.57 | 3.34 | 12.74 | 0.25x | 0.79x | 0.90x | 0.83 |
 | f16-symbolic-k-trans | linear | (64,{'sym': 'seq_len', 'hint': 512}) x (32,{'sym': 'seq_len', 'hint': 512}) | 2.72 | 2.05 | 16.12 | 7.85 | 13.86 | 0.17x | 0.35x | 0.26x | **1.16** |
 | f16-symbolic-m-residual-cp | matmul+elementwise | ({'sym': 'seq_len', 'hint': 512},512) x (512,1024) x ({'sym': 'seq_len', 'hint': 512},1024) | 5.91 | 5.65 | 6.50 | 5.62 | 7.62 | 0.91x | 1.05x | 1.01x | 0.85 |
@@ -239,32 +238,32 @@ Media geométrica vs eager: emmy fijado 0.40x · greedy 0.70x · greedy vs torch
 | matmul/f16-warp-gmem-direct | ✓ | ✓ | · | ✓ | ✓ | ✓ | ✓ | · | ✓ | · | · | – | ✓ |
 | matmul/f16-warp-splitk | – | – | · | · | · | – | – | – | – | – | ✓ | – | ✓ |
 | matmul/f16-warp-symbolic-m-cp | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | · | ✓ | · | · | – | ✓ |
-| matmul/f32-epilogue-bias | ✓ | ✓ | ✓ | · | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
-| matmul/f32-epilogue-relu | ✓ | ✓ | · | · | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
-| matmul/f32-epilogue-residual | ✓ | ✓ | ✓ | · | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
-| matmul/f32-epilogue-scale | ✓ | ✓ | · | · | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
+| matmul/f32-epilogue-bias | ✓ | ✓ | ✓ | – | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
+| matmul/f32-epilogue-relu | ✓ | ✓ | · | – | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
+| matmul/f32-epilogue-residual | ✓ | ✓ | ✓ | – | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
+| matmul/f32-epilogue-scale | ✓ | ✓ | · | – | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
 | matmul/f32-mixed-dtype-slabs | ✓ | ✓ | ✓ | · | ✓ | ✓ | · | – | ✓ | · | · | – | ✓ |
-| matmul/f32-reduce-coop | – | – | · | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| matmul/f32-reduce-coop-ilp | – | – | · | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| matmul/f32-reduce-ilp | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| matmul/f32-scalar-bm8-outside-hints | ✓ | · | · | · | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
-| matmul/f32-scalar-composite-fm4-fn4 | ✓ | ✓ | ✓ | · | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
-| matmul/f32-scalar-composite-fn4 | ✓ | ✓ | ✓ | · | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
-| matmul/f32-scalar-masked-m-fm26 | ✓ | ✓ | ✓ | · | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
-| matmul/f32-scalar-masked-n-fn26 | ✓ | ✓ | ✓ | · | · | – | – | – | – | · | · | – | ✓ |
-| matmul/f32-scalar-masked-n-gmem | ✓ | ✓ | ✓ | · | · | – | – | – | – | · | · | – | ✓ |
-| matmul/f32-scalar-staging-d1-128x128x128 | ✓ | ✓ | ✓ | · | ✓ | ✓ | · | – | · | · | · | – | ✓ |
-| matmul/f32-scalar-staging-d1-64x64x64 | ✓ | ✓ | ✓ | · | ✓ | ✓ | · | – | ✓ | · | · | – | ✓ |
-| matmul/f32-scalar-staging-d2-128x128x128 | ✓ | ✓ | ✓ | · | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
-| matmul/f32-scalar-staging-d2-64x64x64 | ✓ | ✓ | ✓ | · | ✓ | ✓ | ✓ | – | ✓ | · | · | – | ✓ |
-| matmul/f32-scalar-staging-gmem-128x128x128 | ✓ | ✓ | ✓ | · | · | – | – | – | – | · | · | – | ✓ |
-| matmul/f32-scalar-staging-gmem-64x64x64 | ✓ | ✓ | ✓ | · | · | – | – | – | – | · | · | – | ✓ |
-| matmul/f32-scalar-tma-staged | ✓ | ✓ | ✓ | · | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
-| matmul/f32-tile-per-cell | – | – | · | · | · | – | – | – | – | – | – | – | ✓ |
-| matmul/f32-tile-reg-2d | ✓ | ✓ | ✓ | · | · | – | – | – | – | · | · | – | ✓ |
-| matmul/f32-tile-reg-fn3 | ✓ | ✓ | ✓ | · | · | – | – | – | – | · | · | – | ✓ |
-| matmul/f32-tile-reg-inner-fn4 | ✓ | ✓ | ✓ | · | · | – | – | – | – | · | · | – | ✓ |
-| matmul/f32-tile-single-cta | ✓ | ✓ | ✓ | · | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
+| matmul/f32-reduce-coop | – | – | · | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| matmul/f32-reduce-coop-ilp | – | – | · | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| matmul/f32-reduce-ilp | – | – | ✓ | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| matmul/f32-scalar-bm8-outside-hints | ✓ | · | · | – | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
+| matmul/f32-scalar-composite-fm4-fn4 | ✓ | ✓ | ✓ | – | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
+| matmul/f32-scalar-composite-fn4 | ✓ | ✓ | ✓ | – | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
+| matmul/f32-scalar-masked-m-fm26 | ✓ | ✓ | ✓ | – | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
+| matmul/f32-scalar-masked-n-fn26 | ✓ | ✓ | ✓ | – | · | – | – | – | – | · | · | – | ✓ |
+| matmul/f32-scalar-masked-n-gmem | ✓ | ✓ | ✓ | – | · | – | – | – | – | · | · | – | ✓ |
+| matmul/f32-scalar-staging-d1-128x128x128 | ✓ | ✓ | ✓ | – | ✓ | ✓ | · | – | · | · | · | – | ✓ |
+| matmul/f32-scalar-staging-d1-64x64x64 | ✓ | ✓ | ✓ | – | ✓ | ✓ | · | – | ✓ | · | · | – | ✓ |
+| matmul/f32-scalar-staging-d2-128x128x128 | ✓ | ✓ | ✓ | – | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
+| matmul/f32-scalar-staging-d2-64x64x64 | ✓ | ✓ | ✓ | – | ✓ | ✓ | ✓ | – | ✓ | · | · | – | ✓ |
+| matmul/f32-scalar-staging-gmem-128x128x128 | ✓ | ✓ | ✓ | – | · | – | – | – | – | · | · | – | ✓ |
+| matmul/f32-scalar-staging-gmem-64x64x64 | ✓ | ✓ | ✓ | – | · | – | – | – | – | · | · | – | ✓ |
+| matmul/f32-scalar-tma-staged | ✓ | ✓ | ✓ | – | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
+| matmul/f32-tile-per-cell | – | – | · | – | · | – | – | – | – | – | – | – | ✓ |
+| matmul/f32-tile-reg-2d | ✓ | ✓ | ✓ | – | · | – | – | – | – | · | · | – | ✓ |
+| matmul/f32-tile-reg-fn3 | ✓ | ✓ | ✓ | – | · | – | – | – | – | · | · | – | ✓ |
+| matmul/f32-tile-reg-inner-fn4 | ✓ | ✓ | ✓ | – | · | – | – | – | – | · | · | – | ✓ |
+| matmul/f32-tile-single-cta | ✓ | ✓ | ✓ | – | ✓ | ✓ | ✓ | – | · | · | · | – | ✓ |
 | matmul/fp4-tma-w4a4-linear-ring | ✓ | ✓ | · | ✓ | ✓ | ✓ | ✓ | · | · | · | · | – | ✓ |
 | matmul/fp4-tma-w4a4-split-k | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | · | · | · | ✓ | – | ✓ |
 | matmul/imap-reshape-a-cp | ✓ | · | ✓ | · | ✓ | ✓ | ✓ | – | ✓ | · | · | – | ✓ |
@@ -286,43 +285,43 @@ Media geométrica vs eager: emmy fijado 0.40x · greedy 0.70x · greedy vs torch
 | fused/norm-linear-f16-scalar-reduce | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
 | fused/norm-linear-f16-warp-masked-m | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | · | · | ✓ | · | · | ✓ | ✓ |
 | fused/norm-weight-linear-f16-computed-b | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | · | · | ✓ | · | · | – | ✓ |
-| qwen3emb/rmsnorm-knorm-s128 | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| qwen3emb/rmsnorm-knorm-s32 | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| qwen3emb/rmsnorm-knorm-s512 | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| qwen3emb/rmsnorm-layer-s128 | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| qwen3emb/rmsnorm-layer-s32 | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| qwen3emb/rmsnorm-layer-s512 | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| qwen3emb/rmsnorm-qnorm-s128 | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| qwen3emb/rmsnorm-qnorm-s32 | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| qwen3emb/rmsnorm-qnorm-s512 | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| reduce/fused-add-rms-norm | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| reduce/fused-add-rms-norm-escaping-residual | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| reduce/rms-norm-cut-sweep-work | ✓ | ✓ | ✓ | · | · | – | – | – | – | · | · | – | ✓ |
+| qwen3emb/rmsnorm-knorm-s128 | – | – | ✓ | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| qwen3emb/rmsnorm-knorm-s32 | – | – | ✓ | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| qwen3emb/rmsnorm-knorm-s512 | – | – | ✓ | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| qwen3emb/rmsnorm-layer-s128 | – | – | ✓ | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| qwen3emb/rmsnorm-layer-s32 | – | – | ✓ | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| qwen3emb/rmsnorm-layer-s512 | – | – | ✓ | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| qwen3emb/rmsnorm-qnorm-s128 | – | – | ✓ | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| qwen3emb/rmsnorm-qnorm-s32 | – | – | ✓ | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| qwen3emb/rmsnorm-qnorm-s512 | – | – | ✓ | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| reduce/fused-add-rms-norm | – | – | ✓ | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| reduce/fused-add-rms-norm-escaping-residual | – | – | ✓ | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| reduce/rms-norm-cut-sweep-work | ✓ | ✓ | ✓ | – | · | – | – | – | – | · | · | – | ✓ |
 | reduce/rms-norm-packed-cells | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
 | fused/fp4-tma-w4a4-two-channel-p2 | ✓ | ✓ | · | ✓ | ✓ | ✓ | ✓ | · | · | · | · | – | ✓ |
 | fused/nvfp4-gate-up-requant-full-projection-cut | ✓ | · | ✓ | ✓ | ✓ | ✓ | ✓ | · | · | · | · | – | ✓ |
 | fused/nvfp4-gate-up-requant-place-cut | ✓ | ✓ | ✓ | · | · | – | – | – | – | · | · | – | ✓ |
-| fused/nvfp4-quantize-cut-shared-normalizer | – | – | ✓ | · | · | – | – | – | – | – | – | – | ✓ |
+| fused/nvfp4-quantize-cut-shared-normalizer | – | – | ✓ | – | · | – | – | – | – | – | – | – | ✓ |
 | fused/nvfp4-w4a16-sibling-cut-async | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | · | ✓ | · | · | – | ✓ |
 | fused/nvfp4-w4a16-sibling-cut-tma-p2 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | · | ✓ | · | · | – | ✓ |
-| qwen3emb/gated-mlp-s128 | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| qwen3emb/gated-mlp-s32 | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| qwen3emb/gated-mlp-s512 | – | – | ✓ | · | · | – | – | – | – | – | – | ✓ | ✓ |
-| qwen3emb/matmul-add-downproj-s128 | ✓ | ✓ | ✓ | · | ✓ | ✓ | · | – | · | · | · | – | ✓ |
-| qwen3emb/matmul-add-downproj-s32 | ✓ | ✓ | ✓ | · | ✓ | ✓ | · | – | · | · | · | – | ✓ |
-| qwen3emb/matmul-add-downproj-s512 | ✓ | ✓ | ✓ | · | ✓ | ✓ | · | – | · | · | · | – | ✓ |
-| qwen3emb/matmul-add-oproj-s128 | ✓ | ✓ | ✓ | · | ✓ | ✓ | · | – | · | · | · | – | ✓ |
-| qwen3emb/matmul-add-oproj-s32 | ✓ | ✓ | ✓ | · | ✓ | ✓ | · | – | · | · | · | – | ✓ |
-| qwen3emb/matmul-add-oproj-s512 | ✓ | ✓ | ✓ | · | ✓ | ✓ | · | – | · | · | · | – | ✓ |
-| qwen3emb/matmul-kvproj-s128 | ✓ | ✓ | ✓ | · | ✓ | ✓ | · | – | · | · | · | – | ✓ |
-| qwen3emb/matmul-kvproj-s32 | ✓ | ✓ | ✓ | · | ✓ | ✓ | · | – | · | · | · | – | ✓ |
-| qwen3emb/matmul-kvproj-s512 | ✓ | ✓ | ✓ | · | ✓ | ✓ | · | – | · | · | · | – | ✓ |
-| qwen3emb/matmul-qproj-s128 | ✓ | ✓ | ✓ | · | ✓ | ✓ | · | – | · | · | · | – | ✓ |
-| qwen3emb/matmul-qproj-s32 | ✓ | ✓ | ✓ | · | ✓ | ✓ | · | – | · | · | · | – | ✓ |
-| qwen3emb/matmul-qproj-s512 | ✓ | ✓ | ✓ | · | ✓ | ✓ | · | – | · | · | · | – | ✓ |
-| qwen3emb/sdpa-s128 | – | – | ✓ | · | · | – | – | – | – | – | – | – | ✓ |
-| qwen3emb/sdpa-s32 | – | – | ✓ | · | · | – | – | – | – | – | – | – | ✓ |
-| qwen3emb/sdpa-s512 | – | – | ✓ | · | · | – | – | – | – | – | – | – | ✓ |
+| qwen3emb/gated-mlp-s128 | – | – | ✓ | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| qwen3emb/gated-mlp-s32 | – | – | ✓ | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| qwen3emb/gated-mlp-s512 | – | – | ✓ | – | · | – | – | – | – | – | – | ✓ | ✓ |
+| qwen3emb/matmul-add-downproj-s128 | ✓ | ✓ | ✓ | – | ✓ | ✓ | · | – | · | · | · | – | ✓ |
+| qwen3emb/matmul-add-downproj-s32 | ✓ | ✓ | ✓ | – | ✓ | ✓ | · | – | · | · | · | – | ✓ |
+| qwen3emb/matmul-add-downproj-s512 | ✓ | ✓ | ✓ | – | ✓ | ✓ | · | – | · | · | · | – | ✓ |
+| qwen3emb/matmul-add-oproj-s128 | ✓ | ✓ | ✓ | – | ✓ | ✓ | · | – | · | · | · | – | ✓ |
+| qwen3emb/matmul-add-oproj-s32 | ✓ | ✓ | ✓ | – | ✓ | ✓ | · | – | · | · | · | – | ✓ |
+| qwen3emb/matmul-add-oproj-s512 | ✓ | ✓ | ✓ | – | ✓ | ✓ | · | – | · | · | · | – | ✓ |
+| qwen3emb/matmul-kvproj-s128 | ✓ | ✓ | ✓ | – | ✓ | ✓ | · | – | · | · | · | – | ✓ |
+| qwen3emb/matmul-kvproj-s32 | ✓ | ✓ | ✓ | – | ✓ | ✓ | · | – | · | · | · | – | ✓ |
+| qwen3emb/matmul-kvproj-s512 | ✓ | ✓ | ✓ | – | ✓ | ✓ | · | – | · | · | · | – | ✓ |
+| qwen3emb/matmul-qproj-s128 | ✓ | ✓ | ✓ | – | ✓ | ✓ | · | – | · | · | · | – | ✓ |
+| qwen3emb/matmul-qproj-s32 | ✓ | ✓ | ✓ | – | ✓ | ✓ | · | – | · | · | · | – | ✓ |
+| qwen3emb/matmul-qproj-s512 | ✓ | ✓ | ✓ | – | ✓ | ✓ | · | – | · | · | · | – | ✓ |
+| qwen3emb/sdpa-s128 | – | – | ✓ | – | · | – | – | – | – | – | – | – | ✓ |
+| qwen3emb/sdpa-s32 | – | – | ✓ | – | · | – | – | – | – | – | – | – | ✓ |
+| qwen3emb/sdpa-s512 | – | – | ✓ | – | · | – | – | – | – | – | – | – | ✓ |
 
 Leyenda: **Fact** Factorización de bucles · **RegT** Register tiling · **Vec** Cargas vectorizadas e intercalado · **TC** Tensor Cores (mma.sync + ldmatrix) · **Smem** Almacenamiento por fases en smem · **Async** Transferencias asíncronas (cp.async / TMA) · **Pipe** Software pipelining / doble búfer · **WSpec** Especialización de warps · **Bank** Padding y swizzling · **Rast** CTA swizzle (rasterizado agrupado) · **SplitK** Split-K · **Coop** Reducción cooperativa (shuffle / árbol) · **PDL** Programmatic Dependent Launch
 

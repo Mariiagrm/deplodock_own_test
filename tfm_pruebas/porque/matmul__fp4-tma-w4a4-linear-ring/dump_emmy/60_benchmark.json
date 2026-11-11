@@ -1,0 +1,13 @@
+{
+  "time_ms": 0.002339697675779462,
+  "min_ms": 0.0023348622489720583,
+  "max_ms": null,
+  "num_launches": 1,
+  "per_launch": [
+    {
+      "idx": 0,
+      "kernel_name": "k_linear_4dbff7",
+      "time_ms": 0.002339697675779462
+    }
+  ]
+}

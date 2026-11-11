@@ -9,7 +9,7 @@ TIEMPOS (µs; 100 iteraciones tras 10 de calentamiento, captura en CUDA graph)
   PyTorch eager ............................      5.12
   torch.compile ............................      4.59   (1.12x vs eager)
   emmy, schedule fijado (CloudRift) ........    358.24   (0.01x vs eager)  ← lo que mide la suite
-  emmy, greedy (emmy elige sin ayuda) ......      4.58   (1.12x vs eager)  ← tras --tune (24/24 variantes medidas, la mejor 4.38 µs; 26s)
+  emmy, greedy (emmy elige sin ayuda) ......      4.58   (1.12x vs eager)  ← tras --tune (24/24 variantes medidas, la mejor 4.38 µs)
   Referencia CloudRift RTX 5090 ............ (el caso no tiene latencia guardada para esta GPU)
   Corrección frente a eager: torch.compile=pass, Emmy=pass
 
@@ -35,9 +35,9 @@ KERNEL k_rms_norm_7f9133__place_3ca84e4ece  ·  355.36 µs  ·  smem 0.0 KB  · 
           Qué se ha hecho : regla interleave_loads: cargas recolocadas junto a su primer uso.
           Evidencia       : regla disparada: 050_vectorize_loads | regla disparada: 080_vectorize_stores | regla disparada: 095_interleave_loads
           Qué supone      : Una transacción de 64/128 bits (LDG.64/LDG.128) sustituye 2-4 cargas escalares: menos instrucciones de memoria y mejor uso de cada sector de 32 B. Colocar cada carga junto a su primer uso acorta la vida de los registros y mejora la planificación.
-    [NO ] Tensor Cores (mma.sync + ldmatrix)
-          Qué se ha hecho : Camino escalar: FMA en núcleos CUDA, sin mma.sync.
-          Evidencia       : TILE=''
+    [N/A] Tensor Cores (mma.sync + ldmatrix)
+          Qué se ha hecho : Entradas fp32: los Tensor Cores no tienen modo fp32 (solo fp16/bf16/TF32/FP8/FP4), así que se calcula con FMA en núcleos CUDA, igual que PyTorch con su opción por defecto. La alternativa sería TF32 (mantisa de 10 bits, pierde precisión), que emmy no ofrece y que en la RTX 5090 rinde lo mismo que fp32 (~87 TFLOP/s a 2 GHz).
+          Evidencia       : dtype de entrada f32 | TILE=''
 
   2. FLUJO DE DATOS Y SOLAPAMIENTO ASÍNCRONO
     [NO ] Almacenamiento por fases en smem
@@ -86,9 +86,9 @@ KERNEL k_rms_norm_7f9133  ·  3.75 µs  ·  smem 0.0 KB  ·  __launch_bounds__(2
           Qué se ha hecho : 7 accesos de 128 bits (float4/uint4, LDG/STG.128) y 0 de 64 bits (float2/uint2) en el cuerpo; regla interleave_loads: cargas recolocadas junto a su primer uso.
           Evidencia       : regla disparada: 050_vectorize_loads | regla disparada: 080_vectorize_stores | regla disparada: 095_interleave_loads
           Qué supone      : Una transacción de 64/128 bits (LDG.64/LDG.128) sustituye 2-4 cargas escalares: menos instrucciones de memoria y mejor uso de cada sector de 32 B. Colocar cada carga junto a su primer uso acorta la vida de los registros y mejora la planificación.
-    [NO ] Tensor Cores (mma.sync + ldmatrix)
-          Qué se ha hecho : Camino escalar: FMA en núcleos CUDA, sin mma.sync.
-          Evidencia       : TILE='f4'
+    [N/A] Tensor Cores (mma.sync + ldmatrix)
+          Qué se ha hecho : Entradas fp32: los Tensor Cores no tienen modo fp32 (solo fp16/bf16/TF32/FP8/FP4), así que se calcula con FMA en núcleos CUDA, igual que PyTorch con su opción por defecto. La alternativa sería TF32 (mantisa de 10 bits, pierde precisión), que emmy no ofrece y que en la RTX 5090 rinde lo mismo que fp32 (~87 TFLOP/s a 2 GHz).
+          Evidencia       : dtype de entrada f32 | TILE='f4'
 
   2. FLUJO DE DATOS Y SOLAPAMIENTO ASÍNCRONO
     [NO ] Almacenamiento por fases en smem

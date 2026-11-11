@@ -9,7 +9,7 @@ TIEMPOS (µs; 100 iteraciones tras 10 de calentamiento, captura en CUDA graph)
   PyTorch eager ............................      2.72
   torch.compile ............................      2.05   (1.32x vs eager)
   emmy, schedule fijado (CloudRift) ........     16.12   (0.17x vs eager)  ← lo que mide la suite; muestras 16.22, 16.12, 16.16
-  emmy, greedy (emmy elige sin ayuda) ......      7.85   (0.35x vs eager)  ← tras --tune (24/24 variantes medidas, la mejor 7.72 µs; 32s)
+  emmy, greedy (emmy elige sin ayuda) ......      7.85   (0.35x vs eager)  ← tras --tune (24/24 variantes medidas, la mejor 7.72 µs)
   Referencia CloudRift RTX 5090 (emmy) .....     13.86   → aquí tardamos 1.16× su tiempo  (MÁS LENTO que la referencia)
   Corrección frente a eager: torch.compile=pass, Emmy=pass
 

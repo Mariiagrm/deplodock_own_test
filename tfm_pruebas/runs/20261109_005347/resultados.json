@@ -1,10 +1,10 @@
 {
  "meta": {
-  "fecha": "2026-11-08T23:53:48",
+  "fecha": "2026-11-11T09:25:18",
   "gpu": "NVIDIA GeForce RTX 5090",
   "sm": "sm_120",
   "driver": "610.43.02",
-  "git": "6764d63a 2026-11-08",
+  "git": "bf784a76 2026-11-11",
   "torch": "2.15.0+cu132",
   "host": "1531eaebfeed",
   "cats": [
@@ -14,7 +14,8 @@
    "qwen3emb"
   ],
   "ncu": false,
-  "tune": 24
+  "tune": 0,
+  "reanalizado": "2026-11-11T09:25:18"
  },
  "casos": [
   {
@@ -38,7 +39,7 @@
    ],
    "greedy_us": 1.24477525241673,
    "ref_cloudrift_us": null,
-   "segundos": 51.06826663017273,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "NO",
@@ -55,7 +56,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.25 µs",
-   "tune_s": 45.27327251434326
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/bf16-mma-trans-b-masked-n-async",
@@ -78,7 +79,7 @@
    ],
    "greedy_us": 1.049100304953754,
    "ref_cloudrift_us": null,
-   "segundos": 60.10850763320923,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -95,7 +96,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 0.95 µs",
-   "tune_s": 52.75327444076538
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/bf16-mma-trans-b-masked-n-tma",
@@ -118,7 +119,7 @@
    ],
    "greedy_us": 0.9406933095306158,
    "ref_cloudrift_us": null,
-   "segundos": 55.51885104179382,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -135,7 +136,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 0.96 µs",
-   "tune_s": 49.42246437072754
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/bf16-rowless-grouped-pair",
@@ -158,7 +159,7 @@
    ],
    "greedy_us": 1.1333068832755089,
    "ref_cloudrift_us": null,
-   "segundos": 36.378748178482056,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "NO",
@@ -175,7 +176,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.05 µs",
-   "tune_s": 29.958757638931274
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/bf16-scalar-sync-d2-sm120",
@@ -198,7 +199,7 @@
    ],
    "greedy_us": 1.3248000759631395,
    "ref_cloudrift_us": null,
-   "segundos": 48.49122977256775,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -215,7 +216,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.23 µs",
-   "tune_s": 42.29900622367859
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-matvec-reshaped-output-tma",
@@ -238,7 +239,7 @@
    ],
    "greedy_us": 2.2516825702041388,
    "ref_cloudrift_us": null,
-   "segundos": 51.652708768844604,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -255,7 +256,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 2.14 µs",
-   "tune_s": 42.37486386299133
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-batched-pv-b1h4kv128",
@@ -278,7 +279,7 @@
    ],
    "greedy_us": 1.158813713118434,
    "ref_cloudrift_us": 5.800558037536089,
-   "segundos": 53.37347960472107,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -295,7 +296,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.17 µs",
-   "tune_s": 46.769407749176025
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-batched-pv-b2h3kv256",
@@ -320,7 +321,7 @@
    ],
    "greedy_us": 1.662533381022513,
    "ref_cloudrift_us": 6.024727315613718,
-   "segundos": 73.90964007377625,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -337,7 +338,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.66 µs",
-   "tune_s": 49.75238227844238
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-batched-qk-b1h4d64",
@@ -360,7 +361,7 @@
    ],
    "greedy_us": 0.963813450653106,
    "ref_cloudrift_us": 5.915266169598822,
-   "segundos": 50.268638134002686,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -377,7 +378,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 0.97 µs",
-   "tune_s": 43.708280086517334
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-batched-qk-b2h3d32",
@@ -400,7 +401,7 @@
    ],
    "greedy_us": 0.9799078106880188,
    "ref_cloudrift_us": 2.872253529276559,
-   "segundos": 46.943936586380005,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -417,7 +418,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 0.96 µs",
-   "tune_s": 40.88692593574524
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-epilogue-residual",
@@ -440,7 +441,7 @@
    ],
    "greedy_us": 1.037905691191554,
    "ref_cloudrift_us": 11.326909065246582,
-   "segundos": 55.07598900794983,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -457,7 +458,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.03 µs",
-   "tune_s": 49.23866558074951
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-f16acc-cp",
@@ -480,7 +481,7 @@
    ],
    "greedy_us": 1.0263969888910651,
    "ref_cloudrift_us": 4.909399107759222,
-   "segundos": 56.09584021568298,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -497,7 +498,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.02 µs",
-   "tune_s": 50.54525709152222
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-f16acc-gmem",
@@ -520,7 +521,7 @@
    ],
    "greedy_us": 1.026625046506524,
    "ref_cloudrift_us": 8.680626102115797,
-   "segundos": 57.46655797958374,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -537,7 +538,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.02 µs",
-   "tune_s": 50.82113862037659
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-f16acc-symbolic-k",
@@ -551,17 +552,17 @@
     "family": "matmul"
    },
    "ok": false,
-   "error": "emmy run salió con código 1: el schedule fijado por el caso ya no se realiza con este compilador (unreproducible pin; emmy no lo mide): k_matmul_2778f0: unreproducible pin: WORK=w1x1 realized (off); TILE=mma_m16n8k16_f16_f16/f1x1 realized (unset) — row NOT benched",
+   "error": "emmy run falló: el schedule fijado por el caso ya no se realiza con este compilador (unreproducible pin; emmy no lo mide): k_matmul_2778f0: unreproducible pin: WORK=w1x1 realized (off); TILE=mma_m16n8k16_f16_f16/f1x1 realized (unset) — row NOT benched",
    "eager_us": null,
    "tcompile_us": null,
    "emmy_us": null,
    "emmy_muestras": [],
    "greedy_us": null,
    "ref_cloudrift_us": 8.047741747671557,
-   "segundos": 14.045836925506592,
+   "segundos": 0.0,
    "tecnicas": {},
    "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
-   "tune_s": 7.366726398468018
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-f16acc-tma",
@@ -584,7 +585,7 @@
    ],
    "greedy_us": 1.0327742202207446,
    "ref_cloudrift_us": 4.535272717475891,
-   "segundos": 50.087912797927856,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -601,7 +602,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.02 µs",
-   "tune_s": 43.89936351776123
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-m128n128k128-f16",
@@ -624,7 +625,7 @@
    ],
    "greedy_us": 1.1452686740085483,
    "ref_cloudrift_us": 6.211776170671356,
-   "segundos": 42.14243245124817,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -641,7 +642,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.03 µs",
-   "tune_s": 35.50102639198303
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-m128n128k128-f32",
@@ -664,7 +665,7 @@
    ],
    "greedy_us": 1.1339025804772973,
    "ref_cloudrift_us": 6.073599873167096,
-   "segundos": 73.7977991104126,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -681,7 +682,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.02 µs",
-   "tune_s": 67.37154722213745
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-m128n128k128-f32-trans",
@@ -704,7 +705,7 @@
    ],
    "greedy_us": 1.1014300398528576,
    "ref_cloudrift_us": 4.792782012373209,
-   "segundos": 66.53554248809814,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -721,7 +722,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 0.96 µs",
-   "tune_s": 52.523465633392334
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-m128n128k132-f32-masked-k",
@@ -744,7 +745,7 @@
    ],
    "greedy_us": 1.414697733707726,
    "ref_cloudrift_us": 7.228753704955612,
-   "segundos": 65.47503733634949,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -761,7 +762,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.40 µs",
-   "tune_s": 57.92243790626526
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-m128n128k132-f32-trans-masked-k",
@@ -784,7 +785,7 @@
    ],
    "greedy_us": 1.376738422550261,
    "ref_cloudrift_us": 6.544296164065599,
-   "segundos": 54.5845513343811,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -801,7 +802,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.21 µs",
-   "tune_s": 48.031718015670776
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-m128n128k136-f32-masked-k",
@@ -824,7 +825,7 @@
    ],
    "greedy_us": 1.5195384621620178,
    "ref_cloudrift_us": 7.089599967002869,
-   "segundos": 49.72109079360962,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -841,7 +842,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.39 µs",
-   "tune_s": 41.8774311542511
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-parity-m256-cp",
@@ -864,7 +865,7 @@
    ],
    "greedy_us": 3.2354730647057295,
    "ref_cloudrift_us": 5.581740268879691,
-   "segundos": 58.1496148109436,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -881,7 +882,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 3.22 µs",
-   "tune_s": 52.43954062461853
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-parity-m256-tma",
@@ -904,7 +905,7 @@
    ],
    "greedy_us": 3.367555560544133,
    "ref_cloudrift_us": 4.512146183344871,
-   "segundos": 56.390021562576294,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -921,7 +922,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 3.24 µs",
-   "tune_s": 49.53322458267212
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-raster-gm8",
@@ -944,7 +945,7 @@
    ],
    "greedy_us": 3.405190771445632,
    "ref_cloudrift_us": 4.975598062103118,
-   "segundos": 55.6148796081543,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -961,7 +962,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 3.35 µs",
-   "tune_s": 48.80803465843201
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-splitk-atomic",
@@ -984,7 +985,7 @@
    ],
    "greedy_us": 1.584527431987226,
    "ref_cloudrift_us": null,
-   "segundos": 58.08764624595642,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1001,7 +1002,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.57 µs",
-   "tune_s": 50.4345166683197
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-splitk-atomic-f16acc-tma-rolled",
@@ -1024,7 +1025,7 @@
    ],
    "greedy_us": 2.3190826177597046,
    "ref_cloudrift_us": null,
-   "segundos": 70.22777557373047,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1041,7 +1042,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 2.30 µs",
-   "tune_s": 62.89366626739502
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-splitk-deferred",
@@ -1064,7 +1065,7 @@
    ],
    "greedy_us": 1.7064455896615982,
    "ref_cloudrift_us": null,
-   "segundos": 53.4399528503418,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1081,7 +1082,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.58 µs",
-   "tune_s": 46.86873698234558
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-trans-b-staged-cp",
@@ -1104,7 +1105,7 @@
    ],
    "greedy_us": 1.0873650899156928,
    "ref_cloudrift_us": 6.074926838642213,
-   "segundos": 54.05085611343384,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1121,7 +1122,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 0.97 µs",
-   "tune_s": 47.35151696205139
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-mma-trans-b-staged-tma",
@@ -1144,7 +1145,7 @@
    ],
    "greedy_us": 1.0925490641966462,
    "ref_cloudrift_us": 5.791441992271778,
-   "segundos": 46.249999046325684,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1161,7 +1162,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 0.97 µs",
-   "tune_s": 38.86896586418152
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-scalar-register-tile",
@@ -1186,7 +1187,7 @@
    ],
    "greedy_us": 3.441212000325322,
    "ref_cloudrift_us": 97.23520278930664,
-   "segundos": 75.19589591026306,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1203,7 +1204,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 3.32 µs",
-   "tune_s": 53.76497769355774
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-symbolic-batched-mk-greedy",
@@ -1226,7 +1227,7 @@
    ],
    "greedy_us": 354.8159897327423,
    "ref_cloudrift_us": 38.30522986558768,
-   "segundos": 23.279778480529785,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1243,7 +1244,7 @@
     "pdl": "SI"
    },
    "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
-   "tune_s": 11.14863395690918
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-symbolic-computed-a-k-warp",
@@ -1266,7 +1267,7 @@
    ],
    "greedy_us": 4626.656055450439,
    "ref_cloudrift_us": 33.37813218434651,
-   "segundos": 22.087865352630615,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1283,7 +1284,7 @@
     "pdl": "SI"
    },
    "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
-   "tune_s": 12.495179653167725
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-symbolic-demoted-n-greedy",
@@ -1306,7 +1307,7 @@
    ],
    "greedy_us": 20.424185320734978,
    "ref_cloudrift_us": 22.593454881147903,
-   "segundos": 46.98310589790344,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1323,7 +1324,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 116.52 µs",
-   "tune_s": 40.42558145523071
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-symbolic-demoted-pv-greedy",
@@ -1337,17 +1338,17 @@
     "family": "matmul"
    },
    "ok": false,
-   "error": "emmy run salió con código 1: el schedule fijado por el caso ya no se realiza con este compilador (unreproducible pin; emmy no lo mide): k_matmul_softmax_reduce_60ce07: unreproducible pin: WORK=w2x2 realized t128; TILE=mma_m16n8k16_f16_f32/f4x8/k8 realized (unset) (refused: atom mma_m16n8k16_f16_f32 is not offered here (offered: none)) — row NOT benched",
+   "error": "emmy run falló: el schedule fijado por el caso ya no se realiza con este compilador (unreproducible pin; emmy no lo mide): k_matmul_softmax_reduce_60ce07: unreproducible pin: WORK=w2x2 realized t128; TILE=mma_m16n8k16_f16_f32/f4x8/k8 realized (unset) (refused: atom mma_m16n8k16_f16_f32 is not offered here (offered: none)) — row NOT benched",
    "eager_us": null,
    "tcompile_us": null,
    "emmy_us": null,
    "emmy_muestras": [],
    "greedy_us": null,
    "ref_cloudrift_us": 84.25333102544148,
-   "segundos": 20.184839963912964,
+   "segundos": 0.0,
    "tecnicas": {},
    "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
-   "tune_s": 11.045517683029175
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-symbolic-k-gmem",
@@ -1370,7 +1371,7 @@
    ],
    "greedy_us": 3.338244976475835,
    "ref_cloudrift_us": 12.74379476522788,
-   "segundos": 23.263003826141357,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1387,7 +1388,7 @@
     "pdl": "SI"
    },
    "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
-   "tune_s": 13.08950424194336
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-symbolic-k-trans",
@@ -1412,7 +1413,7 @@
    ],
    "greedy_us": 7.850531488656998,
    "ref_cloudrift_us": 13.858222299151949,
-   "segundos": 57.213215827941895,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1429,7 +1430,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 7.72 µs",
-   "tune_s": 31.996386289596558
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-symbolic-m-residual-cp",
@@ -1452,7 +1453,7 @@
    ],
    "greedy_us": 5.622949451208115,
    "ref_cloudrift_us": 7.623816719491973,
-   "segundos": 63.73587226867676,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1469,7 +1470,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 5.49 µs",
-   "tune_s": 55.1430881023407
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-symbolic-m-tma",
@@ -1492,7 +1493,7 @@
    ],
    "greedy_us": 4.876560531556606,
    "ref_cloudrift_us": 6.2784809100476995,
-   "segundos": 56.82217216491699,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1509,7 +1510,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 4.78 µs",
-   "tune_s": 49.88520646095276
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-symbolic-mn-gmem",
@@ -1532,7 +1533,7 @@
    ],
    "greedy_us": 4.183765035122633,
    "ref_cloudrift_us": 5.161948154627351,
-   "segundos": 42.111939668655396,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1549,7 +1550,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 9.90 µs",
-   "tune_s": 35.71324324607849
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-warp-band-p1-tma-d1-m128",
@@ -1572,7 +1573,7 @@
    ],
    "greedy_us": 1.3948235427960753,
    "ref_cloudrift_us": 4.473399153739348,
-   "segundos": 45.61571907997131,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1589,7 +1590,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.24 µs",
-   "tune_s": 39.65089964866638
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-warp-band-p1-tma-d2-m100",
@@ -1612,7 +1613,7 @@
    ],
    "greedy_us": 1.3800985179841518,
    "ref_cloudrift_us": 2.9079765952818577,
-   "segundos": 46.341572523117065,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1629,7 +1630,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.25 µs",
-   "tune_s": 40.15831732749939
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-warp-band-p1-tma-d2-m128",
@@ -1652,7 +1653,7 @@
    ],
    "greedy_us": 1.2517119757831097,
    "ref_cloudrift_us": 2.946366925211348,
-   "segundos": 42.11377000808716,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1669,7 +1670,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.24 µs",
-   "tune_s": 35.7571964263916
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-warp-band-p2-tma-d2-m128",
@@ -1692,7 +1693,7 @@
    ],
    "greedy_us": 1.350883045233786,
    "ref_cloudrift_us": 2.9317647218704224,
-   "segundos": 38.415483236312866,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1709,7 +1710,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.24 µs",
-   "tune_s": 30.14033794403076
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-warp-gmem-direct",
@@ -1732,7 +1733,7 @@
    ],
    "greedy_us": 1.1490037431940436,
    "ref_cloudrift_us": 3.4193655540203225,
-   "segundos": 41.46286582946777,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1749,7 +1750,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.02 µs",
-   "tune_s": 35.35749793052673
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-warp-splitk",
@@ -1772,7 +1773,7 @@
    ],
    "greedy_us": 8.0035962164402,
    "ref_cloudrift_us": null,
-   "segundos": 73.68358111381531,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
@@ -1789,7 +1790,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 7.89 µs",
-   "tune_s": 67.38552331924438
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f16-warp-symbolic-m-cp",
@@ -1812,7 +1813,7 @@
    ],
    "greedy_us": 4.8674591816961765,
    "ref_cloudrift_us": 6.195521954470461,
-   "segundos": 38.97303509712219,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -1829,7 +1830,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 4.77 µs",
-   "tune_s": 32.849101305007935
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-epilogue-bias",
@@ -1852,12 +1853,12 @@
    ],
    "greedy_us": 1.3626667205244303,
    "ref_cloudrift_us": 2.098621816194358,
-   "segundos": 31.30202031135559,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "SI",
@@ -1869,7 +1870,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.19 µs",
-   "tune_s": 25.798592805862427
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-epilogue-relu",
@@ -1892,12 +1893,12 @@
    ],
    "greedy_us": 1.0116390185430646,
    "ref_cloudrift_us": 1.9038779134968764,
-   "segundos": 39.323442459106445,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "NO",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "SI",
@@ -1909,7 +1910,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.01 µs",
-   "tune_s": 34.018298387527466
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-epilogue-residual",
@@ -1932,12 +1933,12 @@
    ],
    "greedy_us": 1.3124247780069709,
    "ref_cloudrift_us": 2.2020087893313773,
-   "segundos": 44.255847692489624,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "SI",
@@ -1949,7 +1950,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.20 µs",
-   "tune_s": 38.10619831085205
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-epilogue-scale",
@@ -1972,12 +1973,12 @@
    ],
    "greedy_us": 1.1549630435183644,
    "ref_cloudrift_us": 2.0921681107593186,
-   "segundos": 39.769983530044556,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "NO",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "SI",
@@ -1989,7 +1990,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.14 µs",
-   "tune_s": 32.99694848060608
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-mixed-dtype-slabs",
@@ -2012,7 +2013,7 @@
    ],
    "greedy_us": 1.1022408725693822,
    "ref_cloudrift_us": null,
-   "segundos": 39.47626090049744,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -2029,7 +2030,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.11 µs",
-   "tune_s": 33.28570508956909
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-reduce-coop",
@@ -2052,12 +2053,12 @@
    ],
    "greedy_us": 1.302531803958118,
    "ref_cloudrift_us": 4.576733899772714,
-   "segundos": 30.58052945137024,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "NO",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -2069,7 +2070,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.19 µs",
-   "tune_s": 24.921898365020752
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-reduce-coop-ilp",
@@ -2092,12 +2093,12 @@
    ],
    "greedy_us": 1.3077829498797655,
    "ref_cloudrift_us": 3.65878395981841,
-   "segundos": 34.57156944274902,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "NO",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -2109,7 +2110,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.19 µs",
-   "tune_s": 26.933703660964966
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-reduce-ilp",
@@ -2132,12 +2133,12 @@
    ],
    "greedy_us": 1.1975618544965982,
    "ref_cloudrift_us": 4.06713461389347,
-   "segundos": 32.4502899646759,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -2149,7 +2150,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.19 µs",
-   "tune_s": 26.01703643798828
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-scalar-bm8-outside-hints",
@@ -2172,12 +2173,12 @@
    ],
    "greedy_us": 240.55199325084686,
    "ref_cloudrift_us": 1596.4800119400024,
-   "segundos": 93.73232531547546,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "NO",
     "vectorizacion": "NO",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "SI",
@@ -2189,7 +2190,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 241.61 µs",
-   "tune_s": 76.08137369155884
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-scalar-composite-fm4-fn4",
@@ -2212,12 +2213,12 @@
    ],
    "greedy_us": 251.5600025653839,
    "ref_cloudrift_us": 530.4960012435913,
-   "segundos": 97.6368236541748,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "SI",
@@ -2229,7 +2230,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 241.98 µs",
-   "tune_s": 83.20107102394104
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-scalar-composite-fn4",
@@ -2252,12 +2253,12 @@
    ],
    "greedy_us": 240.55199325084686,
    "ref_cloudrift_us": 1271.232008934021,
-   "segundos": 86.02791500091553,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "SI",
@@ -2269,7 +2270,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 242.09 µs",
-   "tune_s": 72.83710408210754
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-scalar-masked-m-fm26",
@@ -2292,12 +2293,12 @@
    ],
    "greedy_us": 252.32800841331482,
    "ref_cloudrift_us": 659.8079800605774,
-   "segundos": 111.006112575531,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "SI",
@@ -2309,7 +2310,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 241.94 µs",
-   "tune_s": 99.99492979049683
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-scalar-masked-n-fn26",
@@ -2334,12 +2335,12 @@
    ],
    "greedy_us": 8.210696280002594,
    "ref_cloudrift_us": 75.39446078813992,
-   "segundos": 65.13564872741699,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -2351,7 +2352,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 8.08 µs",
-   "tune_s": 46.013229846954346
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-scalar-masked-n-gmem",
@@ -2376,12 +2377,12 @@
    ],
    "greedy_us": 1.4322547940537333,
    "ref_cloudrift_us": 2.838818187063391,
-   "segundos": 52.41982865333557,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -2393,7 +2394,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.08 µs",
-   "tune_s": 30.29180407524109
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-scalar-staging-d1-128x128x128",
@@ -2418,12 +2419,12 @@
    ],
    "greedy_us": 1.517247292213142,
    "ref_cloudrift_us": 3.285544540229017,
-   "segundos": 54.69083523750305,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "NO",
@@ -2435,7 +2436,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.50 µs",
-   "tune_s": 35.12389349937439
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-scalar-staging-d1-64x64x64",
@@ -2458,12 +2459,12 @@
    ],
    "greedy_us": 1.3146852143108845,
    "ref_cloudrift_us": 1.2648314124277789,
-   "segundos": 27.614246368408203,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "NO",
@@ -2475,7 +2476,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.19 µs",
-   "tune_s": 21.85598850250244
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-scalar-staging-d2-128x128x128",
@@ -2500,12 +2501,12 @@
    ],
    "greedy_us": 1.6337877605110407,
    "ref_cloudrift_us": 3.0576687283311155,
-   "segundos": 33.847869634628296,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "SI",
@@ -2517,7 +2518,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.51 µs",
-   "tune_s": 15.82190465927124
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-scalar-staging-d2-64x64x64",
@@ -2540,12 +2541,12 @@
    ],
    "greedy_us": 1.2021961156278849,
    "ref_cloudrift_us": 1.3773683021808492,
-   "segundos": 22.331960916519165,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "SI",
@@ -2557,7 +2558,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.19 µs",
-   "tune_s": 15.969733238220215
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-scalar-staging-gmem-128x128x128",
@@ -2582,12 +2583,12 @@
    ],
    "greedy_us": 1.5084878541529179,
    "ref_cloudrift_us": 3.240519529813296,
-   "segundos": 38.58875632286072,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -2599,7 +2600,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.52 µs",
-   "tune_s": 17.047152042388916
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-scalar-staging-gmem-64x64x64",
@@ -2624,12 +2625,12 @@
    ],
    "greedy_us": 1.3140097726136446,
    "ref_cloudrift_us": 2.001378722563535,
-   "segundos": 37.399128913879395,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -2641,7 +2642,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.19 µs",
-   "tune_s": 16.788495540618896
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-scalar-tma-staged",
@@ -2664,12 +2665,12 @@
    ],
    "greedy_us": 239.02399837970734,
    "ref_cloudrift_us": 426.1760115623474,
-   "segundos": 35.62402963638306,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "SI",
@@ -2681,7 +2682,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 241.30 µs",
-   "tune_s": 27.371429204940796
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-tile-per-cell",
@@ -2704,12 +2705,12 @@
    ],
    "greedy_us": 1.3192258775234222,
    "ref_cloudrift_us": 1.907786226454582,
-   "segundos": 26.402508020401,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "NO",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -2721,7 +2722,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.19 µs",
-   "tune_s": 19.039705991744995
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-tile-reg-2d",
@@ -2744,12 +2745,12 @@
    ],
    "greedy_us": 1.3096354668959975,
    "ref_cloudrift_us": 3.105093233333611,
-   "segundos": 21.316039562225342,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -2761,7 +2762,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.19 µs",
-   "tune_s": 15.182864904403687
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-tile-reg-fn3",
@@ -2784,12 +2785,12 @@
    ],
    "greedy_us": 1.205194741487503,
    "ref_cloudrift_us": 3.945486112074418,
-   "segundos": 22.004470586776733,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -2801,7 +2802,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.19 µs",
-   "tune_s": 16.262259483337402
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-tile-reg-inner-fn4",
@@ -2824,12 +2825,12 @@
    ],
    "greedy_us": 1.1955373920500278,
    "ref_cloudrift_us": 3.1378113623685056,
-   "segundos": 22.75680637359619,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -2841,7 +2842,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.19 µs",
-   "tune_s": 16.56876254081726
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/f32-tile-single-cta",
@@ -2864,12 +2865,12 @@
    ],
    "greedy_us": 1.1950262123718858,
    "ref_cloudrift_us": 2.8779711091209217,
-   "segundos": 24.44126558303833,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "SI",
@@ -2881,7 +2882,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.19 µs",
-   "tune_s": 17.801190853118896
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/fp4-tma-w4a4-linear-ring",
@@ -2905,7 +2906,7 @@
    ],
    "greedy_us": 2.2881797049194574,
    "ref_cloudrift_us": null,
-   "segundos": 47.78980231285095,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -2922,7 +2923,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 2.30 µs",
-   "tune_s": 39.401639223098755
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/fp4-tma-w4a4-split-k",
@@ -2946,7 +2947,7 @@
    ],
    "greedy_us": 2.2921347990632057,
    "ref_cloudrift_us": null,
-   "segundos": 51.0035297870636,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -2963,7 +2964,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 2.30 µs",
-   "tune_s": 42.08287477493286
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/imap-reshape-a-cp",
@@ -2988,7 +2989,7 @@
    ],
    "greedy_us": 1.1527272872626781,
    "ref_cloudrift_us": 1.754263582883275,
-   "segundos": 59.90420389175415,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "NO",
@@ -3005,7 +3006,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.06 µs",
-   "tune_s": 40.71323084831238
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/imap-reshape-a-gmem",
@@ -3028,7 +3029,7 @@
    ],
    "greedy_us": 1.0430364636704326,
    "ref_cloudrift_us": null,
-   "segundos": 40.82594919204712,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -3045,7 +3046,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.04 µs",
-   "tune_s": 33.98371076583862
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/imap-reshape-b-gmem",
@@ -3068,7 +3069,7 @@
    ],
    "greedy_us": 1.1492230696603656,
    "ref_cloudrift_us": null,
-   "segundos": 43.11174774169922,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -3085,7 +3086,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.04 µs",
-   "tune_s": 36.99657726287842
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/imap-slice-a-cp",
@@ -3110,7 +3111,7 @@
    ],
    "greedy_us": 1.1667070211842656,
    "ref_cloudrift_us": 1.8456087781054509,
-   "segundos": 60.05890250205994,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "NO",
@@ -3127,7 +3128,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.04 µs",
-   "tune_s": 41.418055295944214
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/imap-slice-a-gmem",
@@ -3152,7 +3153,7 @@
    ],
    "greedy_us": 1.03718601167202,
    "ref_cloudrift_us": 2.0573031042040006,
-   "segundos": 60.49099040031433,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
@@ -3169,7 +3170,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.03 µs",
-   "tune_s": 39.324806213378906
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/imap-slice-a-tma",
@@ -3192,7 +3193,7 @@
    ],
    "greedy_us": 1.153061632066965,
    "ref_cloudrift_us": 2.103039967386346,
-   "segundos": 31.24671483039856,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "NO",
@@ -3209,7 +3210,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.04 µs",
-   "tune_s": 25.906179189682007
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/imap-transpose-a-gmem",
@@ -3232,7 +3233,7 @@
    ],
    "greedy_us": 3.95782757550478,
    "ref_cloudrift_us": 7.784250192344189,
-   "segundos": 28.558690309524536,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
@@ -3249,7 +3250,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 3.88 µs",
-   "tune_s": 22.56378984451294
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/mma-fp4-encode-epilogue",
@@ -3273,7 +3274,7 @@
    ],
    "greedy_us": 1.3714457163587213,
    "ref_cloudrift_us": null,
-   "segundos": 52.481030225753784,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "NO",
@@ -3290,7 +3291,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.24 µs",
-   "tune_s": 43.07972741127014
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/mma-fp4-packed-block-scales",
@@ -3314,7 +3315,7 @@
    ],
    "greedy_us": 1.4383221277967095,
    "ref_cloudrift_us": null,
-   "segundos": 58.415297746658325,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -3331,7 +3332,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.45 µs",
-   "tune_s": 48.01254749298096
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/nvfp4-runtime-rows",
@@ -3355,7 +3356,7 @@
    ],
    "greedy_us": 1.241048681549728,
    "ref_cloudrift_us": null,
-   "segundos": 60.71040940284729,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -3372,7 +3373,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.21 µs",
-   "tune_s": 52.49239802360535
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/nvfp4-unit-n",
@@ -3396,7 +3397,7 @@
    ],
    "greedy_us": 1.2450037756934762,
    "ref_cloudrift_us": null,
-   "segundos": 58.004913330078125,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -3413,7 +3414,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.25 µs",
-   "tune_s": 50.92016363143921
+   "tune_s": 0.0
   },
   {
    "caso": "matmul/nvfp4-w4a4-packed-slab-loopify",
@@ -3437,7 +3438,7 @@
    ],
    "greedy_us": 1.661387737840414,
    "ref_cloudrift_us": null,
-   "segundos": 56.116337060928345,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -3454,7 +3455,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.23 µs",
-   "tune_s": 43.82900953292847
+   "tune_s": 0.0
   },
   {
    "caso": "attention/rmsnorm-qk-sdpa-composed-cut",
@@ -3477,7 +3478,7 @@
    ],
    "greedy_us": 1.6805925406515598,
    "ref_cloudrift_us": null,
-   "segundos": 55.635918855667114,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
@@ -3494,7 +3495,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.62 µs",
-   "tune_s": 46.651806116104126
+   "tune_s": 0.0
   },
   {
    "caso": "attention/rmsnorm-qk-sdpa-output-axis",
@@ -3517,7 +3518,7 @@
    ],
    "greedy_us": 1.6049777623265982,
    "ref_cloudrift_us": null,
-   "segundos": 48.23532557487488,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
@@ -3534,7 +3535,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.60 µs",
-   "tune_s": 40.69079852104187
+   "tune_s": 0.0
   },
   {
    "caso": "attention/rmsnorm-qk-sdpa-stat-b-cut",
@@ -3557,7 +3558,7 @@
    ],
    "greedy_us": 1.633340260013938,
    "ref_cloudrift_us": null,
-   "segundos": 49.11504030227661,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
@@ -3574,7 +3575,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.58 µs",
-   "tune_s": 40.388402700424194
+   "tune_s": 0.0
   },
   {
    "caso": "attention/rmsnorm-qk-sdpa-stat-cut",
@@ -3597,7 +3598,7 @@
    ],
    "greedy_us": 1.5863635344430804,
    "ref_cloudrift_us": null,
-   "segundos": 43.450517416000366,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
@@ -3614,7 +3615,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.58 µs",
-   "tune_s": 29.564176082611084
+   "tune_s": 0.0
   },
   {
    "caso": "fused/norm-linear-f16-scalar-reduce",
@@ -3639,7 +3640,7 @@
    ],
    "greedy_us": 2.2040000185370445,
    "ref_cloudrift_us": 80.04266520341237,
-   "segundos": 73.35565209388733,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
@@ -3656,7 +3657,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 2.09 µs",
-   "tune_s": 47.85128402709961
+   "tune_s": 0.0
   },
   {
    "caso": "fused/norm-linear-f16-warp-masked-m",
@@ -3679,7 +3680,7 @@
    ],
    "greedy_us": 2.0989016629755497,
    "ref_cloudrift_us": 11.583255473957506,
-   "segundos": 45.605902910232544,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -3696,7 +3697,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 2.10 µs",
-   "tune_s": 38.95053148269653
+   "tune_s": 0.0
   },
   {
    "caso": "fused/norm-weight-linear-f16-computed-b",
@@ -3719,7 +3720,7 @@
    ],
    "greedy_us": 10.927261784672737,
    "ref_cloudrift_us": null,
-   "segundos": 47.601664304733276,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -3736,7 +3737,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 10.90 µs",
-   "tune_s": 40.94865608215332
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/rmsnorm-knorm-s128",
@@ -3760,12 +3761,12 @@
    ],
    "greedy_us": 1.0970644652843475,
    "ref_cloudrift_us": null,
-   "segundos": 29.26561427116394,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -3777,7 +3778,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 0.98 µs",
-   "tune_s": 22.811577320098877
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/rmsnorm-knorm-s32",
@@ -3801,12 +3802,12 @@
    ],
    "greedy_us": 0.9151769336313009,
    "ref_cloudrift_us": null,
-   "segundos": 27.94804883003235,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -3818,7 +3819,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 0.81 µs",
-   "tune_s": 21.9856915473938
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/rmsnorm-knorm-s512",
@@ -3842,12 +3843,12 @@
    ],
    "greedy_us": 1.4816471375524998,
    "ref_cloudrift_us": null,
-   "segundos": 32.178179025650024,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -3859,7 +3860,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.48 µs",
-   "tune_s": 25.77981448173523
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/rmsnorm-layer-s128",
@@ -3883,12 +3884,12 @@
    ],
    "greedy_us": 1.4497392112389207,
    "ref_cloudrift_us": null,
-   "segundos": 31.787242889404297,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -3900,7 +3901,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.33 µs",
-   "tune_s": 22.177213191986084
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/rmsnorm-layer-s32",
@@ -3924,12 +3925,12 @@
    ],
    "greedy_us": 1.1655293637886643,
    "ref_cloudrift_us": null,
-   "segundos": 29.071870803833008,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -3941,7 +3942,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.05 µs",
-   "tune_s": 21.95160722732544
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/rmsnorm-layer-s512",
@@ -3965,12 +3966,12 @@
    ],
    "greedy_us": 1.8833643989637494,
    "ref_cloudrift_us": null,
-   "segundos": 31.233543157577515,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -3982,7 +3983,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.77 µs",
-   "tune_s": 24.809930086135864
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/rmsnorm-qnorm-s128",
@@ -4006,12 +4007,12 @@
    ],
    "greedy_us": 1.1848205467686057,
    "ref_cloudrift_us": null,
-   "segundos": 32.00755786895752,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -4023,7 +4024,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.17 µs",
-   "tune_s": 25.129314661026
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/rmsnorm-qnorm-s32",
@@ -4047,12 +4048,12 @@
    ],
    "greedy_us": 1.009177416563034,
    "ref_cloudrift_us": null,
-   "segundos": 29.47698211669922,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -4064,7 +4065,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 0.88 µs",
-   "tune_s": 23.327196836471558
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/rmsnorm-qnorm-s512",
@@ -4088,12 +4089,12 @@
    ],
    "greedy_us": 2.457385417073965,
    "ref_cloudrift_us": null,
-   "segundos": 33.976078271865845,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -4105,7 +4106,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 2.32 µs",
-   "tune_s": 23.139864444732666
+   "tune_s": 0.0
   },
   {
    "caso": "reduce/fused-add-rms-norm",
@@ -4128,12 +4129,12 @@
    ],
    "greedy_us": 0.9082125034183264,
    "ref_cloudrift_us": null,
-   "segundos": 31.580373525619507,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -4145,7 +4146,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 0.80 µs",
-   "tune_s": 24.74878740310669
+   "tune_s": 0.0
   },
   {
    "caso": "reduce/fused-add-rms-norm-escaping-residual",
@@ -4168,12 +4169,12 @@
    ],
    "greedy_us": 0.9257040219381452,
    "ref_cloudrift_us": null,
-   "segundos": 30.692964792251587,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -4185,7 +4186,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 0.81 µs",
-   "tune_s": 24.037495851516724
+   "tune_s": 0.0
   },
   {
    "caso": "reduce/rms-norm-cut-sweep-work",
@@ -4208,12 +4209,12 @@
    ],
    "greedy_us": 4.580571316182613,
    "ref_cloudrift_us": null,
-   "segundos": 33.93776535987854,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -4225,7 +4226,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 4.38 µs",
-   "tune_s": 26.19174361228943
+   "tune_s": 0.0
   },
   {
    "caso": "reduce/rms-norm-packed-cells",
@@ -4248,7 +4249,7 @@
    ],
    "greedy_us": 1.413193647749722,
    "ref_cloudrift_us": null,
-   "segundos": 39.96037435531616,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
@@ -4265,7 +4266,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1.25 µs",
-   "tune_s": 30.168882608413696
+   "tune_s": 0.0
   },
   {
    "caso": "fused/fp4-tma-w4a4-two-channel-p2",
@@ -4288,7 +4289,7 @@
    ],
    "greedy_us": 2.716550137847662,
    "ref_cloudrift_us": null,
-   "segundos": 71.08729863166809,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -4305,7 +4306,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 2.68 µs",
-   "tune_s": 51.71594977378845
+   "tune_s": 0.0
   },
   {
    "caso": "fused/nvfp4-gate-up-requant-full-projection-cut",
@@ -4328,7 +4329,7 @@
    ],
    "greedy_us": 61.319999396800995,
    "ref_cloudrift_us": null,
-   "segundos": 56.18786144256592,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "NO",
@@ -4345,7 +4346,7 @@
     "pdl": "SI"
    },
    "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 3",
-   "tune_s": 32.95614409446716
+   "tune_s": 0.0
   },
   {
    "caso": "fused/nvfp4-gate-up-requant-place-cut",
@@ -4368,7 +4369,7 @@
    ],
    "greedy_us": 61.38399988412857,
    "ref_cloudrift_us": null,
-   "segundos": 56.040568590164185,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -4385,7 +4386,7 @@
     "pdl": "SI"
    },
    "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 3",
-   "tune_s": 29.161717176437378
+   "tune_s": 0.0
   },
   {
    "caso": "fused/nvfp4-quantize-cut-shared-normalizer",
@@ -4408,12 +4409,12 @@
    ],
    "greedy_us": 36.978963762521744,
    "ref_cloudrift_us": null,
-   "segundos": 38.6606981754303,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -4425,7 +4426,7 @@
     "pdl": "SI"
    },
    "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
-   "tune_s": 24.350839853286743
+   "tune_s": 0.0
   },
   {
    "caso": "fused/nvfp4-w4a16-sibling-cut-async",
@@ -4448,7 +4449,7 @@
    ],
    "greedy_us": 7.12541164830327,
    "ref_cloudrift_us": null,
-   "segundos": 59.33772945404053,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -4465,7 +4466,7 @@
     "pdl": "SI"
    },
    "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
-   "tune_s": 30.508598804473877
+   "tune_s": 0.0
   },
   {
    "caso": "fused/nvfp4-w4a16-sibling-cut-tma-p2",
@@ -4488,7 +4489,7 @@
    ],
    "greedy_us": 7.177576422691345,
    "ref_cloudrift_us": null,
-   "segundos": 53.24040865898132,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
@@ -4505,7 +4506,7 @@
     "pdl": "SI"
    },
    "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
-   "tune_s": 28.04476022720337
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/gated-mlp-s128",
@@ -4528,12 +4529,12 @@
    ],
    "greedy_us": 40.85564985871315,
    "ref_cloudrift_us": null,
-   "segundos": 91.84506011009216,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -4545,7 +4546,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 40.69 µs",
-   "tune_s": 77.3204345703125
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/gated-mlp-s32",
@@ -4568,12 +4569,12 @@
    ],
    "greedy_us": 113.28355222940445,
    "ref_cloudrift_us": null,
-   "segundos": 77.58984732627869,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -4585,7 +4586,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 112.62 µs",
-   "tune_s": 64.68944549560547
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/gated-mlp-s512",
@@ -4608,12 +4609,12 @@
    ],
    "greedy_us": 122.57999926805496,
    "ref_cloudrift_us": null,
-   "segundos": 74.92222046852112,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -4625,7 +4626,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 122.02 µs",
-   "tune_s": 66.54185628890991
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/matmul-add-downproj-s128",
@@ -4648,12 +4649,12 @@
    ],
    "greedy_us": 19.859200343489647,
    "ref_cloudrift_us": 44.56145384094932,
-   "segundos": 38.84218239784241,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "NO",
@@ -4665,7 +4666,7 @@
     "pdl": "SI"
    },
    "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
-   "tune_s": 24.977370500564575
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/matmul-add-downproj-s32",
@@ -4688,12 +4689,12 @@
    ],
    "greedy_us": 14.9722034111619,
    "ref_cloudrift_us": 39.57376003265381,
-   "segundos": 61.45919132232666,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "NO",
@@ -4705,7 +4706,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 14.87 µs",
-   "tune_s": 53.431138038635254
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/matmul-add-downproj-s512",
@@ -4728,12 +4729,12 @@
    ],
    "greedy_us": 69.16800141334534,
    "ref_cloudrift_us": 153.71732910474142,
-   "segundos": 69.25321388244629,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "NO",
@@ -4745,7 +4746,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 68.83 µs",
-   "tune_s": 52.38954401016235
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/matmul-add-oproj-s128",
@@ -4768,12 +4769,12 @@
    ],
    "greedy_us": 14.043428003787994,
    "ref_cloudrift_us": 30.06060556931929,
-   "segundos": 34.542776584625244,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "NO",
@@ -4785,7 +4786,7 @@
     "pdl": "SI"
    },
    "tune": "no aplicable/falló: ValueError: --tune tunes a program with one scheduled kernel; this one has 2",
-   "tune_s": 20.166420459747314
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/matmul-add-oproj-s32",
@@ -4808,12 +4809,12 @@
    ],
    "greedy_us": 10.342736728489399,
    "ref_cloudrift_us": 26.935351861489785,
-   "segundos": 67.79998683929443,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "NO",
@@ -4825,7 +4826,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 10.34 µs",
-   "tune_s": 57.28537082672119
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/matmul-add-oproj-s512",
@@ -4848,12 +4849,12 @@
    ],
    "greedy_us": 46.5996190905571,
    "ref_cloudrift_us": 102.91199684143066,
-   "segundos": 59.91861009597778,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "NO",
@@ -4865,7 +4866,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 46.66 µs",
-   "tune_s": 48.02288842201233
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/matmul-kvproj-s128",
@@ -4888,12 +4889,12 @@
    ],
    "greedy_us": 11.742666363716125,
    "ref_cloudrift_us": 15.688126995449975,
-   "segundos": 63.051401138305664,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "NO",
@@ -4905,7 +4906,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 11.57 µs",
-   "tune_s": 50.66269540786743
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/matmul-kvproj-s32",
@@ -4928,12 +4929,12 @@
    ],
    "greedy_us": 5.994666833430529,
    "ref_cloudrift_us": 13.773333695199755,
-   "segundos": 59.03911519050598,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "NO",
@@ -4945,7 +4946,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 5.87 µs",
-   "tune_s": 48.53796935081482
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/matmul-kvproj-s512",
@@ -4968,12 +4969,12 @@
    ],
    "greedy_us": 23.54319952428341,
    "ref_cloudrift_us": 52.618105160562614,
-   "segundos": 62.078206062316895,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "NO",
@@ -4985,7 +4986,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 23.54 µs",
-   "tune_s": 54.781946897506714
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/matmul-qproj-s128",
@@ -5008,12 +5009,12 @@
    ],
    "greedy_us": 14.46888130158186,
    "ref_cloudrift_us": 31.247999519109726,
-   "segundos": 70.19620442390442,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "NO",
@@ -5025,7 +5026,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 14.46 µs",
-   "tune_s": 61.4202446937561
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/matmul-qproj-s32",
@@ -5048,12 +5049,12 @@
    ],
    "greedy_us": 8.096710778772831,
    "ref_cloudrift_us": 14.20342837061201,
-   "segundos": 72.68720984458923,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "NO",
@@ -5065,7 +5066,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 7.93 µs",
-   "tune_s": 53.054187059402466
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/matmul-qproj-s512",
@@ -5088,12 +5089,12 @@
    ],
    "greedy_us": 39.30751979351044,
    "ref_cloudrift_us": 62.238000333309174,
-   "segundos": 106.00610971450806,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "SI",
     "register_tiling": "SI",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "SI",
     "cp_async_tma": "SI",
     "pipelining": "NO",
@@ -5105,7 +5106,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 39.24 µs",
-   "tune_s": 70.99233436584473
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/sdpa-s128",
@@ -5128,12 +5129,12 @@
    ],
    "greedy_us": 1408.6719751358032,
    "ref_cloudrift_us": null,
-   "segundos": 139.99988269805908,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -5145,7 +5146,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 1410.18 µs",
-   "tune_s": 105.09177923202515
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/sdpa-s32",
@@ -5168,12 +5169,12 @@
    ],
    "greedy_us": 75.74892789125443,
    "ref_cloudrift_us": null,
-   "segundos": 142.55648756027222,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -5185,7 +5186,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 75.29 µs",
-   "tune_s": 128.60428285598755
+   "tune_s": 0.0
   },
   {
    "caso": "qwen3emb/sdpa-s512",
@@ -5208,12 +5209,12 @@
    ],
    "greedy_us": 6266.528129577637,
    "ref_cloudrift_us": null,
-   "segundos": 208.36600804328918,
+   "segundos": 0.0,
    "tecnicas": {
     "factorizacion": "N/A",
     "register_tiling": "N/A",
     "vectorizacion": "SI",
-    "tensor_cores": "NO",
+    "tensor_cores": "N/A",
     "smem_staging": "NO",
     "cp_async_tma": "N/A",
     "pipelining": "N/A",
@@ -5225,7 +5226,7 @@
     "pdl": "SI"
    },
    "tune": "ok: 24/24 variantes medidas, la mejor 6262.08 µs",
-   "tune_s": 198.95478510856628
+   "tune_s": 0.0
   }
  ]
 }

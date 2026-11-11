@@ -34,9 +34,9 @@ KERNEL k_matmul_8612e4  ·  1.60 µs  ·  smem 16.0 KB  ·  __launch_bounds__(25
     [NO ] Cargas vectorizadas e intercalado
           Qué se ha hecho : Sin LDG/STG vectorizados por hilo: además las cargas global→smem van por TMA (2 copias de baldosa entera), así que el ancho de la transacción ya lo da el hardware de copia.
           Evidencia       : reglas vectorize_*/interleave_loads: sin cambios en este kernel
-    [NO ] Tensor Cores (mma.sync + ldmatrix)
-          Qué se ha hecho : Camino escalar: FMA en núcleos CUDA, sin mma.sync.
-          Evidencia       : TILE='f2x2'
+    [N/A] Tensor Cores (mma.sync + ldmatrix)
+          Qué se ha hecho : Entradas fp32: los Tensor Cores no tienen modo fp32 (solo fp16/bf16/TF32/FP8/FP4), así que se calcula con FMA en núcleos CUDA, igual que PyTorch con su opción por defecto. La alternativa sería TF32 (mantisa de 10 bits, pierde precisión), que emmy no ofrece y que en la RTX 5090 rinde lo mismo que fp32 (~87 TFLOP/s a 2 GHz).
+          Evidencia       : dtype de entrada f32 | TILE='f2x2'
 
   2. FLUJO DE DATOS Y SOLAPAMIENTO ASÍNCRONO
     [SI ] Almacenamiento por fases en smem

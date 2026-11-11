@@ -1,9 +1,9 @@
 {
- "fecha": "2026-11-08T23:53:48",
+ "fecha": "2026-11-11T09:25:18",
  "gpu": "NVIDIA GeForce RTX 5090",
  "sm": "sm_120",
  "driver": "610.43.02",
- "git": "6764d63a 2026-11-08",
+ "git": "bf784a76 2026-11-11",
  "torch": "2.15.0+cu132",
  "host": "1531eaebfeed",
  "cats": [
@@ -13,5 +13,5 @@
   "qwen3emb"
  ],
  "ncu": false,
- "tune": 24
+ "tune": 0
 }

@@ -1,0 +1,24 @@
+digraph G {
+  rankdir=TB;
+  node [style="rounded,filled", fontname="Helvetica", fontsize=10];
+  edge [arrowsize=0.7, color="#555555"];
+
+  "p_b_weight_bits" [label="p_b_weight_bits\nconst p_b_weight\n(256,1024) f4e2m1x2", shape=ellipse, fillcolor="#e0e0e0"];
+  "p_b_weight_f4_pairs" [label="p_b_weight_f4_pairs\nconst p_b_weight_f4_pairs\n(256,2) f16", shape=ellipse, fillcolor="#e0e0e0"];
+  "p_b_weight_scale_2" [label="p_b_weight_scale_2\nconst p_b_weight_scale_2\n(1,1) f32", shape=ellipse, fillcolor="#e0e0e0"];
+  "p_b_weight_scale_bits" [label="p_b_weight_scale_bits\nconst p_b_weight_scale\n(256,128) f8e4m3", shape=ellipse, fillcolor="#e0e0e0"];
+  "x_static_fp4_bits" [label="x_static_fp4_bits\ninput\n(24,1024) f4e2m1x2", shape=ellipse, fillcolor="#d0f0c0"];
+  "x_static_fp4_f16_f4_pairs" [label="x_static_fp4_f16_f4_pairs\nconst x_static_fp4_f16_f4_pairs\n(256,2) f16", shape=ellipse, fillcolor="#e0e0e0"];
+  "x_static_fp4_scale_2" [label="x_static_fp4_scale_2\nconst x_static_fp4_scale_2\n(1,1,1) f32", shape=ellipse, fillcolor="#e0e0e0"];
+  "x_static_fp4_scale_bits" [label="x_static_fp4_scale_bits\ninput\n(24,128,1) f8e4m3", shape=ellipse, fillcolor="#d0f0c0"];
+  "linear" [label="linear\ncuda\n(24,256) f16", shape=box, fillcolor="#c0d8f0"];
+
+  "p_b_weight_scale_2" -> "linear";
+  "x_static_fp4_scale_2" -> "linear";
+  "p_b_weight_scale_bits" -> "linear";
+  "x_static_fp4_scale_bits" -> "linear";
+  "p_b_weight_bits" -> "linear";
+  "x_static_fp4_bits" -> "linear";
+  "p_b_weight_f4_pairs" -> "linear";
+  "x_static_fp4_f16_f4_pairs" -> "linear";
+}

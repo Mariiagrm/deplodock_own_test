@@ -32,9 +32,9 @@ KERNEL k_matmul_reduce_069055  ·  116.99 µs  ·  smem 2.0 KB  ·  __launch_bou
           Qué se ha hecho : regla interleave_loads: cargas recolocadas junto a su primer uso.
           Evidencia       : regla disparada: 095_interleave_loads
           Qué supone      : Una transacción de 64/128 bits (LDG.64/LDG.128) sustituye 2-4 cargas escalares: menos instrucciones de memoria y mejor uso de cada sector de 32 B. Colocar cada carga junto a su primer uso acorta la vida de los registros y mejora la planificación.
-    [NO ] Tensor Cores (mma.sync + ldmatrix)
-          Qué se ha hecho : Camino escalar: FMA en núcleos CUDA, sin mma.sync.
-          Evidencia       : TILE=''
+    [N/A] Tensor Cores (mma.sync + ldmatrix)
+          Qué se ha hecho : Entradas fp32: los Tensor Cores no tienen modo fp32 (solo fp16/bf16/TF32/FP8/FP4), así que se calcula con FMA en núcleos CUDA, igual que PyTorch con su opción por defecto. La alternativa sería TF32 (mantisa de 10 bits, pierde precisión), que emmy no ofrece y que en la RTX 5090 rinde lo mismo que fp32 (~87 TFLOP/s a 2 GHz).
+          Evidencia       : dtype de entrada f32 | TILE=''
 
   2. FLUJO DE DATOS Y SOLAPAMIENTO ASÍNCRONO
     [NO ] Almacenamiento por fases en smem

@@ -348,7 +348,7 @@ def escribir_log(m: Medida, outdir: Path, ncu: bool) -> Path:
         sched = T.parse_schedule(k.get("knobs", {}))
         src = T.read_kernel_source(m.dump, name)
         mismo = greedy_knobs.get(name) == k.get("knobs", {})
-        ctx = T.Contexto(sched, src, fired, noop, k.get("smem_bytes"), (ncu_all or {}).get(name) if mismo else None, corte, sel.facts["op"])
+        ctx = T.Contexto(sched, src, fired, noop, k.get("smem_bytes"), (ncu_all or {}).get(name) if mismo else None, corte, sel.facts["op"], sel.facts["dtype"])
         w("")
         w("-" * 100)
         w(f"KERNEL {name}  ·  {_f(k.get('us'))} µs  ·  smem {(_f((k.get('smem_bytes') or 0) / 1024, 1))} KB"

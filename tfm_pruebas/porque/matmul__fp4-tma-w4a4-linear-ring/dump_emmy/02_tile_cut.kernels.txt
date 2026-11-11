@@ -1,0 +1,32 @@
+=== 0: k_linear_4dbff7 ===
+    place  free=(a0, a1)  unmapped
+    Fold[a2 in 0..2048] contraction
+    ├─ operand[v9]: Fold  free   ‹computed›
+    │  ├─ operand[in4]: load x_static_fp4_bits[a0, a2 / 16 * 8 + a2 % 16 / 2]   ‹materialized›
+    │  ├─ operand[in7]: load x_static_fp4_scale_bits[a0, a2 / 16, 0]   ‹materialized›
+    │  └─ lift: λ(in4, in7, a2) -> (v9)
+    │       in1 = load x_static_fp4_scale_2[0, 0, 0]
+    │       i32 v1 = copy(in4)
+    │       v6 = from_f8e4m3(in7)
+    │       v7 = multiply(in1, v6)
+    │       f16 v8 = copy(v7)
+    │       in5 = load x_static_fp4_f16_f4_pairs[(int)v1 < 0 ? (int)v1 + 256 : (int)v1, a2 % 16 % 2]
+    │       v9 = multiply(in5, v8)
+    ├─ operand[v5]: Fold  free   ‹computed›
+    │  ├─ operand[in2]: load p_b_weight_bits[a1, a2 / 16 * 8 + a2 % 16 / 2]   ‹materialized›
+    │  ├─ operand[in6]: load p_b_weight_scale_bits[a1, a2 / 16]   ‹materialized›
+    │  └─ lift: λ(in2, in6, a2) -> (v5)
+    │       in0 = load p_b_weight_scale_2[0, 0]
+    │       i32 v0 = copy(in2)
+    │       v2 = from_f8e4m3(in6)
+    │       v3 = multiply(in0, v2)
+    │       f16 v4 = copy(v3)
+    │       in3 = load p_b_weight_f4_pairs[(int)v0 < 0 ? (int)v0 + 256 : (int)v0, a2 % 16 % 2]
+    │       v5 = multiply(in3, v4)
+    ├─ init: (0)
+    ├─ lift: λ(a2, v9, v5) -> (v10)
+    │    f32 v10 = multiply(v5, v9)
+    └─ combine: λ(acc0, acc0__o) -> (acc0)
+         acc0 = add(acc0, acc0__o)
+    outputs
+    └─ linear[a0, a1] = acc0

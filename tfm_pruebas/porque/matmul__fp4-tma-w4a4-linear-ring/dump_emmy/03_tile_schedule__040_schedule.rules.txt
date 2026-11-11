@@ -1,0 +1,12 @@
+>>> h:040_schedule
+@@ matched at linear @@
+@@ -1,5 +1,6 @@
+ linear = TileOp(p_b_weight_scale_2, x_static_fp4_scale_2, p_b_weight_scale_bits, x_static_fp4_scale_bits, p_b_weight_bits, x_static_fp4_bits, p_b_weight_f4_pairs, x_static_fp4_f16_f4_pairs)
+-      place  free=(a0, a1)  unmapped
+-      Fold[a2 in 0..2048] contraction
++      place  free=(a0, a1)  grid=(a0, a1)
++      work   w1x2
++      Fold[a2 in 0..2048] contraction   ⟨TILE=mma_m16n8k64_e2m1_f32/f1x2/k8 STAGE=d2/smem-async⟩
+       ├─ operand[v9]: Fold  free   ‹computed›
+       │  ├─ operand[in4]: load x_static_fp4_bits[a0, a2 / 16 * 8 + a2 % 16 / 2]   ‹materialized›
+<<< h:040_schedule

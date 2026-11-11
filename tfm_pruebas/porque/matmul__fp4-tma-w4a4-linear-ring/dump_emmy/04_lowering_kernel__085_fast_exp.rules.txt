@@ -1,0 +1,3 @@
+>>> k:085_fast_exp
+@@ matched at linear @@
+<<< k:085_fast_exp

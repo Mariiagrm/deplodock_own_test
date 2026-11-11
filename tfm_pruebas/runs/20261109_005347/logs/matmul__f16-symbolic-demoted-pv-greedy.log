@@ -4,5 +4,5 @@ CASO matmul/f16-symbolic-demoted-pv-greedy
   Qué es     : matmul+softmax · dtype f16 · entradas (16,{'sym': 'seq_len', 'hint': 512},{'sym': 'seq_len', 'hint': 512}) x (16,{'sym': 'seq_len', 'hint': 512},128)
   Fichero    : tests/compiler/realization/cases/matmul/f16-symbolic-demoted-pv-greedy.json  (fila fijada: k_matmul_softmax_reduce_60ce07)
 ====================================================================================================
-ERROR: emmy run salió con código 1: el schedule fijado por el caso ya no se realiza con este compilador (unreproducible pin; emmy no lo mide): k_matmul_softmax_reduce_60ce07: unreproducible pin: WORK=w2x2 realized t128; TILE=mma_m16n8k16_f16_f32/f4x8/k8 realized (unset) (refused: atom mma_m16n8k16_f16_f32 is not offered here (offered: none)) — row NOT benched
+ERROR: emmy run falló: el schedule fijado por el caso ya no se realiza con este compilador (unreproducible pin; emmy no lo mide): k_matmul_softmax_reduce_60ce07: unreproducible pin: WORK=w2x2 realized t128; TILE=mma_m16n8k16_f16_f32/f4x8/k8 realized (unset) (refused: atom mma_m16n8k16_f16_f32 is not offered here (offered: none)) — row NOT benched
 Salida completa en casos/matmul__f16-symbolic-demoted-pv-greedy/bench_*.stdout.txt

@@ -255,6 +255,7 @@ class Contexto:
     ncu: dict | None  # métricas ncu de este kernel, si se pidieron
     corte: Corte = field(default_factory=Corte)
     op: str = ""  # operaciones del caso (p. ej. "rms_norm+linear")
+    dtype: str = ""  # dtypes de las entradas del caso (p. ej. "f32", "f16/f32")
 
 
 @dataclass
@@ -360,6 +361,10 @@ def _tensor_cores(ctx: Contexto) -> Resultado:
     ldm = ctx.src.count(r"emmy_ldmatrix_\w+\(")
     gload = ctx.src.count(r"emmy_mma_load_[ab]_gmem\w*\(")
     if not s.is_warp and not mma:
+        if ctx.dtype and all(d == "f32" for d in ctx.dtype.split("/")):
+            return Resultado(NA, "Entradas fp32: los Tensor Cores no tienen modo fp32 (solo fp16/bf16/TF32/FP8/FP4), así que se calcula con FMA en núcleos CUDA, igual que PyTorch con su opción por defecto. "
+                             "La alternativa sería TF32 (mantisa de 10 bits, pierde precisión), que emmy no ofrece y que en la RTX 5090 rinde lo mismo que fp32 (~87 TFLOP/s a 2 GHz).",
+                             [f"dtype de entrada {ctx.dtype}", f"TILE={s.raw.get('TILE', '')!r}"])
         return Resultado(NO, "Camino escalar: FMA en núcleos CUDA, sin mma.sync.", [f"TILE={s.raw.get('TILE', '')!r}"])
     am, an, ak = s.atom_mnk
     hecho = f"mma.sync m{am}n{an}k{ak} ({s.atom_in} → acumulador {s.atom_acc}) emitida como PTX: {mma} instrucciones MMA por iteración desenrollada"

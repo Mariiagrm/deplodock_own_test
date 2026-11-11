@@ -1,0 +1,14 @@
+
+Backend        Latency (us)  vs Eager
+-------------------------------------
+Eager PyTorch            32     1.00x
+torch.compile             6     5.81x
+Emmy                      2    14.19x
+
+knobs (greedy pick); golden / ab rows are red where they differ from the greedy pick:
+Kernel                         us       %  grid  block   smem  regs  local B  occ  WORK                           TILE  REDUCE          STAGE  LOOPIFY  RASTER  SHARED_CARRY
+k_linear_4dbff7               2.3  100.0%    16     64  28.5K    66        0  12%  w1x2  mma_m16n8k64_e2m1_f32/f1x2/k8          d2/smem-async        0                     0
+greedy (isolated)             2.3      --    16     64  28.5K    66        0  12%  w1x2  mma_m16n8k64_e2m1_f32/f1x2/k8          d2/smem-async        0                     0
+golden k_linear_4dbff7 [std]  4.1      --    16     64  20.3K    50        0  17%  w1x2  mma_m16n8k64_e2m1_f32/f1x2/k4            d3/smem-tma        0                     0
+TOTAL                         2.3
+A/B record → /workspace/deplodock/tfm_pruebas/porque/matmul__fp4-tma-w4a4-linear-ring/bench_golden.json
